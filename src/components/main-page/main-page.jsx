@@ -4,7 +4,7 @@ import SmallMovieCard from "../movie-card/small-movies-card";
 
 const MainPage = (props) => {
   const {moviesCount, genre, title, releaseYear} = props;
-  const moviesList = new Array(moviesCount).fill(SmallMovieCard);
+  const moviesList = new Array(moviesCount).fill().map((i) => <SmallMovieCard key={String(i)}/>);
 
   return (
     <>
@@ -145,7 +145,7 @@ const MainPage = (props) => {
           </ul>
 
           <div className="catalog__movies-list">
-            {moviesList.map((item) => item())}
+            {moviesList}
           </div>
 
           <div className="catalog__more">
