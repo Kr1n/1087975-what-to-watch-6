@@ -2,12 +2,12 @@ import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import MainPage from '../main-page/main-page';
 import Page404 from '../page-404/page-404';
-import SignIn from "../sign-in/sign-in";
-import MyList from "../my-list/my-list";
-import Film from "../films/films";
-import Player from "../player/player";
-import Reviews from "../reviews/reviews";
-import PropTypes from "prop-types";
+import SignIn from '../sign-in/sign-in';
+import MyList from '../my-list/my-list';
+import Films from '../films/films';
+import Player from '../player/player';
+import Reviews from '../reviews/reviews';
+import PropTypes from 'prop-types';
 
 
 const App = (props) => {
@@ -16,7 +16,7 @@ const App = (props) => {
 
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <MainPage
             moviesCount = {moviesCount}
             genre = {genre}
@@ -24,21 +24,21 @@ const App = (props) => {
             releaseYear = {releaseYear}
           />
         </Route>
-        <Route exact path="/login">
+        <Route exact path='/login'>
           <SignIn />
         </Route>
-        <Route exact path="/mylist">
+        <Route exact path='/mylist'>
           <MyList
             moviesCount={moviesInMyList}
           />
         </Route>
-        <Route exact path="/films/:id/review">
+        <Route exact path='/films/:id/review'>
           <Reviews relatedMoviesCount={relatedMoviesCount}/>
         </Route>
-        <Route exact path="/films/:id?">
-          <Film relatedMoviesCount={relatedMoviesCount}/>
+        <Route exact path='/films/:id'>
+          <Films relatedMoviesCount={relatedMoviesCount}/>
         </Route>
-        <Route exact path="/player/:id?">
+        <Route exact path='/player/:id'>
           <Player />
         </Route>
         <Route>
