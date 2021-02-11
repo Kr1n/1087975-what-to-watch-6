@@ -1,10 +1,21 @@
 import React from 'react';
+import {useParams} from "react-router-dom";
 import SmallMovieCard from '../movie-card/small-movies-card';
 import PropTypes from 'prop-types';
+import {filmsType} from "../../utils/prop-types";
 
 
 const Film = (props) => {
-  const {relatedMoviesCount} = props;
+  const {relatedMoviesCount, films} = props;
+  const {id} = useParams();
+
+  const {poster, title, genre, releaseYear, rate, director, description, actors} = films[Number(id)];
+
+  const actorsReducer = (acc, value) => {
+    return acc + `, ` + value;
+  };
+  const actorsList = actors.reduce(actorsReducer);
+
   const moviesList = new Array(relatedMoviesCount).fill().map((item, i) => <SmallMovieCard key={String(i)}/>);
   return (
     <>
@@ -77,10 +88,10 @@ const Film = (props) => {
 
           <div className='movie-card__wrap'>
             <div className='movie-card__desc'>
-              <h2 className='movie-card__title'>The Grand Budapest Hotel</h2>
+              <h2 className='movie-card__title'>{title}</h2>
               <p className='movie-card__meta'>
-                <span className='movie-card__genre'>Drama</span>
-                <span className='movie-card__year'>2014</span>
+                <span className='movie-card__genre'>{genre}</span>
+                <span className='movie-card__year'>{releaseYear}</span>
               </p>
 
               <div className='movie-card__buttons'>
@@ -105,7 +116,7 @@ const Film = (props) => {
         <div className='movie-card__wrap movie-card__translate-top'>
           <div className='movie-card__info'>
             <div className='movie-card__poster movie-card__poster--big'>
-              <img src='img/the-grand-budapest-hotel-poster.jpg' alt='The Grand Budapest Hotel poster' width='218'
+              <img src={poster} alt={title} width='218'
                 height='327'/>
             </div>
 
@@ -125,25 +136,19 @@ const Film = (props) => {
               </nav>
 
               <div className='movie-rating'>
-                <div className='movie-rating__score'>8,9</div>
+                <div className='movie-rating__score'>{rate.score}</div>
                 <p className='movie-rating__meta'>
-                  <span className='movie-rating__level'>Very good</span>
-                  <span className='movie-rating__count'>240 ratings</span>
+                  <span className='movie-rating__level'>{rate.description}</span>
+                  <span className='movie-rating__count'>{rate.votes} ratings</span>
                 </p>
               </div>
 
               <div className='movie-card__text'>
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge
-                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&amp;apos;s friend and protege.</p>
+                <p>{description}</p>
 
-                <p>Gustave prides himself on providing first-class service to the hotel&amp;apos;s guests, including satisfying the
-                  sexual needs of the many elderly women who stay there. When one of Gustave&amp;apos;s lovers dies mysteriously,
-                  Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
+                <p className='movie-card__director'><strong>Director: {director}</strong></p>
 
-                <p className='movie-card__director'><strong>Director: Wes Andreson</strong></p>
-
-                <p className='movie-card__starring'><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe
-                  and other</strong></p>
+                <p className='movie-card__starring'><strong>Starring: {actorsList} and other</strong></p>
               </div>
             </div>
           </div>
@@ -179,6 +184,7 @@ const Film = (props) => {
 
 Film.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
+  films: filmsType(),
 };
 
 export default Film;

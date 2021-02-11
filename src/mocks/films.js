@@ -1,11 +1,11 @@
 export default [
   {
     id: 1,
-    poster: `../markup/the-grand-budapest-hotel-poster.jpg`,
-    cover: `../markup/macbeth.jpg`,
+    poster: `/img/the-grand-budapest-hotel-poster.jpg`,
+    cover: `/img/macbeth.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
-    releaseDate: 2015,
+    releaseYear: 2015,
     description: `Шпионаж фантастического уровня. С помощью сверхтехнологии герой Ди Каприо и его команда проникают в чужие сны`,
     rate: {
       score: 8.7,
@@ -22,11 +22,11 @@ export default [
   },
   {
     id: 2,
-    poster: `../markup/the-grand-budapest-hotel-poster.jpg`,
-    cover: `../markup/macbeth.jpg`,
+    poster: `/img/the-grand-budapest-hotel-poster.jpg`,
+    cover: `/img/macbeth.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
-    releaseDate: 2015,
+    releaseYear: 2015,
     description: `Шпионаж фантастического уровня. С помощью сверхтехнологии герой Ди Каприо и его команда проникают в чужие сны`,
     rate: {
       score: 8.7,
@@ -43,11 +43,11 @@ export default [
   },
   {
     id: 3,
-    poster: `../markup/the-grand-budapest-hotel-poster.jpg`,
-    cover: `../markup/macbeth.jpg`,
+    poster: `/img/the-grand-budapest-hotel-poster.jpg`,
+    cover: `/img/macbeth.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
-    releaseDate: 2015,
+    releaseYear: 2015,
     description: `Шпионаж фантастического уровня. С помощью сверхтехнологии герой Ди Каприо и его команда проникают в чужие сны`,
     rate: {
       score: 8.7,
@@ -64,11 +64,11 @@ export default [
   },
   {
     id: 4,
-    poster: `../markup/the-grand-budapest-hotel-poster.jpg`,
-    cover: `../markup/macbeth.jpg`,
+    poster: `/img/the-grand-budapest-hotel-poster.jpg`,
+    cover: `/img/macbeth.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
-    releaseDate: 2015,
+    releaseYear: 2015,
     description: `Шпионаж фантастического уровня. С помощью сверхтехнологии герой Ди Каприо и его команда проникают в чужие сны`,
     rate: {
       score: 8.7,
@@ -85,11 +85,11 @@ export default [
   },
   {
     id: 5,
-    poster: `../markup/the-grand-budapest-hotel-poster.jpg`,
-    cover: `../markup/macbeth.jpg`,
+    poster: `/img/the-grand-budapest-hotel-poster.jpg`,
+    cover: `/img/macbeth.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
-    releaseDate: 2015,
+    releaseYear: 2015,
     description: `Шпионаж фантастического уровня. С помощью сверхтехнологии герой Ди Каприо и его команда проникают в чужие сны`,
     rate: {
       score: 8.7,
@@ -106,11 +106,11 @@ export default [
   },
   {
     id: 6,
-    poster: `../markup/the-grand-budapest-hotel-poster.jpg`,
-    cover: `../markup/macbeth.jpg`,
+    poster: `/img/the-grand-budapest-hotel-poster.jpg`,
+    cover: `/img/macbeth.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
-    releaseDate: 2015,
+    releaseYear: 2015,
     description: `Шпионаж фантастического уровня. С помощью сверхтехнологии герой Ди Каприо и его команда проникают в чужие сны`,
     rate: {
       score: 8.7,
@@ -127,11 +127,11 @@ export default [
   },
   {
     id: 7,
-    poster: `../markup/the-grand-budapest-hotel-poster.jpg`,
-    cover: `../markup/macbeth.jpg`,
+    poster: `/img/the-grand-budapest-hotel-poster.jpg`,
+    cover: `/img/macbeth.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
-    releaseDate: 2015,
+    releaseYear: 2015,
     description: `Шпионаж фантастического уровня. С помощью сверхтехнологии герой Ди Каприо и его команда проникают в чужие сны`,
     rate: {
       score: 8.7,
@@ -148,11 +148,11 @@ export default [
   },
   {
     id: 8,
-    poster: `../markup/the-grand-budapest-hotel-poster.jpg`,
-    cover: `../markup/macbeth.jpg`,
+    poster: `/img/the-grand-budapest-hotel-poster.jpg`,
+    cover: `/img/macbeth.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
-    releaseDate: 2015,
+    releaseYear: 2015,
     description: `Шпионаж фантастического уровня. С помощью сверхтехнологии герой Ди Каприо и его команда проникают в чужие сны`,
     rate: {
       score: 8.7,

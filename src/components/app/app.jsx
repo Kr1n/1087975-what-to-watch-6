@@ -37,7 +37,10 @@ const App = (props) => {
           <Reviews relatedMoviesCount={relatedMoviesCount}/>
         </Route>
         <Route exact path='/films/:id'>
-          <Film relatedMoviesCount={relatedMoviesCount}/>
+          <Film
+            relatedMoviesCount={relatedMoviesCount}
+            films = {props.films}
+          />
         </Route>
         <Route exact path='/player/:id'>
           <Player />

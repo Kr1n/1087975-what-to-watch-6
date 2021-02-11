@@ -7,7 +7,7 @@ export const filmsType = () =>
     cover: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     genre: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    releaseDate: PropTypes.number.isRequired,
+    releaseYear: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     director: PropTypes.string.isRequired,
     actors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
