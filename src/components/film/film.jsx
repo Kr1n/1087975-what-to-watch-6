@@ -3,7 +3,7 @@ import SmallMovieCard from '../movie-card/small-movies-card';
 import PropTypes from 'prop-types';
 
 
-const Films = (props) => {
+const Film = (props) => {
   const {relatedMoviesCount} = props;
   const moviesList = new Array(relatedMoviesCount).fill().map((item, i) => <SmallMovieCard key={String(i)}/>);
   return (
@@ -177,8 +177,8 @@ const Films = (props) => {
   );
 };
 
-Films.propTypes = {
+Film.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
 };
 
-export default Films;
+export default Film;

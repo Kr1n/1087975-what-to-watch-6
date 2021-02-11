@@ -4,10 +4,11 @@ import MainPage from '../main-page/main-page';
 import Page404 from '../page-404/page-404';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
-import Films from '../films/films';
+import Film from '../film/film';
 import Player from '../player/player';
 import Reviews from '../reviews/reviews';
 import PropTypes from 'prop-types';
+import {filmsType, reviewsType} from "../../utils/prop-types";
 
 
 const App = (props) => {
@@ -36,7 +37,7 @@ const App = (props) => {
           <Reviews relatedMoviesCount={relatedMoviesCount}/>
         </Route>
         <Route exact path='/films/:id'>
-          <Films relatedMoviesCount={relatedMoviesCount}/>
+          <Film relatedMoviesCount={relatedMoviesCount}/>
         </Route>
         <Route exact path='/player/:id'>
           <Player />
@@ -55,7 +56,9 @@ App.propTypes = {
   moviesCount: PropTypes.number.isRequired,
   genre: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  releaseYear: PropTypes.number.isRequired
+  releaseYear: PropTypes.number.isRequired,
+  films: filmsType(),
+  reviews: reviewsType()
 };
 
 export default App;
