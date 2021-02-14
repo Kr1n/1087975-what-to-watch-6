@@ -1,16 +1,23 @@
 import React from 'react';
+import {movieType} from "../../utils/prop-types";
+import {Link} from "react-router-dom";
 
-const SmallMovieCard = () => {
+const SmallMovieCard = (props) => {
+  const {movie} = props;
   return (
     <article className='small-movie-card catalog__movies-card'>
       <div className='small-movie-card__image'>
-        <img src='img/bohemian-rhapsody.jpg' alt='Bohemian Rhapsody' width='280' height='175'/>
+        <img src={movie.cover} alt={movie.title} width='280' height='175'/>
       </div>
       <h3 className='small-movie-card__title'>
-        <a className='small-movie-card__link' href='movie-page.html'>Bohemian Rhapsody</a>
+        <Link className='small-movie-card__link' to={`films/` + movie.id}>{movie.title}</Link>
       </h3>
     </article>
   );
 };
 
 export default SmallMovieCard;
+
+SmallMovieCard.propTypes = {
+  movie: movieType(),
+};

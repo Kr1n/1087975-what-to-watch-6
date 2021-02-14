@@ -8,11 +8,11 @@ import Film from '../film/film';
 import Player from '../player/player';
 import Reviews from '../reviews/reviews';
 import PropTypes from 'prop-types';
-import {filmsType, reviewsType} from "../../utils/prop-types";
+import {moviesType, reviewsType} from "../../utils/prop-types";
 
 
 const App = (props) => {
-  const {relatedMoviesCount, moviesInMyList, moviesCount, genre, title, releaseYear} = props;
+  const {relatedMoviesCount, moviesInMyList, moviesCount, genre, title, releaseYear, movies} = props;
   return (
 
     <BrowserRouter>
@@ -23,6 +23,7 @@ const App = (props) => {
             genre = {genre}
             title = {title}
             releaseYear = {releaseYear}
+            movies = {movies}
           />
         </Route>
         <Route exact path='/login'>
@@ -31,15 +32,20 @@ const App = (props) => {
         <Route exact path='/mylist'>
           <MyList
             moviesCount={moviesInMyList}
+            movies = {movies}
           />
         </Route>
         <Route exact path='/films/:id/review'>
-          <Reviews relatedMoviesCount={relatedMoviesCount}/>
+          <Reviews
+            relatedMoviesCount={relatedMoviesCount}
+            movies={movies}
+          />
         </Route>
         <Route exact path='/films/:id'>
           <Film
             relatedMoviesCount={relatedMoviesCount}
-            films = {props.films}
+            movies = {movies}
+            movie = {props.movies[0]}
           />
         </Route>
         <Route exact path='/player/:id'>
@@ -60,7 +66,7 @@ App.propTypes = {
   genre: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   releaseYear: PropTypes.number.isRequired,
-  films: filmsType(),
+  movies: moviesType(),
   reviews: reviewsType()
 };
 

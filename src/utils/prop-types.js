@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-export const filmsType = () =>
-  PropTypes.arrayOf(PropTypes.shape({
+export const movieType = () =>
+  PropTypes.shape({
     id: PropTypes.number.isRequired,
     poster: PropTypes.string.isRequired,
     cover: PropTypes.string.isRequired,
@@ -23,7 +23,10 @@ export const filmsType = () =>
       description: PropTypes.string.isRequired,
       votes: PropTypes.number.isRequired
     })
-  }).isRequired);
+  }).isRequired;
+
+export const moviesType = () =>
+  PropTypes.arrayOf(movieType).isRequired;
 
 export const reviewsType = () =>
   PropTypes.arrayOf(
@@ -36,3 +39,5 @@ export const reviewsType = () =>
         date: PropTypes.number.isRequired
       })
   );
+
+

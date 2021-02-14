@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import films from './mocks/films';
+import movies from './mocks/movies';
 import reviews from "./mocks/reviews";
 import App from './components/app/app';
 
 const Setting = {
-  MOVIES_COUNT: 20,
-  MOVIES_IN_MY_LIST: 9,
+  MOVIES_COUNT: 7,
+  MOVIES_IN_MY_LIST: 5,
   RELATED_MOVIES_COUNT: 4
 };
 
@@ -24,7 +24,7 @@ ReactDOM.render(
       genre = {PromoMovie.GENRE}
       title = {PromoMovie.TITLE}
       releaseYear = {PromoMovie.YEAR}
-      films = {films}
+      movies = {movies}
       reviews = {reviews}
     />,
     document.querySelector(`#root`)
