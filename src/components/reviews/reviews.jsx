@@ -4,12 +4,14 @@ import MovieList from "../movie-list/movie-list";
 import {moviesType} from "../../utils/prop-types";
 import PropTypes from 'prop-types';
 import Svg from "../svg/svg";
-import Header from "../Header/Header";
+import Header from "../header/header";
 import Footer from "../footer/footer";
+import {Link, useParams} from "react-router-dom";
 
 const Reviews = (props) => {
   const {relatedMoviesCount, movies} = props;
-
+  const {id} = useParams();
+  const {poster, title, genre, releaseYear} = movies[Number(id)];
   return (
     <>
       <Svg/>
@@ -22,14 +24,14 @@ const Reviews = (props) => {
 
           <h1 className='visually-hidden'>WTW</h1>
 
-          <Header title = {`Reviews`}/>
+          <Header title = {``}/>
 
           <div className='movie-card__wrap'>
             <div className='movie-card__desc'>
-              <h2 className='movie-card__title'>The Grand Budapest Hotel</h2>
+              <h2 className='movie-card__title'>{title}</h2>
               <p className='movie-card__meta'>
-                <span className='movie-card__genre'>Drama</span>
-                <span className='movie-card__year'>2014</span>
+                <span className='movie-card__genre'>{genre[0]}</span>
+                <span className='movie-card__year'>{releaseYear}</span>
               </p>
 
               <div className='movie-card__buttons'>
@@ -54,7 +56,7 @@ const Reviews = (props) => {
         <div className='movie-card__wrap movie-card__translate-top'>
           <div className='movie-card__info'>
             <div className='movie-card__poster movie-card__poster--big'>
-              <img src='img/the-grand-budapest-hotel-poster.jpg' alt='The Grand Budapest Hotel poster' width='218'
+              <img src={poster} alt={title} width='218'
                 height='327'/>
             </div>
 
@@ -62,13 +64,13 @@ const Reviews = (props) => {
               <nav className='movie-nav movie-card__nav'>
                 <ul className='movie-nav__list'>
                   <li className='movie-nav__item'>
-                    <a href='#' className='movie-nav__link'>Overview</a>
+                    <Link to={`/films/` + id} className='movie-nav__link'>Overview</Link>
                   </li>
                   <li className='movie-nav__item'>
-                    <a href='#' className='movie-nav__link'>Details</a>
+                    <Link to={`/films/` + id + `/details`} className='movie-nav__link'>Details</Link>
                   </li>
                   <li className='movie-nav__item movie-nav__item--active'>
-                    <a href='#' className='movie-nav__link'>Reviews</a>
+                    <a className='movie-nav__link'>Reviews</a>
                   </li>
                 </ul>
               </nav>

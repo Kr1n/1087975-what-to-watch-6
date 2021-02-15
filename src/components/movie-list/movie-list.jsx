@@ -1,5 +1,5 @@
 import React from 'react';
-import SmallMovieCard from '../movie-card/small-movies-card';
+import SmallMovieCard from '../small-movie-card/small-movies-card';
 import {moviesType} from "../../utils/prop-types";
 
 const MovieList = (props) => {

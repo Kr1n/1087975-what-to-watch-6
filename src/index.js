@@ -10,20 +10,14 @@ const Setting = {
   RELATED_MOVIES_COUNT: 4
 };
 
-const PromoMovie = {
-  TITLE: `The Grand Budapest Hotel`,
-  GENRE: `Drama`,
-  YEAR: 2014,
-};
+const promoMovie = movies[1];
 
 ReactDOM.render(
     <App
       relatedMoviesCount = {Setting.RELATED_MOVIES_COUNT}
       moviesInMyList = {Setting.MOVIES_IN_MY_LIST}
       moviesCount = {Setting.MOVIES_COUNT}
-      genre = {PromoMovie.GENRE}
-      title = {PromoMovie.TITLE}
-      releaseYear = {PromoMovie.YEAR}
+      promoMovie = {promoMovie}
       movies = {movies}
       reviews = {reviews}
     />,

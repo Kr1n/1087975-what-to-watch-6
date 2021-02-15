@@ -8,11 +8,13 @@ import Film from '../film/film';
 import Player from '../player/player';
 import Reviews from '../reviews/reviews';
 import PropTypes from 'prop-types';
-import {moviesType, reviewsType} from "../../utils/prop-types";
+import {moviesType, reviewsType, movieType} from "../../utils/prop-types";
+import FilmDetails from "../film-details/film-details";
+import AddReview from "../add-review/add-review";
 
 
 const App = (props) => {
-  const {relatedMoviesCount, moviesInMyList, moviesCount, genre, title, releaseYear, movies} = props;
+  const {relatedMoviesCount, moviesInMyList, moviesCount, movies, promoMovie} = props;
   return (
 
     <BrowserRouter>
@@ -20,9 +22,7 @@ const App = (props) => {
         <Route exact path='/'>
           <MainPage
             moviesCount = {moviesCount}
-            genre = {genre}
-            title = {title}
-            releaseYear = {releaseYear}
+            promoMovie = {promoMovie}
             movies = {movies}
           />
         </Route>
@@ -33,6 +33,17 @@ const App = (props) => {
           <MyList
             moviesCount={moviesInMyList}
             movies = {movies}
+          />
+        </Route>
+        <Route exact path='/films/:id/add-review'>
+          <AddReview
+            movies={movies}
+          />
+        </Route>
+        <Route exact path='/films/:id/details'>
+          <FilmDetails
+            relatedMoviesCount={relatedMoviesCount}
+            movies={movies}
           />
         </Route>
         <Route exact path='/films/:id/review'>
@@ -49,7 +60,9 @@ const App = (props) => {
           />
         </Route>
         <Route exact path='/player/:id'>
-          <Player />
+          <Player
+            movie = {props.movies[0]}
+          />
         </Route>
         <Route>
           <Page404 />
@@ -63,9 +76,7 @@ App.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
   moviesInMyList: PropTypes.number.isRequired,
   moviesCount: PropTypes.number.isRequired,
-  genre: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  releaseYear: PropTypes.number.isRequired,
+  promoMovie: movieType(),
   movies: moviesType(),
   reviews: reviewsType()
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import MovieList from "../movie-list/movie-list";
 import {moviesType} from "../../utils/prop-types";
 import Footer from "../footer/footer";
-import Header from "../Header/Header";
+import Header from "../header/header";
 import Svg from "../svg/svg";
 
 const MyList = (props) => {

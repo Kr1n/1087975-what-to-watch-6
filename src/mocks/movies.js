@@ -2,7 +2,7 @@ export default [
   {
     id: 1,
     poster: `/img/the-grand-budapest-hotel-poster.jpg`,
-    cover: `/img/macbeth.jpg`,
+    cover: `/img/bg-the-grand-budapest-hotel.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
     releaseYear: 2015,
@@ -23,7 +23,7 @@ export default [
   {
     id: 2,
     poster: `/img/the-grand-budapest-hotel-poster.jpg`,
-    cover: `/img/macbeth.jpg`,
+    cover: `/img/bg-the-grand-budapest-hotel.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
     releaseYear: 2015,
@@ -44,7 +44,7 @@ export default [
   {
     id: 3,
     poster: `/img/the-grand-budapest-hotel-poster.jpg`,
-    cover: `/img/macbeth.jpg`,
+    cover: `/img/bg-the-grand-budapest-hotel.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
     releaseYear: 2015,
@@ -65,7 +65,7 @@ export default [
   {
     id: 4,
     poster: `/img/the-grand-budapest-hotel-poster.jpg`,
-    cover: `/img/macbeth.jpg`,
+    cover: `/img/bg-the-grand-budapest-hotel.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
     releaseYear: 2015,
@@ -86,7 +86,7 @@ export default [
   {
     id: 5,
     poster: `/img/the-grand-budapest-hotel-poster.jpg`,
-    cover: `/img/macbeth.jpg`,
+    cover: `/img/bg-the-grand-budapest-hotel.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
     releaseYear: 2015,
@@ -107,7 +107,7 @@ export default [
   {
     id: 6,
     poster: `/img/the-grand-budapest-hotel-poster.jpg`,
-    cover: `/img/macbeth.jpg`,
+    cover: `/img/bg-the-grand-budapest-hotel.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
     releaseYear: 2015,
@@ -128,7 +128,7 @@ export default [
   {
     id: 7,
     poster: `/img/the-grand-budapest-hotel-poster.jpg`,
-    cover: `/img/macbeth.jpg`,
+    cover: `/img/bg-the-grand-budapest-hotel.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
     releaseYear: 2015,
@@ -149,7 +149,7 @@ export default [
   {
     id: 8,
     poster: `/img/the-grand-budapest-hotel-poster.jpg`,
-    cover: `/img/macbeth.jpg`,
+    cover: `/img/bg-the-grand-budapest-hotel.jpg`,
     title: `Начало`,
     genre: [`Фантастика`, `Боевик`, `Триллер`],
     releaseYear: 2015,

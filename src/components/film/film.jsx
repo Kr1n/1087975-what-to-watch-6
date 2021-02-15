@@ -1,18 +1,19 @@
 import React from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {moviesType} from "../../utils/prop-types";
-import MovieList from "../movie-list/movie-list";
-import Header from "../Header/Header";
-import Svg from "../svg/svg";
-import Footer from "../footer/footer";
+import {moviesType} from '../../utils/prop-types';
+import MovieList from '../movie-list/movie-list';
+import Header from '../header/header';
+import Svg from '../svg/svg';
+import Footer from '../footer/footer';
 
 
 const Film = (props) => {
   const {relatedMoviesCount, movies} = props;
   const {id} = useParams();
+  const history = useHistory();
 
-  const {poster, title, genre, releaseYear, rate, director, description, actors} = movies[Number(id)];
+  const {cover, poster, title, genre, releaseYear, rate, director, description, actors} = movies[Number(id)];
 
   const actorsReducer = (acc, value) => {
     return acc + `, ` + value;
@@ -26,7 +27,7 @@ const Film = (props) => {
       <section className='movie-card movie-card--full'>
         <div className='movie-card__hero'>
           <div className='movie-card__bg'>
-            <img src='img/bg-the-grand-budapest-hotel.jpg' alt='The Grand Budapest Hotel'/>
+            <img src={cover} alt='The Grand Budapest Hotel'/>
           </div>
 
           <h1 className='visually-hidden'>WTW</h1>
@@ -37,12 +38,12 @@ const Film = (props) => {
             <div className='movie-card__desc'>
               <h2 className='movie-card__title'>{title}</h2>
               <p className='movie-card__meta'>
-                <span className='movie-card__genre'>{genre}</span>
+                <span className='movie-card__genre'>{genre[0]}</span>
                 <span className='movie-card__year'>{releaseYear}</span>
               </p>
 
               <div className='movie-card__buttons'>
-                <button className='btn btn--play movie-card__button' type='button'>
+                <button className='btn btn--play movie-card__button' type='button' onClick={() => history.push(`/player/` + id)}>
                   <svg viewBox='0 0 19 19' width='19' height='19'>
                     <use xlinkHref='#play-s'></use>
                   </svg>
@@ -54,7 +55,7 @@ const Film = (props) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href='add-review.html' className='btn movie-card__button'>Add review</a>
+                <Link to={`/films/` + id + `/add-review`} className='btn movie-card__button'>Add review</Link>
               </div>
             </div>
           </div>
@@ -71,13 +72,13 @@ const Film = (props) => {
               <nav className='movie-nav movie-card__nav'>
                 <ul className='movie-nav__list'>
                   <li className='movie-nav__item movie-nav__item--active'>
-                    <a href='#' className='movie-nav__link'>Overview</a>
+                    <a className='movie-nav__link'>Overview</a>
                   </li>
                   <li className='movie-nav__item'>
-                    <a href='#' className='movie-nav__link'>Details</a>
+                    <Link to={`/films/` + id + `/details`} className='movie-nav__link'>Details</Link>
                   </li>
                   <li className='movie-nav__item'>
-                    <a href='#' className='movie-nav__link'>Reviews</a>
+                    <Link to={`/films/` + id + `/review` } className='movie-nav__link'>Reviews</Link>
                   </li>
                 </ul>
               </nav>
