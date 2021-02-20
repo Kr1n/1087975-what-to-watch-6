@@ -1,10 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SmallMovieCard from '../small-movie-card/small-movies-card';
 import {moviesType} from "../../utils/prop-types";
 
 const MovieList = (props) => {
   const {movies} = props;
-  const moviesList = movies.slice().map((movie, i) => <SmallMovieCard movie={movie} key={String(i)}/>);
+  const [activeFilm, setActiveFilm] = useState({activeFilm: -1});
+
+  const onHover = (id) => {
+    setActiveFilm({activeFilm: id});
+  };
+
+  const moviesList = movies.slice().map((movie, i) =>
+    <SmallMovieCard
+      onHover= {onHover}
+      isActive = {activeFilm === movie.id}
+      movie= {movie}
+      key= {String(i)}
+    />);
   return (
     <>
       {moviesList}
