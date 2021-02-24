@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Header = (props) => {
-  const {title} = props;
+  const {title, link} = props;
   return (
     <>
       <header className='page-header user-page__head'>
@@ -17,6 +17,18 @@ const Header = (props) => {
 
         {title ? <h1 className='page-title user-page__title'>{title}</h1> : ``}
 
+        {link ?
+          <nav className="breadcrumbs">
+            <ul className="breadcrumbs__list">
+              <li className="breadcrumbs__item">
+                <Link to={link.href} className="breadcrumbs__link">{link.title}</Link>
+              </li>
+              <li className="breadcrumbs__item">
+                <a className="breadcrumbs__link">Add review</a>
+              </li>
+            </ul>
+          </nav> : ``}
+
         <div className='user-block'>
           <div className='user-block__avatar'>
             <img src='img/avatar.jpg' alt='User avatar' width='63' height='63'/>
@@ -27,7 +39,8 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  link: PropTypes.object,
 };
 
 export default Header;

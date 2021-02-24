@@ -24,7 +24,7 @@ const Reviews = (props) => {
 
           <h1 className='visually-hidden'>WTW</h1>
 
-          <Header title = {``}/>
+          <Header />
 
           <div className='movie-card__wrap'>
             <div className='movie-card__desc'>
@@ -47,7 +47,7 @@ const Reviews = (props) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href='add-review.html' className='btn movie-card__button'>Add review</a>
+                <Link to={`/films/${id}/add-review`} className='btn movie-card__button'>Add review</Link>
               </div>
             </div>
           </div>
