@@ -1,20 +1,29 @@
-import React from 'react';
+import React from "react";
+import {reviewType} from "../../utils/prop-types";
+import dayjs from "dayjs";
 
-const Review = () => (
-  <div className='review'>
-    <blockquote className='review__quote'>
-      <p className='review__text'>I didn&amp;apos;t find it amusing, and while I can appreciate the creativity,
-      it&amp;apos;s an hour and 40 minutes I wish I could take back.</p>
+const Review = (props) => {
+  const {review} = props;
 
-      <footer className='review__details'>
-        <cite className='review__author'>Amanda Greever</cite>
-        <time className='review__date' dateTime='2015-11-18'>November 18, 2015</time>
-      </footer>
-    </blockquote>
+  return (
+    <div className="review">
+      <blockquote className="review__quote">
+        <p className="review__text">{review.comment}</p>
 
-    <div className='review__rating'>8,0</div>
-  </div>
-);
+        <footer className="review__details">
+          <cite className="review__author">{review.user.name}</cite>
+          <time className="review__date" dateTime={dayjs(review.date).format(`DD-MM-YYYY`)}>{dayjs(review.date).format(`MMMM D, YYYY`)}</time>
+        </footer>
+      </blockquote>
+
+      <div className="review__rating">{review.rating}</div>
+    </div>
+  );
+};
 
 
 export default Review;
+
+Review.propTypes = {
+  review: reviewType
+};

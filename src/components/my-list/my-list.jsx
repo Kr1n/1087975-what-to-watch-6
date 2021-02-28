@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import MovieList from "../movie-list/movie-list";
 import {moviesType} from "../../utils/prop-types";
 import Footer from "../footer/footer";
@@ -11,15 +11,15 @@ const MyList = (props) => {
     <>
       <Svg/>
 
-      <div className='user-page'>
-        <Header title={`My list`}/>
+      <div className="user-page">
+        <Header title="My list"/>
 
-        <section className='catalog'>
-          <h2 className='catalog__title visually-hidden'>Catalog</h2>
+        <section className="catalog">
+          <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <div className='catalog__movies-list'>
+          <div className="catalog__movies-list">
             <MovieList
-              movies = {movies}
+              movies={movies}
             />
           </div>
         </section>
@@ -31,7 +31,7 @@ const MyList = (props) => {
 
 
 MyList.propTypes = {
-  movies: moviesType(),
+  movies: moviesType,
 };
 
 export default MyList;

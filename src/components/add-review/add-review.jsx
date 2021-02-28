@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Svg from "../svg/svg";
 import {useParams} from "react-router-dom";
 import {moviesType} from "../../utils/prop-types";
@@ -7,7 +7,9 @@ import Header from "../header/header";
 const AddReview = (props) => {
   const {movies} = props;
   const {id} = useParams();
-  const {cover, poster, title} = movies[Number(id)];
+  const movie = movies.find((item) => item.id === Number(id));
+
+  const {backgroundImage, posterImage, name} = movie;
 
   return (
     <>
@@ -16,16 +18,18 @@ const AddReview = (props) => {
       <section className="movie-card movie-card--full">
         <div className="movie-card__header">
           <div className="movie-card__bg">
-            <img src={cover} alt={title}/>
+            <img src={backgroundImage} alt={name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
           <Header link={{
-            title,
-            href: `films/${id}`}}/>
+            name,
+            href: `/films/${id}`}}
+          />
+
           <div className="movie-card__poster movie-card__poster--small">
-            <img src={poster} alt={poster + `poster`} width="218"
+            <img src={posterImage} alt={`${name} poster`} width="218"
               height="327"/>
           </div>
         </div>
@@ -85,7 +89,7 @@ const AddReview = (props) => {
 };
 
 AddReview.propTypes = {
-  movies: moviesType(),
+  movies: moviesType,
 };
 
 export default AddReview;

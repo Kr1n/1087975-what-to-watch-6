@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import SmallMovieCard from '../small-movie-card/small-movies-card';
+import React, {useState} from "react";
+import SmallMovieCard from "../small-movie-card/small-movies-card";
 import {moviesType} from "../../utils/prop-types";
 
 const MovieList = (props) => {
@@ -10,12 +10,17 @@ const MovieList = (props) => {
     setActiveFilm({activeFilm: id});
   };
 
-  const moviesList = movies.slice().map((movie, i) =>
+  const onCursorLeave = () => {
+    setActiveFilm({activeFilm: -1});
+  };
+
+  const moviesList = movies.slice().map((movie) =>
     <SmallMovieCard
-      onHover= {onHover}
-      isActive = {activeFilm === movie.id}
-      movie= {movie}
-      key= {String(i)}
+      onHover={onHover}
+      onCursorLeave={onCursorLeave}
+      isActive={activeFilm === movie.id}
+      movie={movie}
+      key={String(movie.id)}
     />);
   return (
     <>
@@ -26,5 +31,5 @@ const MovieList = (props) => {
 export default MovieList;
 
 MovieList.propTypes = {
-  movies: moviesType(),
+  movies: moviesType,
 };
