@@ -12,7 +12,7 @@ const FilmDetails = (props) => {
   const {relatedMoviesCount, movies} = props;
   const {id} = useParams();
   const history = useHistory();
-  const {posterImage, name, genre, released, director, runTime, starring, backgroundImage} = movies[Number(id)];
+  const {posterImage, name, genre, released, director, runTime, starring, backgroundImage} = movies.find((item) => item.id === Number(id));
 
   const {hours, minutes} = getDurationFromMinutes(runTime);
 
