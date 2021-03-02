@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 
 const VideoPlayer = (props) => {
-  const {videoLink, backgroundImage, autoPlay, muted, play} = props;
+  const {videoLink, backgroundImage, autoPlay, muted} = props;
   const autoPlayState = autoPlay ? `autoPlay` : ``;
 
   return (
