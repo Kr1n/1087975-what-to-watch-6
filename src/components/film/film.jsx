@@ -1,18 +1,25 @@
 import React from "react";
-import Review from "./review";
-import MovieList from "../movie-list/movie-list";
-import {moviesType, reviewsType} from "../../utils/prop-types";
+import {Link, useParams, useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import Svg from "../svg/svg";
+import {moviesType} from "../../utils/prop-types";
+import MovieList from "../movie-list/movie-list";
 import Header from "../header/header";
+import Svg from "../svg/svg";
 import Footer from "../footer/footer";
-import {Link, useHistory, useParams} from "react-router-dom";
+import {getRatingDescription} from "../../utils/utils";
 
-const Reviews = (props) => {
-  const {relatedMoviesCount, movies, reviews} = props;
+
+const Film = (props) => {
+  const {relatedMoviesCount, movies} = props;
   const {id} = useParams();
   const history = useHistory();
-  const {posterImage, name, genre, released, backgroundImage} = movies[Number(id)];
+
+  const {backgroundImage, posterImage, name, scoresCount, genre, released, rating, director, description, starring} = movies[Number(id)];
+
+  const actorsReducer = (acc, value) => {
+    return `${acc}, ${value}`;
+  };
+  const actorsList = starring.reduce(actorsReducer);
 
   return (
     <>
@@ -65,29 +72,32 @@ const Reviews = (props) => {
             <div className="movie-card__desc">
               <nav className="movie-nav movie-card__nav">
                 <ul className="movie-nav__list">
-                  <li className="movie-nav__item">
-                    <Link to={`/films/${id}`} className="movie-nav__link">Overview</Link>
+                  <li className="movie-nav__item movie-nav__item--active">
+                    <a className="movie-nav__link">Overview</a>
                   </li>
                   <li className="movie-nav__item">
                     <Link to={`/films/${id}/details`} className="movie-nav__link">Details</Link>
                   </li>
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a className="movie-nav__link">Reviews</a>
+                  <li className="movie-nav__item">
+                    <Link to={`/films/${id}/review` } className="movie-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
 
-              <div className="movie-card__reviews movie-card__row">
-                <div className="movie-card__reviews-col">
-                  <Review review={reviews[0]}/>
-                  <Review review={reviews[0]}/>
-                  <Review review={reviews[0]}/>
-                </div>
-                <div className="movie-card__reviews-col">
-                  <Review review={reviews[0]}/>
-                  <Review review={reviews[0]}/>
-                  <Review review={reviews[0]}/>
-                </div>
+              <div className="movie-rating">
+                <div className="movie-rating__score">{rating}</div>
+                <p className="movie-rating__meta">
+                  <span className="movie-rating__level">{getRatingDescription(rating)}</span>
+                  <span className="movie-rating__count">{scoresCount} ratings</span>
+                </p>
+              </div>
+
+              <div className="movie-card__text">
+                <p>{description}</p>
+
+                <p className="movie-card__director"><strong>Director: {director}</strong></p>
+
+                <p className="movie-card__starring"><strong>Starring: {actorsList} and other</strong></p>
               </div>
             </div>
           </div>
@@ -109,10 +119,9 @@ const Reviews = (props) => {
   );
 };
 
-Reviews.propTypes = {
+Film.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
   movies: moviesType,
-  reviews: reviewsType
 };
 
-export default Reviews;
+export default Film;

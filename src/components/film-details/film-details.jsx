@@ -1,18 +1,29 @@
 import React from "react";
-import Review from "./review";
-import MovieList from "../movie-list/movie-list";
-import {moviesType, reviewsType} from "../../utils/prop-types";
-import PropTypes from "prop-types";
 import Svg from "../svg/svg";
 import Header from "../header/header";
 import Footer from "../footer/footer";
+import MovieList from "../movie-list/movie-list";
 import {Link, useHistory, useParams} from "react-router-dom";
+import PropTypes from "prop-types";
+import {moviesType} from "../../utils/prop-types";
+import {getDurationFromMinutes} from "../../utils/utils";
 
-const Reviews = (props) => {
-  const {relatedMoviesCount, movies, reviews} = props;
+const FilmDetails = (props) => {
+  const {relatedMoviesCount, movies} = props;
   const {id} = useParams();
   const history = useHistory();
-  const {posterImage, name, genre, released, backgroundImage} = movies[Number(id)];
+  const {posterImage, name, genre, released, director, runTime, starring, backgroundImage} = movies.find((item) => item.id === Number(id));
+
+  const {hours, minutes} = getDurationFromMinutes(runTime);
+
+  const starringReducer = (acc, value) => {
+    return (
+      <>
+        {acc},<br/>
+        {value}
+      </>);
+  };
+  const starringList = starring.reduce(starringReducer);
 
   return (
     <>
@@ -26,7 +37,7 @@ const Reviews = (props) => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header />
+          <Header/>
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
@@ -68,25 +79,42 @@ const Reviews = (props) => {
                   <li className="movie-nav__item">
                     <Link to={`/films/${id}`} className="movie-nav__link">Overview</Link>
                   </li>
-                  <li className="movie-nav__item">
-                    <Link to={`/films/${id}/details`} className="movie-nav__link">Details</Link>
-                  </li>
                   <li className="movie-nav__item movie-nav__item--active">
-                    <a className="movie-nav__link">Reviews</a>
+                    <a className="movie-nav__link">Details</a>
+                  </li>
+                  <li className="movie-nav__item">
+                    <Link to={`/films/${id}/review`} className="movie-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
 
-              <div className="movie-card__reviews movie-card__row">
-                <div className="movie-card__reviews-col">
-                  <Review review={reviews[0]}/>
-                  <Review review={reviews[0]}/>
-                  <Review review={reviews[0]}/>
+              <div className="movie-card__text movie-card__row">
+                <div className="movie-card__text-col">
+                  <p className="movie-card__details-item">
+                    <strong className="movie-card__details-name">Director</strong>
+                    <span className="movie-card__details-value">{director}</span>
+                  </p>
+                  <p className="movie-card__details-item">
+                    <strong className="movie-card__details-name">Starring</strong>
+                    <span className="movie-card__details-value">
+                      {starringList}
+                    </span>
+                  </p>
                 </div>
-                <div className="movie-card__reviews-col">
-                  <Review review={reviews[0]}/>
-                  <Review review={reviews[0]}/>
-                  <Review review={reviews[0]}/>
+
+                <div className="movie-card__text-col">
+                  <p className="movie-card__details-item">
+                    <strong className="movie-card__details-name">Run Time</strong>
+                    <span className="movie-card__details-value">{hours}h {minutes}m</span>
+                  </p>
+                  <p className="movie-card__details-item">
+                    <strong className="movie-card__details-name">Genre</strong>
+                    <span className="movie-card__details-value">{genre}</span>
+                  </p>
+                  <p className="movie-card__details-item">
+                    <strong className="movie-card__details-name">Released</strong>
+                    <span className="movie-card__details-value">{released}</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -109,10 +137,9 @@ const Reviews = (props) => {
   );
 };
 
-Reviews.propTypes = {
+FilmDetails.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
   movies: moviesType,
-  reviews: reviewsType
 };
 
-export default Reviews;
+export default FilmDetails;
