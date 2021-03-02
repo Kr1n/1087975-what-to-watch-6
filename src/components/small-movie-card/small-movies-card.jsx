@@ -4,7 +4,8 @@ import {movieType} from "../../utils/prop-types";
 import {Link} from "react-router-dom";
 
 const SmallMovieCard = (props) => {
-  const {movie, onHover, onCursorLeave} = props;
+  const {movie, onHover, onCursorLeave, isActive} = props;
+  console.log(isActive);
   return (
     <article className="small-movie-card catalog__movies-card"
       onMouseEnter={() => onHover(movie.id)}
@@ -27,4 +28,5 @@ SmallMovieCard.propTypes = {
   movie: movieType,
   onHover: PropTypes.func.isRequired,
   onCursorLeave: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };

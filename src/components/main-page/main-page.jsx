@@ -21,7 +21,7 @@ const MainPage = (props) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header title={``}/>
+        <Header/>
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">

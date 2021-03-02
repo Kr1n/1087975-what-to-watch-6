@@ -12,7 +12,7 @@ const Reviews = (props) => {
   const {relatedMoviesCount, movies, reviews} = props;
   const {id} = useParams();
   const history = useHistory();
-  const {posterImage, name, genre, released, backgroundImage} = movies[Number(id)];
+  const {posterImage, name, genre, released, backgroundImage} = movies.find((item) => item.id === Number(id));
 
   return (
     <>
