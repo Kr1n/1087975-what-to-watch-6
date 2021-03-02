@@ -2,18 +2,40 @@ import React from "react";
 import PropTypes from "prop-types";
 import {movieType} from "../../utils/prop-types";
 import {Link} from "react-router-dom";
+import VideoPlayer from "../video-player/video-player";
 
 const SmallMovieCard = (props) => {
   const {movie, onHover, onCursorLeave, isActive} = props;
-  console.log(isActive);
+  let timerID;
+
+  const articleRef = React.createRef();
+
+  React.useEffect(() => {
+
+    articleRef.current.onmouseenter = () => {
+      timerID = setTimeout(() => onHover(movie.id), 1000);
+    };
+    articleRef.current.onmouseleave = () => {
+      clearTimeout(timerID);
+      onCursorLeave(movie.id);
+    };
+
+    return () => {
+      clearTimeout(timerID);
+      // articleRef.current.onmouseenter = null;
+      // articleRef.current.onmouseleave = null;
+    };
+  }, [isActive]);
+
   return (
-    <article className="small-movie-card catalog__movies-card"
-      onMouseEnter={() => onHover(movie.id)}
-      onMouseLeave={() => onCursorLeave()}
+    <article ref={articleRef} className="small-movie-card catalog__movies-card"
+      // onMouseEnter={() => onHover(movie.id)}
+      // onMouseLeave={() => onCursorLeave(movie.id)}
     >
 
       <div className="small-movie-card__image">
-        <img src={movie.backgroundImage} alt={movie.name} width="280" height="175"/>
+        <VideoPlayer videoLink={isActive ? movie.previewVideoLink : ``} backgroundImage={movie.backgroundImage} autoPlay={true} muted={true}/>
+        {/* <img src={movie.backgroundImage} alt={movie.name} width="280" height="175"/>*/}
       </div>
       <h3 className="small-movie-card__title">
         <Link className="small-movie-card__link" to={`/films/${movie.id}`}>{movie.name}</Link>

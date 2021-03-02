@@ -3,11 +3,13 @@ import Svg from "../svg/svg";
 import {moviesType} from "../../utils/prop-types";
 import {useHistory, useParams} from "react-router-dom";
 import {getDurationFromMinutes} from "../../utils/utils";
+import VideoPlayer from "../video-player/video-player";
 
 const Player = (props) => {
   const {movies} = props;
   const {id} = useParams();
   const history = useHistory();
+
 
   const movie = movies.find((item) => item.id === Number(id));
   const {videoLink, runTime, backgroundImage} = movie;
@@ -19,7 +21,7 @@ const Player = (props) => {
       <Svg/>
 
       <div className="player">
-        <video src={videoLink} className="player__video" poster={backgroundImage} autoPlay></video>
+        <VideoPlayer videoLink={videoLink} backgroundImage={backgroundImage} autoPlay={true} muted={false}/>
 
         <button type="button" className="player__exit" onClick={() => history.push(`/films/${id}`)}>Exit</button>
 
@@ -29,7 +31,7 @@ const Player = (props) => {
               <progress className="player__progress" value="30" max="100"></progress>
               <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
             </div>
-            <div className="player__time-value">{duration.hours}:{duration.minutes}</div>
+            <div className="player__time-value">{duration.hours}:{duration.minutes}:00</div>
           </div>
 
           <div className="player__controls-row">
