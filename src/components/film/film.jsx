@@ -14,7 +14,7 @@ const Film = (props) => {
   const {id} = useParams();
   const history = useHistory();
 
-  const {backgroundImage, posterImage, name, scoresCount, genre, released, rating, director, description, starring} = movies[Number(id)];
+  const {backgroundImage, posterImage, name, scoresCount, genre, released, rating, director, description, starring} = movies.find((item) => item.id === Number(id));
 
   const actorsReducer = (acc, value) => {
     return `${acc}, ${value}`;

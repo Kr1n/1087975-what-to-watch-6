@@ -4,15 +4,9 @@ import {moviesType} from "../../utils/prop-types";
 
 const MovieList = (props) => {
   const {movies} = props;
-  const [activeFilm, setActiveFilm] = useState({activeFilm: -1});
-
-  const onHover = (id) => {
-    setActiveFilm({activeFilm: id});
-  };
-
-  const onCursorLeave = () => {
-    setActiveFilm({activeFilm: -1});
-  };
+  const [activeFilm, setActiveFilm] = useState(-1);
+  const onHover = (id) => setActiveFilm(id);
+  const onCursorLeave = () => setActiveFilm(-1);
 
   const moviesList = movies.slice().map((movie) =>
     <SmallMovieCard

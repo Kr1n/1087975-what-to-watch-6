@@ -46,4 +46,9 @@ Header.propTypes = {
   })
 };
 
+Header.defaultProps = {
+  title: ``,
+  link: null
+};
+
 export default Header;
