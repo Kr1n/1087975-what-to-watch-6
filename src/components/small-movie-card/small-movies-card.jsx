@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {movieType} from "../../utils/prop-types";
 import {Link} from "react-router-dom";
 import VideoPlayer from "../video-player/video-player";
+import {VIDEO_LOAD_TIMEOUT} from "../../consts/common";
 
 const SmallMovieCard = (props) => {
   const {movie, onHover, onCursorLeave, isActive} = props;
@@ -13,7 +14,7 @@ const SmallMovieCard = (props) => {
   React.useEffect(() => {
 
     articleRef.current.onmouseenter = () => {
-      timerID = setTimeout(() => onHover(movie.id), 1000);
+      timerID = setTimeout(() => onHover(movie.id), VIDEO_LOAD_TIMEOUT);
     };
     articleRef.current.onmouseleave = () => {
       clearTimeout(timerID);
@@ -22,8 +23,6 @@ const SmallMovieCard = (props) => {
 
     return () => {
       clearTimeout(timerID);
-      // articleRef.current.onmouseenter = null;
-      // articleRef.current.onmouseleave = null;
     };
   }, [isActive]);
 
@@ -35,7 +34,6 @@ const SmallMovieCard = (props) => {
 
       <div className="small-movie-card__image">
         <VideoPlayer videoLink={isActive ? movie.previewVideoLink : ``} backgroundImage={movie.backgroundImage} autoPlay={true} muted={true}/>
-        {/* <img src={movie.backgroundImage} alt={movie.name} width="280" height="175"/>*/}
       </div>
       <h3 className="small-movie-card__title">
         <Link className="small-movie-card__link" to={`/films/${movie.id}`}>{movie.name}</Link>
