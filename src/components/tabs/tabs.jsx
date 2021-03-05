@@ -1,16 +1,23 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Link, useParams} from "react-router-dom";
 import {getDurationFromMinutes, getRatingDescription} from "../../utils/utils";
 
-import {moviesType, reviewsType} from "../../utils/prop-types";
+import {movieType, reviewsType} from "../../utils/prop-types";
 import Review from "../reviews/review";
+
+export const tabStates = {
+  TAB_OVERVIEW: `tab_overview`,
+  TAB_DETAILS: `tab_details`,
+  TAB_REVIEWS: `tab_reviews`,
+};
 
 const Tabs = (props) => {
 
-  const {movies} = props;
+  const {movie, reviews, selectedTab} = props;
   const {id} = useParams();
 
-  const {runTime, scoresCount, genre, released, rating, director, description, starring} = movies.find((item) => item.id === Number(id));
+  const {runTime, scoresCount, genre, released, rating, director, description, starring} = movie;
   const {hours, minutes} = getDurationFromMinutes(runTime);
 
   const actorsReducer = (acc, value) => {
@@ -27,43 +34,40 @@ const Tabs = (props) => {
   };
   const starringList = starring.reduce(starringReducer);
 
-  const overview = () => {
-    return (
-      <>
-        <nav className="movie-nav movie-card__nav">
-          <ul className="movie-nav__list">
-            <li className="movie-nav__item movie-nav__item--active">
-              <a className="movie-nav__link">Overview</a>
-            </li>
-            <li className="movie-nav__item">
-              <Link to={`/films/${id}/details`} className="movie-nav__link">Details</Link>
-            </li>
-            <li className="movie-nav__item">
-              <Link to={`/films/${id}/review` } className="movie-nav__link">Reviews</Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="movie-rating">
-          <div className="movie-rating__score">{rating}</div>
-          <p className="movie-rating__meta">
-            <span className="movie-rating__level">{getRatingDescription(rating)}</span>
-            <span className="movie-rating__count">{scoresCount} ratings</span>
-          </p>
-        </div>
+  const overviewTab =
+    <>
+      <nav className="movie-nav movie-card__nav">
+        <ul className="movie-nav__list">
+          <li className="movie-nav__item movie-nav__item--active">
+            <a className="movie-nav__link">Overview</a>
+          </li>
+          <li className="movie-nav__item">
+            <Link to={`/films/${id}/details`} className="movie-nav__link">Details</Link>
+          </li>
+          <li className="movie-nav__item">
+            <Link to={`/films/${id}/review` } className="movie-nav__link">Reviews</Link>
+          </li>
+        </ul>
+      </nav>
+      <div className="movie-rating">
+        <div className="movie-rating__score">{rating}</div>
+        <p className="movie-rating__meta">
+          <span className="movie-rating__level">{getRatingDescription(rating)}</span>
+          <span className="movie-rating__count">{scoresCount} ratings</span>
+        </p>
+      </div>
 
-        <div className="movie-card__text">
-          <p>{description}</p>
+      <div className="movie-card__text">
+        <p>{description}</p>
 
-          <p className="movie-card__director"><strong>Director: {director}</strong></p>
+        <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
-          <p className="movie-card__starring"><strong>Starring: {actorsList} and other</strong></p>
-        </div>
-      </>
-    );
-  };
+        <p className="movie-card__starring"><strong>Starring: {actorsList} and other</strong></p>
+      </div>
+    </>;
 
-  const details = () => {
-    return (<>
+  const detailsTab =
+    <>
       <nav className="movie-nav movie-card__nav">
         <ul className="movie-nav__list">
           <li className="movie-nav__item">
@@ -106,11 +110,11 @@ const Tabs = (props) => {
             <span className="movie-card__details-value">{released}</span>
           </p>
         </div>
-      </div></>);
-  };
+      </div>
+    </>;
 
-  const reviews = () => {
-    return (<>
+  const reviewsTab =
+    <>
       <nav className="movie-nav movie-card__nav">
         <ul className="movie-nav__list">
           <li className="movie-nav__item">
@@ -135,21 +139,36 @@ const Tabs = (props) => {
           <Review review={reviews[0]}/>
           <Review review={reviews[0]}/>
         </div>
-      </div></>);
-  };
+      </div>
+    </>;
 
+  let tab;
 
-  return (<div className="movie-card__desc">
-    {overview}
-    {details}
-    {reviews}
-  </div>
+  switch (selectedTab) {
+    case tabStates.TAB_OVERVIEW:
+      tab = overviewTab;
+      break;
+    case tabStates.TAB_DETAILS:
+      tab = detailsTab;
+      break;
+    case tabStates.TAB_REVIEWS:
+      tab = reviewsTab;
+      break;
+    default:
+      tab = overviewTab;
+  }
+
+  return (
+    <div className="movie-card__desc">
+      {tab}
+    </div>
   );
 };
 
 Tabs.propTypes = {
-  movies: moviesType,
-  reviews: reviewsType
+  movie: movieType,
+  reviews: reviewsType,
+  selectedTab: PropTypes.string.isRequired
 };
 
 export default Tabs;

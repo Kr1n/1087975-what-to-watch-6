@@ -6,11 +6,10 @@ import SignIn from "../sign-in/sign-in";
 import MyList from "../my-list/my-list";
 import Film from "../film/film";
 import Player from "../player/player";
-import Reviews from "../reviews/reviews";
 import PropTypes from "prop-types";
 import {moviesType, reviewsType, movieType} from "../../utils/prop-types";
-import FilmDetails from "../film-details/film-details";
 import AddReview from "../add-review/add-review";
+import {tabStates} from "../tabs/tabs";
 
 
 const App = (props) => {
@@ -41,22 +40,27 @@ const App = (props) => {
           />
         </Route>
         <Route exact path="/films/:id/details">
-          <FilmDetails
-            relatedMoviesCount={relatedMoviesCount}
-            movies={movies}
-          />
-        </Route>
-        <Route exact path="/films/:id/review">
-          <Reviews
+          <Film
             relatedMoviesCount={relatedMoviesCount}
             movies={movies}
             reviews={reviews}
+            selectedTab={tabStates.TAB_DETAILS}
+          />
+        </Route>
+        <Route exact path="/films/:id/review">
+          <Film
+            relatedMoviesCount={relatedMoviesCount}
+            movies={movies}
+            reviews={reviews}
+            selectedTab={tabStates.TAB_REVIEWS}
           />
         </Route>
         <Route exact path="/films/:id">
           <Film
             relatedMoviesCount={relatedMoviesCount}
             movies={movies}
+            reviews={reviews}
+            selectedTab={tabStates.TAB_OVERVIEW}
           />
         </Route>
         <Route exact path="/player/:id">
