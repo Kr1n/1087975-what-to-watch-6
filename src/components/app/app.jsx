@@ -9,7 +9,6 @@ import Player from "../player/player";
 import PropTypes from "prop-types";
 import {moviesType, reviewsType, movieType} from "../../utils/prop-types";
 import AddReview from "../add-review/add-review";
-import {tabStates} from "../tabs/tabs";
 
 
 const App = (props) => {
@@ -34,25 +33,9 @@ const App = (props) => {
             movies={movies}
           />
         </Route>
-        <Route exact path="/films/:id/add-review">
+        <Route exact path="/films/:id/review">
           <AddReview
             movies={movies}
-          />
-        </Route>
-        <Route exact path="/films/:id/details">
-          <Film
-            relatedMoviesCount={relatedMoviesCount}
-            movies={movies}
-            reviews={reviews}
-            selectedTab={tabStates.TAB_DETAILS}
-          />
-        </Route>
-        <Route exact path="/films/:id/review">
-          <Film
-            relatedMoviesCount={relatedMoviesCount}
-            movies={movies}
-            reviews={reviews}
-            selectedTab={tabStates.TAB_REVIEWS}
           />
         </Route>
         <Route exact path="/films/:id">
@@ -60,7 +43,6 @@ const App = (props) => {
             relatedMoviesCount={relatedMoviesCount}
             movies={movies}
             reviews={reviews}
-            selectedTab={tabStates.TAB_OVERVIEW}
           />
         </Route>
         <Route exact path="/player/:id">

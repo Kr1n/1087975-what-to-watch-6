@@ -9,7 +9,7 @@ import Footer from "../footer/footer";
 import Tabs from "../tabs/tabs";
 
 const Film = (props) => {
-  const {relatedMoviesCount, movies, reviews, selectedTab} = props;
+  const {relatedMoviesCount, movies, reviews} = props;
   const {id} = useParams();
   const history = useHistory();
 
@@ -66,7 +66,6 @@ const Film = (props) => {
             <Tabs
               movie={movies[id]}
               reviews={reviews}
-              selectedTab={selectedTab}
             />
           </div>
         </div>
@@ -91,7 +90,6 @@ Film.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
   movies: moviesType,
   reviews: reviewsType,
-  selectedTab: PropTypes.string.isRequired
 };
 
 export default Film;

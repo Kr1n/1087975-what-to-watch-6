@@ -1,21 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {Link, useParams} from "react-router-dom";
+import {useState} from "react";
 import {getDurationFromMinutes, getRatingDescription} from "../../utils/utils";
-
 import {movieType, reviewsType} from "../../utils/prop-types";
 import Review from "../reviews/review";
 
-export const tabStates = {
-  TAB_OVERVIEW: `tab_overview`,
-  TAB_DETAILS: `tab_details`,
-  TAB_REVIEWS: `tab_reviews`,
+export const TabStates = {
+  OVERVIEW: `overview`,
+  DETAILS: `details`,
+  REVIEWS: `reviews`,
 };
 
 const Tabs = (props) => {
 
-  const {movie, reviews, selectedTab} = props;
-  const {id} = useParams();
+  const {movie, reviews} = props;
+  const [activeTab, setActiveTab] = useState(TabStates.OVERVIEW);
 
   const {runTime, scoresCount, genre, released, rating, director, description, starring} = movie;
   const {hours, minutes} = getDurationFromMinutes(runTime);
@@ -36,19 +34,6 @@ const Tabs = (props) => {
 
   const overviewTab =
     <>
-      <nav className="movie-nav movie-card__nav">
-        <ul className="movie-nav__list">
-          <li className="movie-nav__item movie-nav__item--active">
-            <a className="movie-nav__link">Overview</a>
-          </li>
-          <li className="movie-nav__item">
-            <Link to={`/films/${id}/details`} className="movie-nav__link">Details</Link>
-          </li>
-          <li className="movie-nav__item">
-            <Link to={`/films/${id}/review` } className="movie-nav__link">Reviews</Link>
-          </li>
-        </ul>
-      </nav>
       <div className="movie-rating">
         <div className="movie-rating__score">{rating}</div>
         <p className="movie-rating__meta">
@@ -68,20 +53,6 @@ const Tabs = (props) => {
 
   const detailsTab =
     <>
-      <nav className="movie-nav movie-card__nav">
-        <ul className="movie-nav__list">
-          <li className="movie-nav__item">
-            <Link to={`/films/${id}`} className="movie-nav__link">Overview</Link>
-          </li>
-          <li className="movie-nav__item movie-nav__item--active">
-            <a className="movie-nav__link">Details</a>
-          </li>
-          <li className="movie-nav__item">
-            <Link to={`/films/${id}/review`} className="movie-nav__link">Reviews</Link>
-          </li>
-        </ul>
-      </nav>
-
       <div className="movie-card__text movie-card__row">
         <div className="movie-card__text-col">
           <p className="movie-card__details-item">
@@ -115,19 +86,6 @@ const Tabs = (props) => {
 
   const reviewsTab =
     <>
-      <nav className="movie-nav movie-card__nav">
-        <ul className="movie-nav__list">
-          <li className="movie-nav__item">
-            <Link to={`/films/${id}`} className="movie-nav__link">Overview</Link>
-          </li>
-          <li className="movie-nav__item">
-            <Link to={`/films/${id}/details`} className="movie-nav__link">Details</Link>
-          </li>
-          <li className="movie-nav__item movie-nav__item--active">
-            <a className="movie-nav__link">Reviews</a>
-          </li>
-        </ul>
-      </nav>
       <div className="movie-card__reviews movie-card__row">
         <div className="movie-card__reviews-col">
           <Review review={reviews[0]}/>
@@ -144,14 +102,14 @@ const Tabs = (props) => {
 
   let tab;
 
-  switch (selectedTab) {
-    case tabStates.TAB_OVERVIEW:
+  switch (activeTab) {
+    case TabStates.OVERVIEW:
       tab = overviewTab;
       break;
-    case tabStates.TAB_DETAILS:
+    case TabStates.DETAILS:
       tab = detailsTab;
       break;
-    case tabStates.TAB_REVIEWS:
+    case TabStates.REVIEWS:
       tab = reviewsTab;
       break;
     default:
@@ -160,6 +118,31 @@ const Tabs = (props) => {
 
   return (
     <div className="movie-card__desc">
+      <nav className="movie-nav movie-card__nav">
+        <ul className="movie-nav__list">
+          <li className={`movie-nav__item ${(activeTab === TabStates.OVERVIEW) ? `movie-nav__item--active` : ``}`}>
+            {
+              (activeTab === TabStates.OVERVIEW)
+                ? <a className="movie-nav__link">Overview</a>
+                : <a href="#" className="movie-nav__link" onClick={() => setActiveTab(TabStates.OVERVIEW)}>Overview</a>
+            }
+          </li>
+          <li className={`movie-nav__item ${(activeTab === TabStates.DETAILS) ? `movie-nav__item--active` : ``}`}>
+            {
+              (activeTab === TabStates.DETAILS)
+                ? <a className="movie-nav__link">Details</a>
+                : <a href="#" onClick={() => setActiveTab(TabStates.DETAILS)} className="movie-nav__link">Details</a>
+            }
+          </li>
+          <li className={`movie-nav__item ${(activeTab === TabStates.REVIEWS) ? `movie-nav__item--active` : ``}`}>
+            {
+              (activeTab === TabStates.REVIEWS)
+                ? <a className="movie-nav__link">Reviews</a>
+                : <a href="#" onClick={() => setActiveTab(TabStates.REVIEWS)} className="movie-nav__link">Reviews</a>
+            }
+          </li>
+        </ul>
+      </nav>
       {tab}
     </div>
   );
@@ -168,7 +151,6 @@ const Tabs = (props) => {
 Tabs.propTypes = {
   movie: movieType,
   reviews: reviewsType,
-  selectedTab: PropTypes.string.isRequired
 };
 
 export default Tabs;
