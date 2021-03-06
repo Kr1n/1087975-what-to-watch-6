@@ -14,7 +14,7 @@
     "@babel/preset-env": "7.12.13",
     "@babel/preset-react": "7.12.13",
     "babel-loader": "8.2.2",
-    "dayjs": "^1.10.4",
+    "dayjs": "1.10.4",
     "eslint": "7.18.0",
     "eslint-config-htmlacademy": "2.1.0",
     "eslint-plugin-react": "7.22.0",
@@ -29,6 +29,9 @@
     "prop-types": "15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "react-router-dom": "5.2.0"
+    "react-redux": "7.2.2",
+    "react-router-dom": "5.2.0",
+    "redux": "4.0.5",
+    "redux-devtools-extension": "2.13.9"
   }
 }
