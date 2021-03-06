@@ -12,7 +12,6 @@ const SmallMovieCard = (props) => {
       onMouseEnter={() => onHover(movie.id)}
       onMouseLeave={() => onCursorLeave(movie.id)}
     >
-
       <div className="small-movie-card__image">
         <VideoPlayer videoLink={isActive ? movie.previewVideoLink : ``} backgroundImage={movie.backgroundImage} autoPlay={true} muted={true}/>
       </div>
