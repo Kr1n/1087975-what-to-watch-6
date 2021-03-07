@@ -4,13 +4,12 @@ import PropTypes from "prop-types";
 
 const VideoPlayer = (props) => {
   const {videoLink, backgroundImage, autoPlay, muted} = props;
-  const autoPlayState = autoPlay ? `autoPlay` : ``;
 
   return (
     <video className="player__video"
       src={videoLink}
       poster={backgroundImage}
-      autoPlay={autoPlayState}
+      autoPlay={autoPlay}
       muted={muted}
     ></video>
   );
