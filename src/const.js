@@ -1,55 +1,42 @@
-export const genres = [`All genres`, `comedy`, `crime`, `documentary`, `drama`, `horror`, `family`, `romance`, `sci-fi`, `thriller`];
-
-export const GenreType = {
-
-  ALL: {
-    text: `All genres`,
-    filter: (items) => items
+export const genres = [
+  {
+    title: `All genres`,
+    name: ``
   },
-
-  COMEDIES: {
-    text: `Comedies`,
-    filter: (items) => items.filter((item) => item.genre === `comedy`),
+  {
+    title: `Comedies`,
+    name: `comedy`
   },
-
-  CRIME: {
-    text: `Crime`,
-    filter: (items) => items.filter((item) => item.genre === `crime`),
+  {
+    title: `Crime`,
+    name: `crime`
   },
-
-  DOCUMENTARY: {
-    text: `Documentary`,
-    filter: (items) => items.filter((item) => item.genre === `documentary`),
+  {
+    title: `Documentary`,
+    name: `documentary`
   },
-
-  DRAMA: {
-    text: `Dramas`,
-    filter: (items) => items.filter((item) => item.genre === `drama`),
+  {
+    title: `Dramas`,
+    name: `drama`
   },
-
-  HORROR: {
-    text: `Horror`,
-    filter: (items) => items.filter((item) => item.genre === `horror`),
+  {
+    title: `Horror`,
+    name: `horror`
   },
-
-  FAMILY: {
-    text: `Kids &amp; Family`,
-    filter: (items) => items.filter((item) => item.genre === `family`),
+  {
+    title: `Kids & Family`,
+    name: `family`
   },
-
-  ROMANCE: {
-    text: `Romance`,
-    filter: (items) => items.filter((item) => item.genre === `romance`),
+  {
+    title: `Romance`,
+    name: `romance`
   },
-
-  SCI_FI: {
-    text: `Sci-Fi`,
-    filter: (items) => items.filter((item) => item.genre === `sci-fi`),
+  {
+    title: `Sci-Fi`,
+    name: `sci-fi`
   },
-
-  THRILLER: {
-    text: `Thrillers`,
-    filter: (items) => items.filter((item) => item.genre === `thriller`),
+  {
+    title: `Thrillers`,
+    name: `thriller`
   }
-
-};
+];

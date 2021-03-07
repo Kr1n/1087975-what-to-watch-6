@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import SmallMovieCard from "../small-movie-card/small-movies-card";
 import {moviesType} from "../../utils/prop-types";
+import {connect} from "react-redux";
 
 const MovieList = (props) => {
   const {movies} = props;
@@ -22,8 +23,13 @@ const MovieList = (props) => {
     </>);
 };
 
-export default MovieList;
-
 MovieList.propTypes = {
   movies: moviesType,
 };
+
+const mapStateToProps = (state) => ({
+  movies: (state.genre) ? state.movieList.filter((item) => item.genre === state.genre) : state.movieList,
+});
+
+export {MovieList};
+export default connect(mapStateToProps)(MovieList);

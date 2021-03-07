@@ -7,7 +7,6 @@ import Svg from "../svg/svg";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import GenreList from "../genre-list/genre-list";
-import {genres} from "../../const";
 
 const MainPage = (props) => {
   const {moviesCount, promoMovie, movies} = props;
@@ -62,10 +61,10 @@ const MainPage = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList genres={genres} />
+          <GenreList />
 
           <div className="catalog__movies-list">
-            <MovieList movies={movies.slice(0, moviesCount)}/>
+            <MovieList />
           </div>
 
           <div className="catalog__more">

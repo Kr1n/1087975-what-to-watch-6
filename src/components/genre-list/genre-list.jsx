@@ -2,17 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {ActionType} from "../../store/action";
+import {genres} from "../../const";
 
 const GenreList = (props) => {
 
-  const {genres, selectedGenre, onTabClick} = props;
+  const {selectedGenre, onTabClick} = props;
 
-  const genreItems = genres.slice().map((genre) =>
-    <li key={genre} className={`catalog__genres-item ${(selectedGenre === genre) ? `catalog__genres-item--active` : ``}`}>
+  const genreItems = genres.slice().map(({name, title}) =>
+    <li key={name} className={`catalog__genres-item ${(selectedGenre === name) ? `catalog__genres-item--active` : ``}`}>
       {
-        (selectedGenre === genre)
-          ? <a className="catalog__genres-link">{genre}</a>
-          : <a href="#" className="catalog__genres-link">{genre}</a>
+        (selectedGenre === name)
+          ? <a className="catalog__genres-link">{title}</a>
+          : <a href="#" onClick={() => onTabClick(name)} className="catalog__genres-link">{title}</a>
       }
     </li>);
 
@@ -24,8 +25,6 @@ const GenreList = (props) => {
 };
 
 GenreList.propTypes = {
-  genres: PropTypes.arrayOf(
-      PropTypes.string.isRequired).isRequired,
   selectedGenre: PropTypes.string.isRequired,
   onTabClick: PropTypes.func.isRequired
 };
@@ -40,7 +39,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  selectedGenre: state.genre.text,
+  selectedGenre: state.genre,
+  movieList: (state.genre) ? state.movieList.filter((item) => item.genre === state.genre) : state.movieList,
 });
 
 export {GenreList};
