@@ -1,13 +1,26 @@
 import React, {useState} from "react";
 import SmallMovieCard from "../small-movie-card/small-movies-card";
 import {moviesType} from "../../utils/prop-types";
-import {connect} from "react-redux";
 
 const MovieList = (props) => {
   const {movies} = props;
   const [activeFilm, setActiveFilm] = useState(-1);
-  const onHover = (id) => setActiveFilm(id);
-  const onCursorLeave = () => setActiveFilm(-1);
+  let timerID;
+
+  useEffect(() => {
+    return () => clearTimeout(timerID);
+  });
+
+  const onHover = (id) => {
+    timerID = setTimeout(() => setActiveFilm(id), VIDEO_LOAD_TIMEOUT);
+  };
+
+  const onCursorLeave = () => {
+    clearTimeout(timerID);
+    if (activeFilm !== -1) {
+      setActiveFilm(-1);
+    }
+  };
 
   const moviesList = movies.slice().map((movie) =>
     <SmallMovieCard
@@ -22,6 +35,8 @@ const MovieList = (props) => {
       {moviesList}
     </>);
 };
+
+export default MovieList;
 
 MovieList.propTypes = {
   movies: moviesType,

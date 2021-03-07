@@ -6,10 +6,8 @@ import SignIn from "../sign-in/sign-in";
 import MyList from "../my-list/my-list";
 import Film from "../film/film";
 import Player from "../player/player";
-import Reviews from "../reviews/reviews";
 import PropTypes from "prop-types";
 import {moviesType, reviewsType, movieType} from "../../utils/prop-types";
-import FilmDetails from "../film-details/film-details";
 import AddReview from "../add-review/add-review";
 
 
@@ -35,28 +33,16 @@ const App = (props) => {
             movies={movies}
           />
         </Route>
-        <Route exact path="/films/:id/add-review">
+        <Route exact path="/films/:id/review">
           <AddReview
             movies={movies}
-          />
-        </Route>
-        <Route exact path="/films/:id/details">
-          <FilmDetails
-            relatedMoviesCount={relatedMoviesCount}
-            movies={movies}
-          />
-        </Route>
-        <Route exact path="/films/:id/review">
-          <Reviews
-            relatedMoviesCount={relatedMoviesCount}
-            movies={movies}
-            reviews={reviews}
           />
         </Route>
         <Route exact path="/films/:id">
           <Film
             relatedMoviesCount={relatedMoviesCount}
             movies={movies}
+            reviews={reviews}
           />
         </Route>
         <Route exact path="/player/:id">

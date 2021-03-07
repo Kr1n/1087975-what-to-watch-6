@@ -21,7 +21,7 @@ const Player = (props) => {
       <Svg/>
 
       <div className="player">
-        <VideoPlayer videoLink={videoLink} backgroundImage={backgroundImage} autoPlay={true} muted={false}/>
+        <VideoPlayer videoLink={videoLink} backgroundImage={backgroundImage} autoPlay muted={false}/>
 
         <button type="button" className="player__exit" onClick={() => history.push(`/films/${id}`)}>Exit</button>
 
