@@ -1,6 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import SmallMovieCard from "../small-movie-card/small-movies-card";
 import {moviesType} from "../../utils/prop-types";
+import {VIDEO_LOAD_TIMEOUT} from "../../consts/common";
+import {connect} from "react-redux";
 
 const MovieList = (props) => {
   const {movies} = props;
@@ -35,8 +37,6 @@ const MovieList = (props) => {
       {moviesList}
     </>);
 };
-
-export default MovieList;
 
 MovieList.propTypes = {
   movies: moviesType,

@@ -7,9 +7,10 @@ import Svg from "../svg/svg";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import GenreList from "../genre-list/genre-list";
+import {genres} from "../../const";
 
 const MainPage = (props) => {
-  const {moviesCount, promoMovie, movies} = props;
+  const {promoMovie} = props;
   const history = useHistory();
   return (
     <>
@@ -34,7 +35,7 @@ const MainPage = (props) => {
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{promoMovie.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{promoMovie.genre}</span>
+                <span className="movie-card__genre">{genres.find((item) => item.name === promoMovie.genre).title}</span>
                 <span className="movie-card__year">{promoMovie.released}</span>
               </p>
 
