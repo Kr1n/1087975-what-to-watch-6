@@ -6,9 +6,11 @@ import MovieList from "../movie-list/movie-list";
 import Svg from "../svg/svg";
 import Header from "../header/header";
 import Footer from "../footer/footer";
+import GenreList from "../genre-list/genre-list";
+import {genres} from "../../const";
 
 const MainPage = (props) => {
-  const {moviesCount, promoMovie, movies} = props;
+  const {promoMovie} = props;
   const history = useHistory();
   return (
     <>
@@ -33,7 +35,7 @@ const MainPage = (props) => {
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{promoMovie.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{promoMovie.genre}</span>
+                <span className="movie-card__genre">{genres.find((item) => item.name === promoMovie.genre).title}</span>
                 <span className="movie-card__year">{promoMovie.released}</span>
               </p>
 
@@ -60,41 +62,10 @@ const MainPage = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids &amp; Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
-            </li>
-          </ul>
+          <GenreList />
 
           <div className="catalog__movies-list">
-            <MovieList movies={movies.slice(0, moviesCount)}/>
+            <MovieList />
           </div>
 
           <div className="catalog__more">
