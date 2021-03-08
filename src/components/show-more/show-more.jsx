@@ -1,19 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {ActionType} from "../../store/action";
 
-const SHOW_MORE_COUNT = 8;
-
-const ShowMore = (onShowMoreCLick) => {
+const ShowMore = ({onShowMoreClick}) => {
 
   return (
     <div className="catalog__more">
-      <button onClick={() => onShowMoreCLick()} className="catalog__button" type="button">Show more</button>
+      <button onClick={() => onShowMoreClick()} className="catalog__button" type="button">Show more</button>
     </div>
   );
 };
 
-ShowMore.protoTypes = {
-  onShowMoreCLick: PropTypes.func.isRequired
+ShowMore.propTypes = {
+  onShowMoreClick: PropTypes.func.isRequired
 };
 
-export default ShowMore;
+const mapDispatchToProps = (dispatch) => ({
+  onShowMoreClick() {
+    dispatch({
+      type: ActionType.SHOW_MORE_PUSHED,
+    });
+  },
+});
+
+export {ShowMore};
+export default connect(null, mapDispatchToProps)(ShowMore);

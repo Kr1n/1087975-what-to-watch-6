@@ -21,7 +21,6 @@ const App = (props) => {
           <MainPage
             moviesCount={moviesCount}
             promoMovie={promoMovie}
-            movies={movies}
           />
         </Route>
         <Route exact path="/login">
