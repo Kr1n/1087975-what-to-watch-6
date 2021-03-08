@@ -8,9 +8,11 @@ import Header from "../header/header";
 import Footer from "../footer/footer";
 import GenreList from "../genre-list/genre-list";
 import {genres} from "../../const";
+import ShowMore from "../show-more/show-more";
+import {connect} from "react-redux";
 
 const MainPage = (props) => {
-  const {promoMovie} = props;
+  const {promoMovie, moviesShowed, movieList} = props;
   const history = useHistory();
   return (
     <>
@@ -68,9 +70,7 @@ const MainPage = (props) => {
             <MovieList />
           </div>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {(movieList.length > moviesShowed) ? <ShowMore/> : ``}
         </section>
 
         <Footer/>
@@ -82,7 +82,13 @@ const MainPage = (props) => {
 MainPage.propTypes = {
   moviesCount: PropTypes.number.isRequired,
   promoMovie: movieType,
-  movies: moviesType,
+  movieList: moviesType,
+  moviesShowed: PropTypes.number.isRequired
 };
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  moviesShowed: state.moviesShowed,
+  movieList: (state.genre) ? state.movieList.filter((item) => item.genre === state.genre) : state.movieList,
+});
+
+export default connect(mapStateToProps)(MainPage);

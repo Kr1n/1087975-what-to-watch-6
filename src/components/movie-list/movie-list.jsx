@@ -43,7 +43,7 @@ MovieList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  movies: (state.genre) ? state.movieList.filter((item) => item.genre === state.genre) : state.movieList,
+  movies: ((state.genre) ? state.movieList.filter((item) => item.genre === state.genre) : state.movieList).slice(0, state.moviesShowed),
 });
 
 export {MovieList};
