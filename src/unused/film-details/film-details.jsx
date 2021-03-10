@@ -1,8 +1,8 @@
 import React from "react";
-import Svg from "../svg/svg";
-import Header from "../header/header";
-import Footer from "../footer/footer";
-import MovieList from "../movie-list/movie-list";
+import Svg from "../../components/svg/svg";
+import Header from "../../components/header/header";
+import Footer from "../../components/footer/footer";
+import MovieList from "../../components/movie-list/movie-list";
 import {Link, useHistory, useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {moviesType} from "../../utils/prop-types";

@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionType} from "../../store/action";
-import {genres} from "../../const";
+import {ActionCreator} from "../../store/action";
+import {genres} from "../../consts/genres";
 
 const GenreList = (props) => {
 
   const {selectedGenre, onTabClick} = props;
 
-  const genreItems = genres.slice().map(({name, title}) =>
-    <li key={name} className={`catalog__genres-item ${(selectedGenre === name) ? `catalog__genres-item--active` : ``}`}>
+  console.log(selectedGenre);
+  const genreItems = genres.slice().map((genre) =>
+    <li key={genre} className={`catalog__genres-item ${(selectedGenre === genre) ? `catalog__genres-item--active` : ``}`}>
       {
-        (selectedGenre === name)
-          ? <a className="catalog__genres-link">{title}</a>
-          : <a href="#" onClick={() => onTabClick(name)} className="catalog__genres-link">{title}</a>
+        (selectedGenre === genre)
+          ? <a className="catalog__genres-link">{genre}</a>
+          : <a href="#" onClick={() => onTabClick(genre)} className="catalog__genres-link">{genre}</a>
       }
     </li>);
 
@@ -31,10 +32,7 @@ GenreList.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onTabClick(genre) {
-    dispatch({
-      type: ActionType.CHANGE_GENRE,
-      payload: genre
-    });
+    dispatch(ActionCreator.changeGenre(genre));
   },
 });
 

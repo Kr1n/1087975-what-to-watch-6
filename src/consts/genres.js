@@ -1,7 +1,18 @@
+export const ALL_GENRES = `All genres`;
+
 export const genres = [
+  ALL_GENRES, `Adventure`, `Comedy`, `Crime`, `Drama`, `Horror`, `Romance`, `Thriller`, `Action`, `Fantasy`,
+];
+
+
+export const genresOld = [
   {
     title: `All genres`,
     name: ``
+  },
+  {
+    title: `Adventure`,
+    name: `Adventure`
   },
   {
     title: `Comedies`,

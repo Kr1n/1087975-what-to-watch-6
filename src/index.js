@@ -1,18 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore} from "redux";
+import {createStore, applyMiddleware} from "redux";
 import {Provider} from 'react-redux';
-import movies from "./mocks/movies";
 import reviews from "./mocks/reviews";
 import App from "./components/app/app";
 import {reducer} from "./store/reducer";
 import {composeWithDevTools} from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import {createAPI} from "./services/api";
+import {AuthorizationStatus} from "./consts/common";
+import {ActionCreator} from "./store/action";
+import {checkAuth} from "./store/api-actions";
+import {redirect} from "./store/middleware/redirect";
 
+const api = createAPI(
+    () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
+);
 
 const store = createStore(
     reducer,
-    composeWithDevTools()
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
+    )
 );
+
+store.dispatch(checkAuth());
 
 const Setting = {
   MOVIES_COUNT: 7,
@@ -20,16 +33,12 @@ const Setting = {
   RELATED_MOVIES_COUNT: 4
 };
 
-const promoMovie = movies[0];
-
 ReactDOM.render(
     <Provider store={store}>
       <App
         relatedMoviesCount={Setting.RELATED_MOVIES_COUNT}
         moviesInMyList={Setting.MOVIES_IN_MY_LIST}
         moviesCount={Setting.MOVIES_COUNT}
-        promoMovie={promoMovie}
-        movies={movies}
         reviews={reviews}
       />
     </Provider>,

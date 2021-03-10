@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {movieType} from "../../utils/prop-types";
 import {Link} from "react-router-dom";
 import VideoPlayer from "../video-player/video-player";
+import {AppRoute} from "../../consts/common";
 
 const SmallMovieCard = (props) => {
   const {movie, onHover, onCursorLeave, isActive} = props;
@@ -16,7 +17,7 @@ const SmallMovieCard = (props) => {
         <VideoPlayer videoLink={isActive ? movie.previewVideoLink : ``} backgroundImage={movie.backgroundImage} autoPlay={true} muted={true}/>
       </div>
       <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`/films/${movie.id}`}>{movie.name}</Link>
+        <Link className="small-movie-card__link" to={`${AppRoute.FILM}/${movie.id}`}>{movie.name}</Link>
       </h3>
     </article>
   );
