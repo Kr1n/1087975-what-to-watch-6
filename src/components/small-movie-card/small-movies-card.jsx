@@ -4,6 +4,7 @@ import {movieType} from "../../utils/prop-types";
 import {Link} from "react-router-dom";
 import VideoPlayer from "../video-player/video-player";
 import {AppRoute} from "../../consts/common";
+import browserHistory from "../../browser-history";
 
 const SmallMovieCard = (props) => {
   const {movie, onHover, onCursorLeave, isActive} = props;
@@ -13,7 +14,7 @@ const SmallMovieCard = (props) => {
       onMouseEnter={() => onHover(movie.id)}
       onMouseLeave={() => onCursorLeave(movie.id)}
     >
-      <div className="small-movie-card__image">
+      <div className="small-movie-card__image" onClick={() => browserHistory.push(`${AppRoute.FILM}/${movie.id}`)}>
         <VideoPlayer videoLink={isActive ? movie.previewVideoLink : ``} backgroundImage={movie.backgroundImage} autoPlay={true} muted={true}/>
       </div>
       <h3 className="small-movie-card__title">

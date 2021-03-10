@@ -10,10 +10,12 @@ import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
 import {ALL_GENRES} from "../../consts/genres";
 
+
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onMyListButtonClick, isDataLoaded} = props;
+  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onMyListButtonClick, isPromoLoaded} = props;
 
   const loading = <div>Loading... </div>;
+
 
   return (
     <>
@@ -28,7 +30,7 @@ const MainPage = (props) => {
 
         <Header/>
 
-        {isDataLoaded ?
+        {isPromoLoaded ?
           <div className="movie-card__wrap">
             <div className="movie-card__info">
               <div className="movie-card__poster">
@@ -90,15 +92,16 @@ MainPage.propTypes = {
   moviesShowed: PropTypes.number.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onMyListButtonClick: PropTypes.func.isRequired,
-  isDataLoaded: PropTypes.bool.isRequired
+  isPromoLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   moviesShowed: state.moviesShowed,
   movies: (state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre),
   promoMovie: state.promoMovie,
-  isDataLoaded: state.isDataLoaded
+  isPromoLoaded: state.isPromoLoaded
 });
+
 
 export {MainPage};
 export default connect(mapStateToProps)(MainPage);

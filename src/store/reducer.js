@@ -10,6 +10,7 @@ const initialState = {
   moviesShowed: SHOW_MORE_COUNT,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
+  isPromoLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,6 +19,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         genre: action.payload,
+        moviesShowed: SHOW_MORE_COUNT,
       };
     case ActionType.SHOW_MORE_PUSHED:
       return {
@@ -34,7 +36,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         movieList: adaptToClient(action.payload),
         isDataLoaded: true,
-        promoMovie: adaptToClient(action.payload)[0]
+      };
+    case ActionType.LOAD_PROMO:
+      return {
+        ...state,
+        promoMovie: adaptToClient([action.payload])[0],
+        isPromoLoaded: true
       };
   }
 

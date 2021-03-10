@@ -6,6 +6,11 @@ export const fetchMovieList = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadMovies(data)))
 );
 
+export const fetchPromo = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.PROMO)
+    .then(({data}) => dispatch(ActionCreator.loadPromo(data)))
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
@@ -16,4 +21,10 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(APIRoute.LOGIN, {email, password})
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
+);
+
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.LOGOUT)
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN)))
 );

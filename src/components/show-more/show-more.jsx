@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionType} from "../../store/action";
+import {ActionCreator} from "../../store/action";
 
 const ShowMore = ({onShowMoreClick}) => {
 
@@ -18,9 +18,7 @@ ShowMore.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
-    dispatch({
-      type: ActionType.SHOW_MORE_PUSHED,
-    });
+    dispatch(ActionCreator.showMorePushed());
   },
 });
 

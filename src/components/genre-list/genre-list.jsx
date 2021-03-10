@@ -8,7 +8,6 @@ const GenreList = (props) => {
 
   const {selectedGenre, onTabClick} = props;
 
-  console.log(selectedGenre);
   const genreItems = genres.slice().map((genre) =>
     <li key={genre} className={`catalog__genres-item ${(selectedGenre === genre) ? `catalog__genres-item--active` : ``}`}>
       {

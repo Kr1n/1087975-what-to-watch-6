@@ -11,13 +11,15 @@ export const AppRoute = {
   PLAYER: `/player`,
   MYLIST: `/mylist`,
   FILM: `/film`,
-  REVIEW: `/review`,
-  ADD_REVIEW: `/add-review`,
+  ADD_REVIEW: `/review`,
   ROOT: `/`,
 };
 
 export const APIRoute = {
   FILMS: `/films`,
   LOGIN: `/login`,
-  LOGOUT: `/logout`
+  LOGOUT: `/logout`,
+  PROMO: `/films/promo`,
+  FAVORITE: `/favorite`,
+  COMMENTS: `/comments/`,
 };

@@ -4,20 +4,13 @@ import {moviesType} from "../../utils/prop-types";
 import {VIDEO_LOAD_TIMEOUT} from "../../consts/common";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {fetchMovieList} from "../../store/api-actions";
 import {ALL_GENRES} from "../../consts/genres";
 
 const MovieList = (props) => {
-  const {movies, isDataLoaded, onLoadData} = props;
+  const {movies, isDataLoaded} = props;
   const [activeFilm, setActiveFilm] = useState(-1);
   let timerID;
 
-  useEffect(() => {
-
-    if (!isDataLoaded) {
-      onLoadData();
-    }
-  }, [isDataLoaded]);
 
   useEffect(() => {
     return () => clearTimeout(timerID);
@@ -45,7 +38,6 @@ const MovieList = (props) => {
 
   const loading = <div>Loading... </div>;
 
-  console.log(movies);
   return (
     <>
       {isDataLoaded ?
@@ -58,7 +50,7 @@ const MovieList = (props) => {
 MovieList.propTypes = {
   movies: moviesType,
   isDataLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired
+
 };
 
 
@@ -67,11 +59,6 @@ const mapStateToProps = (state) => ({
   isDataLoaded: state.isDataLoaded,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchMovieList());
-  }
-});
 
 export {MovieList};
-export default connect(mapStateToProps, mapDispatchToProps)(MovieList);
+export default connect(mapStateToProps)(MovieList);

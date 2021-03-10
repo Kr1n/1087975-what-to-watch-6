@@ -14,9 +14,9 @@ import browserHistory from "../../browser-history";
 import {AppRoute} from "../../consts/common";
 import {connect} from "react-redux";
 
-
 const App = (props) => {
   const {relatedMoviesCount, moviesInMyList, moviesCount, movies, reviews} = props;
+
   return (
 
     <BrowserRouter history={browserHistory}>
@@ -37,11 +37,11 @@ const App = (props) => {
           render={()=>(<MyList moviesCount={moviesInMyList} movies={movies}/>)}
         >
         </PrivateRoute>
-        <Route exact path={`${AppRoute.FILM}/:id/${AppRoute.REVIEW}`}>
+        <PrivateRoute exact path={`${AppRoute.FILM}/:id/${AppRoute.ADD_REVIEW}`}>
           <AddReview
             movies={movies}
           />
-        </Route>
+        </PrivateRoute>
         <Route exact path={`${AppRoute.FILM}/:id`}
           render={({history}) =>
             <Film
@@ -70,11 +70,11 @@ App.propTypes = {
   moviesInMyList: PropTypes.number.isRequired,
   moviesCount: PropTypes.number.isRequired,
   movies: moviesType,
-  reviews: reviewsType
+  reviews: reviewsType,
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movieList
+  movies: state.movieList,
 });
 
 export default connect(mapStateToProps)(App);

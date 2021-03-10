@@ -3,9 +3,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {AuthorizationStatus} from "../../consts/common";
+import {logout} from "../../store/api-actions";
 
 const Header = (props) => {
-  const {title, link, authorizationStatus} = props;
+  const {title, link, authorizationStatus, onLogout} = props;
   return (
     <>
       <header className="page-header user-page__head">
@@ -36,7 +37,7 @@ const Header = (props) => {
             authorizationStatus === AuthorizationStatus.AUTH
               ?
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" onClick={() => onLogout()}/>
               </div>
               :
               <Link to="/login" className="user-block__link">Sign in</Link>
@@ -52,7 +53,8 @@ Header.propTypes = {
     href: PropTypes.string,
     name: PropTypes.string,
   }),
-  authorizationStatus: PropTypes.string.isRequired
+  authorizationStatus: PropTypes.string.isRequired,
+  onLogout: PropTypes.func.isRequired
 };
 
 Header.defaultProps = {
@@ -64,5 +66,11 @@ const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  onLogout() {
+    dispatch(logout());
+  }
+});
+
 export {Header};
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
