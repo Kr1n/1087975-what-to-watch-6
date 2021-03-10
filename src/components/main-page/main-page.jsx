@@ -1,19 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {useHistory} from "react-router-dom";
 import {moviesType, movieType} from "../../utils/prop-types";
 import MovieList from "../movie-list/movie-list";
 import Svg from "../svg/svg";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import GenreList from "../genre-list/genre-list";
-import {genres} from "../../const";
 import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
+import {ALL_GENRES} from "../../consts/genres";
 
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movieList} = props;
-  const history = useHistory();
+  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onMyListButtonClick} = props;
   return (
     <>
       <Svg/>
@@ -37,18 +35,18 @@ const MainPage = (props) => {
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{promoMovie.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{genres.find((item) => item.name === promoMovie.genre).title}</span>
+                <span className="movie-card__genre">{promoMovie.genre}</span>
                 <span className="movie-card__year">{promoMovie.released}</span>
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={() => history.push(`/player/${promoMovie.id}`)}>
+                <button className="btn btn--play movie-card__button" type="button" onClick={()=>onPlayButtonClick(promoMovie.id)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={() => history.push(`/mylist`)}>
+                <button className="btn btn--list movie-card__button" type="button" onClick={()=>onMyListButtonClick()}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -70,7 +68,7 @@ const MainPage = (props) => {
             <MovieList />
           </div>
 
-          {(movieList.length > moviesShowed) ? <ShowMore/> : ``}
+          {(movies.length > moviesShowed) ? <ShowMore/> : ``}
         </section>
 
         <Footer/>
@@ -82,13 +80,17 @@ const MainPage = (props) => {
 MainPage.propTypes = {
   moviesCount: PropTypes.number.isRequired,
   promoMovie: movieType,
-  movieList: moviesType,
-  moviesShowed: PropTypes.number.isRequired
+  movies: moviesType,
+  moviesShowed: PropTypes.number.isRequired,
+  onPlayButtonClick: PropTypes.func.isRequired,
+  onMyListButtonClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   moviesShowed: state.moviesShowed,
-  movieList: (state.genre) ? state.movieList.filter((item) => item.genre === state.genre) : state.movieList,
+  movies: (state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre),
+  promoMovie: state.promoMovie
 });
 
+export {MainPage};
 export default connect(mapStateToProps)(MainPage);

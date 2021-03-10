@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useParams, useHistory} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {moviesType, reviewsType} from "../../utils/prop-types";
 import MovieList from "../movie-list/movie-list";
@@ -7,16 +7,19 @@ import Header from "../header/header";
 import Svg from "../svg/svg";
 import Footer from "../footer/footer";
 import Tabs from "../tabs/tabs";
-import {genres} from "../../const";
+import {ALL_GENRES, genres} from "../../consts/genres";
+import {AppRoute} from "../../consts/common";
+import {connect} from "react-redux";
+
 
 const Film = (props) => {
-  const {relatedMoviesCount, movies, reviews} = props;
+  const {relatedMoviesCount, movies, reviews, onPlayButtonClick, onMyListButtonClick} = props;
   const {id} = useParams();
-  const history = useHistory();
 
   const {backgroundImage, posterImage, name, genre, released} = movies.find((item) => item.id === Number(id));
-  const genreTitle = genres.find((item) => item.name === genre).title;
 
+  // const genreTitle = genres.find((item) => item.name === genre).title;
+  const genreTitle = genre;
   return (
     <>
       <Svg/>
@@ -40,19 +43,19 @@ const Film = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={() => history.push(`/player/${id}`)}>
+                <button className="btn btn--play movie-card__button" type="button" onClick={()=>onPlayButtonClick(id)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={() => history.push(`/mylist`)}>
+                <button className="btn btn--list movie-card__button" type="button" onClick={()=>onMyListButtonClick()}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${id}/add-review`} className="btn movie-card__button">Add review</Link>
+                <Link to={`${AppRoute.FILM}/${id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -92,6 +95,13 @@ Film.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
   movies: moviesType,
   reviews: reviewsType,
+  onPlayButtonClick: PropTypes.func.isRequired,
+  onMyListButtonClick: PropTypes.func.isRequired
 };
 
-export default Film;
+const mapStateToProps = (state) => ({
+  movies: (state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre),
+});
+
+export {Film};
+export default connect(mapStateToProps)(Film);

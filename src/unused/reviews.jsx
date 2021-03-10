@@ -1,11 +1,11 @@
 import React from "react";
-import Review from "./review";
-import MovieList from "../movie-list/movie-list";
-import {moviesType, reviewsType} from "../../utils/prop-types";
+import Review from "../components/reviews/review";
+import MovieList from "../components/movie-list/movie-list";
+import {moviesType, reviewsType} from "../utils/prop-types";
 import PropTypes from "prop-types";
-import Svg from "../svg/svg";
-import Header from "../header/header";
-import Footer from "../footer/footer";
+import Svg from "../components/svg/svg";
+import Header from "../components/header/header";
+import Footer from "../components/footer/footer";
 import {Link, useHistory, useParams} from "react-router-dom";
 
 const Reviews = (props) => {

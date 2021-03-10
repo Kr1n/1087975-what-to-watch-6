@@ -1,9 +1,11 @@
 import {Link} from "react-router-dom";
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {AuthorizationStatus} from "../../consts/common";
 
 const Header = (props) => {
-  const {title, link} = props;
+  const {title, link, authorizationStatus} = props;
   return (
     <>
       <header className="page-header user-page__head">
@@ -30,9 +32,15 @@ const Header = (props) => {
           </nav> : ``}
 
         <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-          </div>
+          {
+            authorizationStatus === AuthorizationStatus.AUTH
+              ?
+              <div className="user-block__avatar">
+                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+              </div>
+              :
+              <Link to="/login" className="user-block__link">Sign in</Link>
+          }
         </div>
       </header>
     </>);
@@ -43,7 +51,8 @@ Header.propTypes = {
   link: PropTypes.shape({
     href: PropTypes.string,
     name: PropTypes.string,
-  })
+  }),
+  authorizationStatus: PropTypes.string.isRequired
 };
 
 Header.defaultProps = {
@@ -51,4 +60,9 @@ Header.defaultProps = {
   link: null
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus
+});
+
+export {Header};
+export default connect(mapStateToProps)(Header);

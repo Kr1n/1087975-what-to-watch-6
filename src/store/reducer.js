@@ -1,12 +1,15 @@
-import movies from "../mocks/movies";
 import {ActionType} from "./action";
-import {genres} from "../const";
-import {SHOW_MORE_COUNT} from "../consts/common";
+import {genres} from "../consts/genres";
+import {AuthorizationStatus, SHOW_MORE_COUNT} from "../consts/common";
+import {adaptToClient} from "../utils/utils";
 
 const initialState = {
-  genre: genres[0].name,
-  movieList: movies,
-  moviesShowed: SHOW_MORE_COUNT
+  genre: genres[0],
+  movieList: [],
+  promoMovie: {},
+  moviesShowed: SHOW_MORE_COUNT,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +23,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         moviesShowed: state.moviesShowed + SHOW_MORE_COUNT
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOAD_MOVIES:
+      return {
+        ...state,
+        movieList: adaptToClient(action.payload),
+        isDataLoaded: true,
+        promoMovie: adaptToClient(action.payload)[0]
       };
   }
 
