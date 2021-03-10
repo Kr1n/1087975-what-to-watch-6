@@ -7,7 +7,7 @@ import Header from "../header/header";
 import Svg from "../svg/svg";
 import Footer from "../footer/footer";
 import Tabs from "../tabs/tabs";
-import {ALL_GENRES, genres} from "../../consts/genres";
+import {ALL_GENRES} from "../../consts/genres";
 import {AppRoute} from "../../consts/common";
 import {connect} from "react-redux";
 

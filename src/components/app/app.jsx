@@ -7,13 +7,12 @@ import MyList from "../my-list/my-list";
 import Film from "../film/film";
 import Player from "../player/player";
 import PropTypes from "prop-types";
-import {moviesType, reviewsType, movieType} from "../../utils/prop-types";
+import {moviesType, reviewsType} from "../../utils/prop-types";
 import AddReview from "../add-review/add-review";
 import PrivateRoute from "../private-router/private-router";
 import browserHistory from "../../browser-history";
 import {AppRoute} from "../../consts/common";
 import {connect} from "react-redux";
-import {ALL_GENRES} from "../../consts/genres";
 
 
 const App = (props) => {
