@@ -4,6 +4,7 @@ import {moviesType} from "../../utils/prop-types";
 import {useHistory, useParams} from "react-router-dom";
 import {getDurationFromMinutes} from "../../utils/utils";
 import VideoPlayer from "../video-player/video-player";
+import {AppRoute} from "../../consts/common";
 
 const Player = (props) => {
   const {movies} = props;
@@ -23,7 +24,7 @@ const Player = (props) => {
       <div className="player">
         <VideoPlayer videoLink={videoLink} backgroundImage={backgroundImage} autoPlay muted={false}/>
 
-        <button type="button" className="player__exit" onClick={() => history.push(`/films/${id}`)}>Exit</button>
+        <button type="button" className="player__exit" onClick={() => history.push(`${AppRoute.FILM}/${id}`)}>Exit</button>
 
         <div className="player__controls">
           <div className="player__controls-row">

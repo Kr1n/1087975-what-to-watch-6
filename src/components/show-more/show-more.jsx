@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionType} from "../../store/action";
+import {ActionCreator} from "../../store/action";
 
 const ShowMore = ({onShowMoreClick}) => {
 
   return (
     <div className="catalog__more">
-      <button onClick={() => onShowMoreClick()} className="catalog__button" type="button">Show more</button>
+      <button onClick={onShowMoreClick} className="catalog__button" type="button">Show more</button>
     </div>
   );
 };
@@ -18,9 +18,7 @@ ShowMore.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
-    dispatch({
-      type: ActionType.SHOW_MORE_PUSHED,
-    });
+    dispatch(ActionCreator.showMorePushed());
   },
 });
 
