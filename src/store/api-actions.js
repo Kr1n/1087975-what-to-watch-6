@@ -26,5 +26,10 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const logout = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGOUT)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
+);
+
+export const toggleFavorite = (id, isFavorite) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITE}/${id}/${Number(isFavorite)}`)
+    .then(({data}) => dispatch(ActionCreator.toogleFavorite(data)))
 );

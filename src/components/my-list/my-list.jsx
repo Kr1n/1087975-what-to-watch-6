@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 import MovieList from "../movie-list/movie-list";
 import {moviesType} from "../../utils/prop-types";
 import Footer from "../footer/footer";
@@ -34,4 +35,9 @@ MyList.propTypes = {
   movies: moviesType,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  movies: state.movieList.filter((movie) => movie.isFavorite),
+});
+
+export {MyList};
+export default connect(mapStateToProps)(MyList);

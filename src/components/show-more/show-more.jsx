@@ -18,7 +18,7 @@ ShowMore.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
-    dispatch(ActionCreator.showMorePushed());
+    dispatch(ActionCreator.showMoreClicked());
   },
 });
 

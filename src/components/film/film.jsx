@@ -7,15 +7,20 @@ import Header from "../header/header";
 import Svg from "../svg/svg";
 import Footer from "../footer/footer";
 import Tabs from "../tabs/tabs";
-import {AppRoute} from "../../consts/common";
+import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {connect} from "react-redux";
 import Loading from "../loading/loading";
+import {ActionCreator} from "../../store/action";
+import {toggleFavorite} from "../../store/api-actions";
 
 
 const Film = (props) => {
-  const {relatedMoviesCount, movies, reviews, onPlayButtonClick, onMyListButtonClick, isDataLoaded} = props;
+  const {relatedMoviesCount, movies, reviews, onPlayButtonClick, onFavoriteClick, isDataLoaded, redirectToLogin, authorizationStatus} = props;
   const {id} = useParams();
 
+  const addReviewLink = (authorizationStatus === AuthorizationStatus.AUTH) ?
+    <Link to={`${AppRoute.FILM}/${id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">Add review</Link> :
+    ``;
 
   let filmComponent;
 
@@ -24,6 +29,9 @@ const Film = (props) => {
     const {backgroundImage, posterImage, name, genre, released} = movie;
     const relatedMovies = movies.filter((item) => item.genre === genre);
     const genreTitle = genre;
+
+    const onMylistClick = () => onFavoriteClick(id, !movie.isFavorite);
+    const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
 
     const fullDescription = <>
       <section className="movie-card movie-card--full">
@@ -51,13 +59,13 @@ const Film = (props) => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={onMyListButtonClick}>
+                <button className="btn btn--list movie-card__button" type="button" onClick={mylistAction}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`${AppRoute.FILM}/${id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">Add review</Link>
+                {addReviewLink}
               </div>
             </div>
           </div>
@@ -109,14 +117,26 @@ Film.propTypes = {
   movies: moviesType,
   reviews: reviewsType,
   onPlayButtonClick: PropTypes.func.isRequired,
-  onMyListButtonClick: PropTypes.func.isRequired,
+  onFavoriteClick: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  redirectToLogin: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   movies: state.movieList,
   isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  redirectToLogin() {
+    dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
+  },
+  onFavoriteClick(id, isFavorite) {
+    dispatch(toggleFavorite(id, isFavorite));
+  },
 });
 
 export {Film};
-export default connect(mapStateToProps)(Film);
+export default connect(mapStateToProps, mapDispatchToProps)(Film);

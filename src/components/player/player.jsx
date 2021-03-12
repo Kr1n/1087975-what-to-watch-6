@@ -5,6 +5,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {getDurationFromMinutes} from "../../utils/utils";
 import VideoPlayer from "../video-player/video-player";
 import {AppRoute} from "../../consts/common";
+import {connect} from "react-redux";
 
 const Player = (props) => {
   const {movies} = props;
@@ -59,4 +60,9 @@ Player.propTypes = {
   movies: moviesType,
 };
 
-export default Player;
+const mapStateToProps = (state) => ({
+  movies: state.movieList,
+});
+
+export {Player};
+export default connect(mapStateToProps)(Player);

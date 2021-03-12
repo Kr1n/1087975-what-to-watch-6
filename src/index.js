@@ -30,8 +30,6 @@ store.dispatch(fetchPromo());
 store.dispatch(fetchMovieList());
 
 const Setting = {
-  MOVIES_COUNT: 7,
-  MOVIES_IN_MY_LIST: 5,
   RELATED_MOVIES_COUNT: 4
 };
 
@@ -39,8 +37,6 @@ ReactDOM.render(
     <Provider store={store}>
       <App
         relatedMoviesCount={Setting.RELATED_MOVIES_COUNT}
-        moviesInMyList={Setting.MOVIES_IN_MY_LIST}
-        moviesCount={Setting.MOVIES_COUNT}
         reviews={reviews}
       />
     </Provider>,

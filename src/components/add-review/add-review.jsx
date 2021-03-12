@@ -3,6 +3,8 @@ import Svg from "../svg/svg";
 import {useParams} from "react-router-dom";
 import {moviesType} from "../../utils/prop-types";
 import Header from "../header/header";
+import {connect} from "react-redux";
+import {AppRoute} from "../../consts/common";
 
 const AddReview = (props) => {
   const {movies} = props;
@@ -25,7 +27,7 @@ const AddReview = (props) => {
 
           <Header link={{
             name,
-            href: `/films/${id}`}}
+            href: `${AppRoute.FILM}/${id}`}}
           />
 
           <div className="movie-card__poster movie-card__poster--small">
@@ -92,4 +94,10 @@ AddReview.propTypes = {
   movies: moviesType,
 };
 
-export default AddReview;
+const mapStateToProps = (state) => ({
+  movies: state.movieList,
+});
+
+export {AddReview};
+export default connect(mapStateToProps)(AddReview);
+

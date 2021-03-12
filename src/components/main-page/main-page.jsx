@@ -10,11 +10,18 @@ import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
 import {ALL_GENRES} from "../../consts/genres";
 import Loading from "../loading/loading";
+import {AppRoute, AuthorizationStatus} from "../../consts/common";
+import {ActionCreator} from "../../store/action";
+import {toggleFavorite} from "../../store/api-actions";
 
 
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onMyListButtonClick, isPromoLoaded} = props;
+  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin} = props;
 
+  const onMylistClick = () => onFavoriteClick(promoMovie.id, !promoMovie.isFavorite);
+  const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
+
+  console.log(movies);
 
   return (
     <>
@@ -51,7 +58,7 @@ const MainPage = (props) => {
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list movie-card__button" type="button" onClick={()=>onMyListButtonClick()}>
+                  <button className="btn btn--list movie-card__button" type="button" onClick={mylistAction}>
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>
                     </svg>
@@ -61,7 +68,7 @@ const MainPage = (props) => {
               </div>
             </div>
           </div> :
-          Loading
+          <Loading/>
         }
       </section>
 
@@ -72,7 +79,7 @@ const MainPage = (props) => {
           <GenreList />
 
           <div className="catalog__movies-list">
-            <MovieList movies={movies}/>
+            <MovieList movies={movies.slice(0, moviesShowed)}/>
           </div>
 
           {(movies.length > moviesShowed) ? <ShowMore/> : ``}
@@ -85,23 +92,32 @@ const MainPage = (props) => {
 };
 
 MainPage.propTypes = {
-  moviesCount: PropTypes.number.isRequired,
   promoMovie: movieType,
   movies: moviesType,
   moviesShowed: PropTypes.number.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
-  onMyListButtonClick: PropTypes.func.isRequired,
+  onFavoriteClick: PropTypes.func.isRequired,
   isPromoLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  redirectToLogin: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
   moviesShowed: state.moviesShowed,
-  movies: ((state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre))
-    .slice(0, state.moviesShowed),
+  movies: ((state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre)),
   promoMovie: state.promoMovie,
-  isPromoLoaded: state.isPromoLoaded
+  isPromoLoaded: state.isPromoLoaded,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  redirectToLogin() {
+    dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
+  },
+  onFavoriteClick(id, isFavorite) {
+    dispatch(toggleFavorite(id, isFavorite));
+  },
+});
 
 export {MainPage};
-export default connect(mapStateToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

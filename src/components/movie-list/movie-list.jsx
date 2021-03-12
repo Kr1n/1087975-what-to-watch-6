@@ -36,11 +36,15 @@ const MovieList = (props) => {
       key={String(movie.id)}
     />);
 
+  const emptyList = <div>List is empty.</div>;
+
+  const myListComponent = (moviesList.length) ? moviesList : emptyList;
+
   return (
     <>
       {isDataLoaded ?
-        moviesList :
-        Loading
+        myListComponent :
+        <Loading/>
       }
     </>);
 };
