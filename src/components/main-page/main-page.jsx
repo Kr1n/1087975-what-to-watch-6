@@ -9,12 +9,11 @@ import GenreList from "../genre-list/genre-list";
 import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
 import {ALL_GENRES} from "../../consts/genres";
+import Loading from "../loading/loading";
 
 
 const MainPage = (props) => {
   const {promoMovie, moviesShowed, movies, onPlayButtonClick, onMyListButtonClick, isPromoLoaded} = props;
-
-  const loading = <div>Loading... </div>;
 
 
   return (
@@ -62,7 +61,7 @@ const MainPage = (props) => {
               </div>
             </div>
           </div> :
-          loading
+          Loading
         }
       </section>
 
@@ -73,7 +72,7 @@ const MainPage = (props) => {
           <GenreList />
 
           <div className="catalog__movies-list">
-            <MovieList />
+            <MovieList movies={movies}/>
           </div>
 
           {(movies.length > moviesShowed) ? <ShowMore/> : ``}
@@ -97,7 +96,8 @@ MainPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   moviesShowed: state.moviesShowed,
-  movies: (state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre),
+  movies: ((state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre))
+    .slice(0, state.moviesShowed),
   promoMovie: state.promoMovie,
   isPromoLoaded: state.isPromoLoaded
 });

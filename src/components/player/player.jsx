@@ -11,10 +11,8 @@ const Player = (props) => {
   const {id} = useParams();
   const history = useHistory();
 
-
   const movie = movies.find((item) => item.id === Number(id));
   const {videoLink, runTime, backgroundImage} = movie;
-
   const duration = getDurationFromMinutes(runTime);
 
   return (
