@@ -1,8 +1,9 @@
 export const ActionType = {
   CHANGE_GENRE: `main/changeGenre`,
-  SHOW_MORE_PUSHED: `main/showMorePushed`,
+  SHOW_MORE_CLICKED: `main/showMoreClicked`,
   REDIRECT_TO_ROUTE: `main/redirectToRoute`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  ADD_TO_FAVORITE: `user/addToFavorite`,
   LOAD_MOVIES: `data/loadMovies`,
   LOAD_PROMO: `data/loadPromo`,
 };
@@ -28,7 +29,11 @@ export const ActionCreator = {
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url,
   }),
-  showMorePushed: () => ({
-    type: ActionType.SHOW_MORE_PUSHED,
-  })
+  showMoreClicked: () => ({
+    type: ActionType.SHOW_MORE_CLICKED,
+  }),
+  toogleFavorite: (movie) => ({
+    type: ActionType.ADD_TO_FAVORITE,
+    payload: movie
+  }),
 };

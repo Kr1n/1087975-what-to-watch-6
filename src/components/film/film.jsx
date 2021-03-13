@@ -7,23 +7,33 @@ import Header from "../header/header";
 import Svg from "../svg/svg";
 import Footer from "../footer/footer";
 import Tabs from "../tabs/tabs";
-import {ALL_GENRES} from "../../consts/genres";
-import {AppRoute} from "../../consts/common";
+import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {connect} from "react-redux";
+import Loading from "../loading/loading";
+import {ActionCreator} from "../../store/action";
+import {toggleFavorite} from "../../store/api-actions";
 
 
 const Film = (props) => {
-  const {relatedMoviesCount, movies, reviews, onPlayButtonClick, onMyListButtonClick} = props;
+  const {relatedMoviesCount, movies, reviews, onPlayButtonClick, onFavoriteClick, isDataLoaded, redirectToLogin, authorizationStatus} = props;
   const {id} = useParams();
 
-  const {backgroundImage, posterImage, name, genre, released} = movies.find((item) => item.id === Number(id));
+  const addReviewLink = (authorizationStatus === AuthorizationStatus.AUTH) ?
+    <Link to={`${AppRoute.FILM}/${id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">Add review</Link> :
+    ``;
 
-  // const genreTitle = genres.find((item) => item.name === genre).title;
-  const genreTitle = genre;
-  return (
-    <>
-      <Svg/>
+  let filmComponent;
 
+  if (isDataLoaded) {
+    const movie = movies.find((item) => item.id === Number(id));
+    const {backgroundImage, posterImage, name, genre, released} = movie;
+    const relatedMovies = movies.filter((item) => item.genre === genre);
+    const genreTitle = genre;
+
+    const onMylistClick = () => onFavoriteClick(id, !movie.isFavorite);
+    const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
+
+    const fullDescription = <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
@@ -43,19 +53,19 @@ const Film = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={()=>onPlayButtonClick(id)}>
+                <button className="btn btn--play movie-card__button" type="button" onClick={() => onPlayButtonClick(id)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={()=>onMyListButtonClick()}>
+                <button className="btn btn--list movie-card__button" type="button" onClick={mylistAction}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`${AppRoute.FILM}/${id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">Add review</Link>
+                {addReviewLink}
               </div>
             </div>
           </div>
@@ -69,24 +79,35 @@ const Film = (props) => {
             </div>
 
             <Tabs
-              movie={movies[id]}
+              movie={movie}
               reviews={reviews}
             />
           </div>
         </div>
       </section>
-
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__movies-list">
-            <MovieList movies={movies.slice(0, relatedMoviesCount)} />
+            <MovieList movies={relatedMovies.slice(0, relatedMoviesCount)} />
           </div>
         </section>
 
-        <Footer/>
+
       </div>
+    </>;
+
+    filmComponent = fullDescription;
+  } else {
+    filmComponent = <Loading/>;
+  }
+
+  return (
+    <>
+      <Svg/>
+      {filmComponent}
+      <Footer/>
     </>
   );
 };
@@ -96,12 +117,26 @@ Film.propTypes = {
   movies: moviesType,
   reviews: reviewsType,
   onPlayButtonClick: PropTypes.func.isRequired,
-  onMyListButtonClick: PropTypes.func.isRequired
+  onFavoriteClick: PropTypes.func.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  redirectToLogin: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  movies: (state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre),
+  movies: state.movieList,
+  isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  redirectToLogin() {
+    dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
+  },
+  onFavoriteClick(id, isFavorite) {
+    dispatch(toggleFavorite(id, isFavorite));
+  },
 });
 
 export {Film};
-export default connect(mapStateToProps)(Film);
+export default connect(mapStateToProps, mapDispatchToProps)(Film);

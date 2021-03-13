@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
         genre: action.payload,
         moviesShowed: SHOW_MORE_COUNT,
       };
-    case ActionType.SHOW_MORE_PUSHED:
+    case ActionType.SHOW_MORE_CLICKED:
       return {
         ...state,
         moviesShowed: state.moviesShowed + SHOW_MORE_COUNT
@@ -42,6 +42,15 @@ const reducer = (state = initialState, action) => {
         ...state,
         promoMovie: adaptToClient([action.payload])[0],
         isPromoLoaded: true
+      };
+    case ActionType.ADD_TO_FAVORITE:
+      const movie = adaptToClient([action.payload])[0];
+      const movieIndex = state.movieList.findIndex((item) => item.id === movie.id);
+      state.movieList.splice(movieIndex, 1, movie);
+
+      return {
+        ...state,
+        movieList: state.movieList
       };
   }
 

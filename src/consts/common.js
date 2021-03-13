@@ -8,6 +8,7 @@ export const AuthorizationStatus = {
 
 export const AppRoute = {
   LOGIN: `/login`,
+  LOGOUT: `/logout`,
   PLAYER: `/player`,
   MYLIST: `/mylist`,
   FILM: `/film`,

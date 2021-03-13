@@ -4,7 +4,7 @@ import {moviesType} from "../../utils/prop-types";
 import {VIDEO_LOAD_TIMEOUT} from "../../consts/common";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {ALL_GENRES} from "../../consts/genres";
+import Loading from "../loading/loading";
 
 const MovieList = (props) => {
   const {movies, isDataLoaded} = props;
@@ -36,13 +36,15 @@ const MovieList = (props) => {
       key={String(movie.id)}
     />);
 
-  const loading = <div>Loading... </div>;
+  const emptyList = <div>List is empty.</div>;
+
+  const myListComponent = (moviesList.length) ? moviesList : emptyList;
 
   return (
     <>
       {isDataLoaded ?
-        moviesList :
-        loading
+        myListComponent :
+        <Loading/>
       }
     </>);
 };
@@ -50,12 +52,10 @@ const MovieList = (props) => {
 MovieList.propTypes = {
   movies: moviesType,
   isDataLoaded: PropTypes.bool.isRequired,
-
 };
 
 
 const mapStateToProps = (state) => ({
-  movies: ((state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre)).slice(0, state.moviesShowed),
   isDataLoaded: state.isDataLoaded,
 });
 

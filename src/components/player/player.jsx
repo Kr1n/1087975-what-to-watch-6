@@ -5,16 +5,15 @@ import {useHistory, useParams} from "react-router-dom";
 import {getDurationFromMinutes} from "../../utils/utils";
 import VideoPlayer from "../video-player/video-player";
 import {AppRoute} from "../../consts/common";
+import {connect} from "react-redux";
 
 const Player = (props) => {
   const {movies} = props;
   const {id} = useParams();
   const history = useHistory();
 
-
   const movie = movies.find((item) => item.id === Number(id));
   const {videoLink, runTime, backgroundImage} = movie;
-
   const duration = getDurationFromMinutes(runTime);
 
   return (
@@ -61,4 +60,9 @@ Player.propTypes = {
   movies: moviesType,
 };
 
-export default Player;
+const mapStateToProps = (state) => ({
+  movies: state.movieList,
+});
+
+export {Player};
+export default connect(mapStateToProps)(Player);
