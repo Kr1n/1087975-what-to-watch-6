@@ -6,8 +6,10 @@ import {adaptToClient} from "../utils/utils";
 const initialState = {
   genre: genres[0],
   movieList: [],
+  favoriteList: [],
   moviesShowed: SHOW_MORE_COUNT,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isFavoriteLoaded: false,
   isDataLoaded: false,
   isPromoLoaded: false,
   isFilmLoaded: false,
@@ -37,6 +39,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         movieList: adaptToClient(action.payload),
         isDataLoaded: true,
+      };
+    case ActionType.LOAD_FAVORITE:
+      return {
+        ...state,
+        favoriteList: adaptToClient(action.payload),
+        isFavoriteLoaded: true,
       };
     case ActionType.LOAD_MOVIE:
       return {
