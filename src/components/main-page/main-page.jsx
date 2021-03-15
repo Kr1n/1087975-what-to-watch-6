@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {moviesType, movieType} from "../../utils/prop-types";
 import MovieList from "../movie-list/movie-list";
@@ -12,14 +12,18 @@ import {ALL_GENRES} from "../../consts/genres";
 import Loading from "../loading/loading";
 import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {ActionCreator} from "../../store/action";
-import {toggleFavorite} from "../../store/api-actions";
+import {fetchPromo, toggleFavorite} from "../../store/api-actions";
 
 
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin} = props;
+  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo} = props;
 
   const onMylistClick = () => onFavoriteClick(promoMovie.id, !promoMovie.isFavorite);
   const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
+
+  useEffect(() => {
+    loadPromo();
+  }, [isPromoLoaded]);
 
   return (
     <>
@@ -98,6 +102,7 @@ MainPage.propTypes = {
   isPromoLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   redirectToLogin: PropTypes.func.isRequired,
+  loadPromo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -115,6 +120,9 @@ const mapDispatchToProps = (dispatch) => ({
   onFavoriteClick(id, isFavorite) {
     dispatch(toggleFavorite(id, isFavorite));
   },
+  loadPromo() {
+    dispatch(fetchPromo());
+  }
 });
 
 export {MainPage};

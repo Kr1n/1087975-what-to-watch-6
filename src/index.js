@@ -9,7 +9,7 @@ import thunk from "redux-thunk";
 import {createAPI} from "./services/api";
 import {AuthorizationStatus} from "./consts/common";
 import {ActionCreator} from "./store/action";
-import {checkAuth, fetchPromo, fetchMovieList} from "./store/api-actions";
+import {checkAuth, fetchMovieList} from "./store/api-actions";
 import {redirect} from "./store/middleware/redirect";
 
 const api = createAPI(
@@ -25,7 +25,6 @@ const store = createStore(
 );
 
 store.dispatch(checkAuth());
-store.dispatch(fetchPromo());
 store.dispatch(fetchMovieList());
 
 const Setting = {
