@@ -16,7 +16,7 @@ const AddReview = (props) => {
   const refReview = useRef();
   const refForm = useRef();
 
-  const {backgroundImage, posterImage, name} = movie;
+  const {backgroundImage, backgroundColor, posterImage, name} = movie;
 
   const onAddReviewClick = (evt, commentRating, comment) => {
     evt.preventDefault();
@@ -27,7 +27,7 @@ const AddReview = (props) => {
     <>
       <Svg/>
 
-      <section className="movie-card movie-card--full">
+      <section className="movie-card movie-card--full" style={{backgroundColor}}>
         <div className="movie-card__header">
           <div className="movie-card__bg">
             <img src={backgroundImage} alt={name}/>
