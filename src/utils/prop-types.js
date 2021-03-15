@@ -29,10 +29,9 @@ export const reviewType = PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   }),
-  filmId: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  date: PropTypes.number.isRequired
+  date: PropTypes.string.isRequired
 });
 
 export const reviewsType = PropTypes.arrayOf(reviewType);

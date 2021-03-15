@@ -21,7 +21,7 @@ export const getRatingDescription = (rating) => {
 };
 
 
-export const adaptToClient = (serverData) =>
+export const adaptMoviesToClient = (serverData) =>
   serverData.map((item) => ({
     id: item.id,
     name: item.name,

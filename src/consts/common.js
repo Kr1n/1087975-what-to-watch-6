@@ -23,5 +23,5 @@ export const APIRoute = {
   LOGOUT: `/logout`,
   PROMO: `/films/promo`,
   FAVORITE: `/favorite`,
-  COMMENTS: `/comments/`,
+  REVIEWS: `/comments`,
 };

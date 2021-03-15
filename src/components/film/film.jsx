@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import PropTypes from "prop-types";
-import {moviesType, movieType, reviewsType} from "../../utils/prop-types";
+import {moviesType, movieType} from "../../utils/prop-types";
 import MovieList from "../movie-list/movie-list";
 import Header from "../header/header";
 import Svg from "../svg/svg";
@@ -15,7 +15,7 @@ import {fetchMovie, toggleFavorite} from "../../store/api-actions";
 
 
 const Film = (props) => {
-  const {relatedMoviesCount, movies, movie, reviews, onPlayButtonClick, onFavoriteClick, redirectToLogin, authorizationStatus, loadFilm, loadedFilmId} = props;
+  const {relatedMoviesCount, movies, movie, onPlayButtonClick, onFavoriteClick, redirectToLogin, authorizationStatus, loadFilm, loadedFilmId} = props;
   const {id} = useParams();
 
   useEffect(() => {
@@ -86,7 +86,6 @@ const Film = (props) => {
 
             <Tabs
               movie={movie}
-              reviews={reviews}
             />
           </div>
         </div>
@@ -122,7 +121,6 @@ Film.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
   movie: movieType,
   movies: moviesType.isRequired,
-  reviews: reviewsType.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onFavoriteClick: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,

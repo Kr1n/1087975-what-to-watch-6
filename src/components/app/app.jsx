@@ -7,7 +7,6 @@ import MyList from "../my-list/my-list";
 import Film from "../film/film";
 import Player from "../player/player";
 import PropTypes from "prop-types";
-import {reviewsType} from "../../utils/prop-types";
 import AddReview from "../add-review/add-review";
 import PrivateRoute from "../private-router/private-router";
 import browserHistory from "../../browser-history";
@@ -16,7 +15,7 @@ import {connect} from "react-redux";
 import Logout from "../logout/logout";
 
 const App = (props) => {
-  const {relatedMoviesCount, reviews} = props;
+  const {relatedMoviesCount} = props;
 
   return (
 
@@ -44,7 +43,6 @@ const App = (props) => {
           render={({history}) =>
             <Film
               relatedMoviesCount={relatedMoviesCount}
-              reviews={reviews}
               onPlayButtonClick={(id) => history.push(`${AppRoute.PLAYER}/${id}`)}
               onMyListButtonClick={() => history.push(AppRoute.MYLIST)}
             />
@@ -69,7 +67,6 @@ const App = (props) => {
 
 App.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
-  reviews: reviewsType.isRequired,
 };
 
 export default connect()(App);
