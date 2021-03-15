@@ -56,6 +56,9 @@ const App = (props) => {
         <Route exact path={AppRoute.LOGOUT}>
           <Logout/>
         </Route>
+        <Route path={AppRoute.NOT_FOUND}>
+          <Page404 />
+        </Route>
         <Route>
           <Page404 />
         </Route>
@@ -66,7 +69,7 @@ const App = (props) => {
 
 App.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
-  reviews: reviewsType,
+  reviews: reviewsType.isRequired,
 };
 
 export default connect()(App);

@@ -11,6 +11,12 @@ export const fetchPromo = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadPromo(data)))
 );
 
+export const fetchMovie = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.FILMS}/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadFilm(data)))
+    .catch(() => dispatch(ActionCreator.redirectToRoute(AppRoute.NOT_FOUND)))
+);
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))

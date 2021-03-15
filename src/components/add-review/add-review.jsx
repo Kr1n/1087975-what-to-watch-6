@@ -91,7 +91,7 @@ const AddReview = (props) => {
 };
 
 AddReview.propTypes = {
-  movies: moviesType,
+  movies: moviesType.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -14,6 +14,7 @@ export const AppRoute = {
   FILM: `/film`,
   ADD_REVIEW: `/review`,
   ROOT: `/`,
+  NOT_FOUND: `/404`
 };
 
 export const APIRoute = {

@@ -27,7 +27,7 @@ const SmallMovieCard = (props) => {
 export default SmallMovieCard;
 
 SmallMovieCard.propTypes = {
-  movie: movieType,
+  movie: movieType.isRequired,
   onHover: PropTypes.func.isRequired,
   onCursorLeave: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,

@@ -21,15 +21,13 @@ const MainPage = (props) => {
   const onMylistClick = () => onFavoriteClick(promoMovie.id, !promoMovie.isFavorite);
   const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
 
-  console.log(movies);
-
   return (
     <>
       <Svg/>
 
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={promoMovie.backgroundImage} alt={promoMovie.name}/>
+          {isPromoLoaded ? <img src={promoMovie.backgroundImage} alt={promoMovie.name}/> : ``}
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -93,7 +91,7 @@ const MainPage = (props) => {
 
 MainPage.propTypes = {
   promoMovie: movieType,
-  movies: moviesType,
+  movies: moviesType.isRequired,
   moviesShowed: PropTypes.number.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onFavoriteClick: PropTypes.func.isRequired,

@@ -32,7 +32,7 @@ const MyList = (props) => {
 
 
 MyList.propTypes = {
-  movies: moviesType,
+  movies: moviesType.isRequired,
 };
 
 const mapStateToProps = (state) => ({

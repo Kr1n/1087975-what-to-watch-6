@@ -149,8 +149,8 @@ const Tabs = (props) => {
 };
 
 Tabs.propTypes = {
-  movie: movieType,
-  reviews: reviewsType,
+  movie: movieType.isRequired,
+  reviews: reviewsType.isRequired,
 };
 
 export default Tabs;

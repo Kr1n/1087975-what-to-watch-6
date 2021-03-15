@@ -6,6 +6,7 @@ export const ActionType = {
   ADD_TO_FAVORITE: `user/addToFavorite`,
   LOAD_MOVIES: `data/loadMovies`,
   LOAD_PROMO: `data/loadPromo`,
+  LOAD_MOVIE: `data/loadMovie`,
 };
 
 export const ActionCreator = {
@@ -20,6 +21,10 @@ export const ActionCreator = {
   loadPromo: (promo) => ({
     type: ActionType.LOAD_PROMO,
     payload: promo
+  }),
+  loadFilm: (movie) => ({
+    type: ActionType.LOAD_MOVIE,
+    payload: movie
   }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
