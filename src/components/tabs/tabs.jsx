@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useState} from "react";
+import PropTypes from "prop-types";
 import {getDurationFromMinutes, getRatingDescription} from "../../utils/utils";
 import {movieType, reviewsType} from "../../utils/prop-types";
-import Review from "../reviews/review";
+import Review from "../review/review";
+import {fetchReviews} from "../../store/api-actions";
+import {connect} from "react-redux";
+import Loading from "../loading/loading";
 
 export const TabStates = {
   OVERVIEW: `overview`,
@@ -12,11 +16,16 @@ export const TabStates = {
 
 const Tabs = (props) => {
 
-  const {movie, reviews} = props;
+
+  const {movie, reviews, loadReviews, loadedCommentsFilmId} = props;
   const [activeTab, setActiveTab] = useState(TabStates.OVERVIEW);
 
   const {runTime, scoresCount, genre, released, rating, director, description, starring} = movie;
   const {hours, minutes} = getDurationFromMinutes(runTime);
+
+  useEffect(() => {
+    loadReviews(movie.id);
+  }, [movie.id]);
 
   const actorsReducer = (acc, value) => {
     return `${acc}, ${value}`;
@@ -84,18 +93,21 @@ const Tabs = (props) => {
       </div>
     </>;
 
+  const leftColumn = reviews.slice(0, Math.ceil(reviews.length / 2)).map((review) =>
+    <Review review={review} key={review.id}/>
+  );
+  const rightColumn = reviews.slice(Math.ceil(reviews.length / 2)).map((review) =>
+    <Review review={review} key={review.id}/>
+  );
+
   const reviewsTab =
     <>
       <div className="movie-card__reviews movie-card__row">
         <div className="movie-card__reviews-col">
-          <Review review={reviews[0]}/>
-          <Review review={reviews[0]}/>
-          <Review review={reviews[0]}/>
+          {leftColumn}
         </div>
         <div className="movie-card__reviews-col">
-          <Review review={reviews[0]}/>
-          <Review review={reviews[0]}/>
-          <Review review={reviews[0]}/>
+          {rightColumn}
         </div>
       </div>
     </>;
@@ -110,7 +122,7 @@ const Tabs = (props) => {
       tab = detailsTab;
       break;
     case TabStates.REVIEWS:
-      tab = reviewsTab;
+      tab = loadedCommentsFilmId === movie.id ? reviewsTab : <Loading/>;
       break;
     default:
       tab = overviewTab;
@@ -149,8 +161,21 @@ const Tabs = (props) => {
 };
 
 Tabs.propTypes = {
-  movie: movieType,
-  reviews: reviewsType,
+  movie: movieType.isRequired,
+  reviews: reviewsType.isRequired,
+  loadedCommentsFilmId: PropTypes.number.isRequired,
+  loadReviews: PropTypes.func.isRequired,
 };
 
-export default Tabs;
+const mapStateToProps = (state) => ({
+  reviews: state.reviewsList,
+  loadedCommentsFilmId: state.loadedCommentsFilmId,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadReviews(id) {
+    dispatch(fetchReviews(id));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tabs);

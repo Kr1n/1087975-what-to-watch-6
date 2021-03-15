@@ -4,8 +4,12 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `main/redirectToRoute`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   ADD_TO_FAVORITE: `user/addToFavorite`,
+  ADD_REVIEW: `data/addComment`,
   LOAD_MOVIES: `data/loadMovies`,
   LOAD_PROMO: `data/loadPromo`,
+  LOAD_MOVIE: `data/loadMovie`,
+  LOAD_FAVORITE: `data/loadFavorite`,
+  LOAD_REVIEWS: `data/loadReviews`,
 };
 
 export const ActionCreator = {
@@ -21,6 +25,18 @@ export const ActionCreator = {
     type: ActionType.LOAD_PROMO,
     payload: promo
   }),
+  loadFilm: (movie) => ({
+    type: ActionType.LOAD_MOVIE,
+    payload: movie
+  }),
+  loadFavorite: (movies) => ({
+    type: ActionType.LOAD_FAVORITE,
+    payload: movies
+  }),
+  loadReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews
+  }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
@@ -35,5 +51,9 @@ export const ActionCreator = {
   toogleFavorite: (movie) => ({
     type: ActionType.ADD_TO_FAVORITE,
     payload: movie
+  }),
+  addReview: ({id, reviews}) => ({
+    type: ActionType.ADD_REVIEW,
+    payload: {id, reviews}
   }),
 };

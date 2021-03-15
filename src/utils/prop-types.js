@@ -18,9 +18,9 @@ export const movieType = PropTypes.shape({
   genre: PropTypes.string.isRequired,
   released: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired
-}).isRequired;
+});
 
-export const moviesType = PropTypes.arrayOf(movieType).isRequired;
+export const moviesType = PropTypes.arrayOf(movieType);
 
 
 export const reviewType = PropTypes.shape({
@@ -29,12 +29,11 @@ export const reviewType = PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   }),
-  filmId: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  date: PropTypes.number.isRequired
-}).isRequired;
+  date: PropTypes.string.isRequired
+});
 
-export const reviewsType = PropTypes.arrayOf(reviewType).isRequired;
+export const reviewsType = PropTypes.arrayOf(reviewType);
 
 

@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import PropTypes from "prop-types";
-import {moviesType, reviewsType} from "../../utils/prop-types";
+import {moviesType, movieType} from "../../utils/prop-types";
 import MovieList from "../movie-list/movie-list";
 import Header from "../header/header";
 import Svg from "../svg/svg";
@@ -11,22 +11,24 @@ import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {connect} from "react-redux";
 import Loading from "../loading/loading";
 import {ActionCreator} from "../../store/action";
-import {toggleFavorite} from "../../store/api-actions";
+import {fetchMovie, toggleFavorite} from "../../store/api-actions";
 
 
 const Film = (props) => {
-  const {relatedMoviesCount, movies, reviews, onPlayButtonClick, onFavoriteClick, isDataLoaded, redirectToLogin, authorizationStatus} = props;
+  const {relatedMoviesCount, movies, movie, onPlayButtonClick, onFavoriteClick, redirectToLogin, authorizationStatus, loadFilm, loadedFilmId} = props;
   const {id} = useParams();
 
+  useEffect(() => {
+    loadFilm(id);
+  }, [id]);
+
   const addReviewLink = (authorizationStatus === AuthorizationStatus.AUTH) ?
-    <Link to={`${AppRoute.FILM}/${id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">Add review</Link> :
-    ``;
+    <Link to={`${AppRoute.FILM}/${id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">Add review</Link> : ``;
 
   let filmComponent;
 
-  if (isDataLoaded) {
-    const movie = movies.find((item) => item.id === Number(id));
-    const {backgroundImage, posterImage, name, genre, released} = movie;
+  if (loadedFilmId === Number(id)) {
+    const {backgroundImage, backgroundColor, posterImage, name, genre, released} = movie;
     const relatedMovies = movies.filter((item) => item.genre === genre);
     const genreTitle = genre;
 
@@ -34,7 +36,7 @@ const Film = (props) => {
     const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
 
     const fullDescription = <>
-      <section className="movie-card movie-card--full">
+      <section className="movie-card movie-card--full" style={{backgroundColor}}>
         <div className="movie-card__hero">
           <div className="movie-card__bg">
             <img src={backgroundImage} alt={name}/>
@@ -61,7 +63,11 @@ const Film = (props) => {
                 </button>
                 <button className="btn btn--list movie-card__button" type="button" onClick={mylistAction}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                    {
+                      movie.isFavorite ?
+                        <use xlinkHref="#in-list"></use> :
+                        <use xlinkHref="#add"></use>
+                    }
                   </svg>
                   <span>My list</span>
                 </button>
@@ -80,7 +86,6 @@ const Film = (props) => {
 
             <Tabs
               movie={movie}
-              reviews={reviews}
             />
           </div>
         </div>
@@ -114,19 +119,23 @@ const Film = (props) => {
 
 Film.propTypes = {
   relatedMoviesCount: PropTypes.number.isRequired,
-  movies: moviesType,
-  reviews: reviewsType,
+  movie: movieType,
+  movies: moviesType.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onFavoriteClick: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   redirectToLogin: PropTypes.func.isRequired,
+  loadFilm: PropTypes.func.isRequired,
+  loadedFilmId: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => ({
   movies: state.movieList,
   isDataLoaded: state.isDataLoaded,
   authorizationStatus: state.authorizationStatus,
+  loadedFilmId: state.loadedFilmId,
+  movie: state.movie,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -136,6 +145,9 @@ const mapDispatchToProps = (dispatch) => ({
   onFavoriteClick(id, isFavorite) {
     dispatch(toggleFavorite(id, isFavorite));
   },
+  loadFilm(id) {
+    dispatch(fetchMovie(id));
+  }
 });
 
 export {Film};

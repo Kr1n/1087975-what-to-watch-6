@@ -57,7 +57,7 @@ const Player = (props) => {
 };
 
 Player.propTypes = {
-  movies: moviesType,
+  movies: moviesType.isRequired,
 };
 
 const mapStateToProps = (state) => ({

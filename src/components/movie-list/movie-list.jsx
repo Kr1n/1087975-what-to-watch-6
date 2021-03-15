@@ -50,7 +50,7 @@ const MovieList = (props) => {
 };
 
 MovieList.propTypes = {
-  movies: moviesType,
+  movies: moviesType.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
 };
 
