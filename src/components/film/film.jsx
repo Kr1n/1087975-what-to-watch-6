@@ -28,7 +28,7 @@ const Film = (props) => {
   let filmComponent;
 
   if (loadedFilmId === Number(id)) {
-    const {backgroundImage, posterImage, name, genre, released} = movie;
+    const {backgroundImage, backgroundColor, posterImage, name, genre, released} = movie;
     const relatedMovies = movies.filter((item) => item.genre === genre);
     const genreTitle = genre;
 
@@ -36,7 +36,7 @@ const Film = (props) => {
     const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
 
     const fullDescription = <>
-      <section className="movie-card movie-card--full">
+      <section className="movie-card movie-card--full" style={{backgroundColor}}>
         <div className="movie-card__hero">
           <div className="movie-card__bg">
             <img src={backgroundImage} alt={name}/>
