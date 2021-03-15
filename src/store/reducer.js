@@ -70,12 +70,14 @@ const reducer = (state = initialState, action) => {
     case ActionType.ADD_TO_FAVORITE:
       const movie = adaptMoviesToClient([action.payload])[0];
       const movieIndex = state.movieList.findIndex((item) => item.id === movie.id);
-      const updatedMovieList = state.movieList.slice().splice(movieIndex, 1, movie);
+      const updatedMovieList = state.movieList.slice();
+      updatedMovieList.splice(movieIndex, 1, movie);
+
       return {
         ...state,
         movie,
         movieList: updatedMovieList,
-        isFavoriteLoaded: false
+        isFavoriteLoaded: false,
       };
     case ActionType.ADD_REVIEW:
       return {
