@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import PropTypes from "prop-types";
 import Svg from "../svg/svg";
 import Footer from "../footer/footer";
@@ -10,15 +10,26 @@ const SignIn = ({onSubmit}) => {
   const loginRef = useRef();
   const passwordRef = useRef();
 
+  const [isEmailValid, setEmailValid] = useState(true);
+
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    if (!loginRef.current.value) {
+      setEmailValid(false);
+      return;
+    }
 
     onSubmit({
       login: loginRef.current.value,
       password: passwordRef.current.value,
     });
   };
+
+  const errorMessage = <div className="sign-in__message">
+    <p>Please enter a valid email address</p>
+  </div>;
 
   return (
     <>
@@ -39,8 +50,9 @@ const SignIn = ({onSubmit}) => {
 
         <div className="sign-in user-page__content">
           <form action="" className="sign-in__form" onSubmit={handleSubmit}>
+            {isEmailValid ? `` : errorMessage}
             <div className="sign-in__fields">
-              <div className="sign-in__field">
+              <div className={`sign-in__field ${isEmailValid ? `` : `sign-in__field--error`}`}>
                 <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email"
                   id="user-email"/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
