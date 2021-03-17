@@ -20,6 +20,11 @@ const AddReview = (props) => {
 
   const onAddReviewClick = (evt, commentRating, comment) => {
     evt.preventDefault();
+
+    if (!refReview.current.value) {
+      refReview.current.placeholder = `Please enter your text.`;
+      return;
+    }
     addReview(movie.id, {rating: commentRating, comment});
   };
 
