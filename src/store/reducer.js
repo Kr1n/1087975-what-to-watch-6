@@ -1,10 +1,10 @@
 import {ActionType} from "./action";
-import {genres} from "../consts/genres";
-import {AuthorizationStatus, SHOW_MORE_COUNT} from "../consts/common";
+import {ALL_GENRES, AuthorizationStatus, GENRES_MAX_COUNT, SHOW_MORE_COUNT} from "../consts/common";
 import {adaptMoviesToClient} from "../utils/utils";
 
 const initialState = {
-  genre: genres[0],
+  genres: [ALL_GENRES],
+  genre: ALL_GENRES,
   movieList: [],
   favoriteList: [],
   reviewsList: [],
@@ -43,9 +43,13 @@ const reducer = (state = initialState, action) => {
         authorizationStatus: action.payload,
       };
     case ActionType.LOAD_MOVIES:
+      const movieList = adaptMoviesToClient(action.payload);
+      const genres = Array.from(new Set([ALL_GENRES, ...movieList.map((item) => item.genre)]));
+      genres.splice(GENRES_MAX_COUNT);
       return {
         ...state,
-        movieList: adaptMoviesToClient(action.payload),
+        genres,
+        movieList,
         isDataLoaded: true,
       };
     case ActionType.LOAD_FAVORITE:

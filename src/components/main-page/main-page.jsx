@@ -8,9 +8,8 @@ import Footer from "../footer/footer";
 import GenreList from "../genre-list/genre-list";
 import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
-import {ALL_GENRES} from "../../consts/genres";
 import Loading from "../loading/loading";
-import {AppRoute, AuthorizationStatus} from "../../consts/common";
+import {ALL_GENRES, AppRoute, AuthorizationStatus} from "../../consts/common";
 import {ActionCreator} from "../../store/action";
 import {fetchPromo, toggleFavorite} from "../../store/api-actions";
 
