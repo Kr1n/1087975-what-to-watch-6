@@ -1,6 +1,7 @@
 export const ActionType = {
   CHANGE_GENRE: `main/changeGenre`,
   SHOW_MORE_CLICKED: `main/showMoreClicked`,
+  RESET_FILM_COUNT: `main/resetFilmCount`,
   REDIRECT_TO_ROUTE: `main/redirectToRoute`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   ADD_TO_FAVORITE: `user/addToFavorite`,
@@ -47,6 +48,9 @@ export const ActionCreator = {
   }),
   showMoreClicked: () => ({
     type: ActionType.SHOW_MORE_CLICKED,
+  }),
+  resetFilmCount: () => ({
+    type: ActionType.RESET_FILM_COUNT,
   }),
   toogleFavorite: (movie) => ({
     type: ActionType.ADD_TO_FAVORITE,

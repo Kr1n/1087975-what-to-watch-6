@@ -32,6 +32,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         moviesShowed: state.moviesShowed + SHOW_MORE_COUNT
       };
+    case ActionType.RESET_FILM_COUNT:
+      return {
+        ...state,
+        moviesShowed: SHOW_MORE_COUNT
+      };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,

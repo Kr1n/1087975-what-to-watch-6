@@ -16,13 +16,14 @@ import {fetchPromo, toggleFavorite} from "../../store/api-actions";
 
 
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo} = props;
+  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo, onLeaveMainPage} = props;
 
   const onMylistClick = () => onFavoriteClick(promoMovie.id, !promoMovie.isFavorite);
   const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
 
   useEffect(() => {
     loadPromo();
+    return onLeaveMainPage;
   }, [isPromoLoaded]);
 
   return (
@@ -103,6 +104,7 @@ MainPage.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   redirectToLogin: PropTypes.func.isRequired,
   loadPromo: PropTypes.func.isRequired,
+  onLeaveMainPage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -122,6 +124,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadPromo() {
     dispatch(fetchPromo());
+  },
+  onLeaveMainPage() {
+    dispatch(ActionCreator.resetFilmCount());
   }
 });
 
