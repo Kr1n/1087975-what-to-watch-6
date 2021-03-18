@@ -1,12 +1,12 @@
 import {
   addReview,
   loadFavorite,
-  loadFilm,
+  loadMovie,
   loadMovies,
   loadPromo,
   loadReviews,
   redirectToRoute,
-  requireAuthorization, toogleFavorite,
+  requireAuthorization, addToFavorite,
 } from "./action";
 import {APIRoute, AppRoute, AuthorizationStatus} from "../consts/common";
 
@@ -22,7 +22,7 @@ export const fetchPromo = () => (dispatch, _getState, api) => (
 
 export const fetchMovie = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.FILMS}/${id}`)
-    .then(({data}) => dispatch(loadFilm(data)))
+    .then(({data}) => dispatch(loadMovie(data)))
     .catch(() => dispatch(redirectToRoute(AppRoute.NOT_FOUND)))
 );
 
@@ -56,7 +56,7 @@ export const logout = () => (dispatch, _getState, api) => (
 
 export const toggleFavorite = (id, isFavorite) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITE}/${id}/${Number(isFavorite)}`)
-    .then(({data}) => dispatch(toogleFavorite(data)))
+    .then(({data}) => dispatch(addToFavorite(data)))
 );
 
 export const postReview = (id, review) => (dispatch, _getState, api) => (

@@ -44,7 +44,7 @@ const App = (props) => {
             <Film
               relatedMoviesCount={relatedMoviesCount}
               onPlayButtonClick={(id) => history.push(`${AppRoute.PLAYER}/${id}`)}
-              onMyListButtonClick={() => history.push(AppRoute.MYLIST)}
+              // onMyListButtonClick={() => history.push(AppRoute.MYLIST)}
             />
           }
         />

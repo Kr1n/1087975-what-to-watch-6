@@ -1,6 +1,16 @@
-import {ActionType} from '../action';
-import {ALL_GENRES, GENRES_MAX_COUNT} from '../../consts/common';
+import {
+  addReview,
+  loadFavorite,
+  loadMovie,
+  loadMovies, loadPromo,
+  loadReviews,
+  showMoreClicked,
+} from '../action';
+
+import {ALL_GENRES, GENRES_MAX_COUNT, SHOW_MORE_COUNT} from '../../consts/common';
 import {adaptMoviesToClient} from "../../utils/utils";
+import {createReducer} from "@reduxjs/toolkit";
+import {getShowedMovieCount} from "../main/selectors";
 
 const initialState = {
   genres: [ALL_GENRES],
@@ -17,51 +27,41 @@ const initialState = {
   loadedCommentsFilmId: -1,
 };
 
-const moviesData = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.LOAD_MOVIES:
-      const movieList = adaptMoviesToClient(action.payload);
-      const genres = Array.from(new Set([ALL_GENRES, ...movieList.map((item) => item.genre)]));
-      genres.splice(GENRES_MAX_COUNT);
-      return {
-        ...state,
-        genres,
-        movieList,
-        isDataLoaded: true,
-      };
-    case ActionType.LOAD_FAVORITE:
-      return {
-        ...state,
-        favoriteList: adaptMoviesToClient(action.payload),
-        isFavoriteLoaded: true,
-      };
-    case ActionType.LOAD_MOVIE:
-      return {
-        ...state,
-        movie: adaptMoviesToClient([action.payload])[0],
-        loadedFilmId: action.payload.id
-      };
-    case ActionType.LOAD_REVIEWS:
-      return {
-        ...state,
-        reviewsList: action.payload.reviews,
-        loadedCommentsFilmId: action.payload.filmId
-      };
-    case ActionType.LOAD_PROMO:
-      return {
-        ...state,
-        promoMovie: adaptMoviesToClient([action.payload])[0],
-        isPromoLoaded: true
-      };
-    case ActionType.ADD_REVIEW:
-      return {
-        ...state,
-        reviewsList: action.payload.reviews,
-        loadedCommentsFilmId: action.payload.id
-      };
-  }
-
-  return state;
-};
+const moviesData = createReducer(initialState, (builder) => {
+  builder.addCase(loadMovies, (state, action) => {
+    const movieList = adaptMoviesToClient(action.payload);
+    const genres = Array.from(new Set([ALL_GENRES, ...movieList.map((item) => item.genre)]));
+    genres.splice(GENRES_MAX_COUNT);
+    return {
+      ...state,
+      genres,
+      movieList,
+      isDataLoaded: true,
+    };
+  });
+  builder.addCase(loadFavorite, (state, action) => {
+    state.favoriteList = adaptMoviesToClient(action.payload);
+    state.isFavoriteLoaded = true;
+  });
+  builder.addCase(showMoreClicked, (state) => {
+    state.moviesShowed = getShowedMovieCount(state) + SHOW_MORE_COUNT;
+  });
+  builder.addCase(loadMovie, (state, action) => {
+    state.movie = adaptMoviesToClient([action.payload])[0];
+    state.loadedFilmId = action.payload.id;
+  });
+  builder.addCase(loadReviews, (state, action) => {
+    state.mreviewsList = action.payload.reviews;
+    state.loadedCommentsFilmId = action.payload.filmId;
+  });
+  builder.addCase(loadPromo, (state, action) => {
+    state.promoMovie = adaptMoviesToClient([action.payload])[0];
+    state.isPromoLoaded = true;
+  });
+  builder.addCase(addReview, (state, action) => {
+    state.reviewsList = action.payload.reviews;
+    state.loadedCommentsFilmId = action.payload.id;
+  });
+});
 
 export {moviesData};

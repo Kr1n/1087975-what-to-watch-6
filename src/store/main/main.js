@@ -1,4 +1,5 @@
-import {ActionType} from '../action';
+import {changeGenre, resetFilmCount, showMoreClicked} from '../action';
+import {createReducer} from '@reduxjs/toolkit';
 import {ALL_GENRES, SHOW_MORE_COUNT} from "../../consts/common";
 import {getShowedMovieCount} from "./selectors";
 
@@ -7,27 +8,17 @@ const initialState = {
   genre: ALL_GENRES,
 };
 
-const main = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.CHANGE_GENRE:
-      return {
-        ...state,
-        genre: action.payload,
-        moviesShowed: SHOW_MORE_COUNT,
-      };
-    case ActionType.SHOW_MORE_CLICKED:
-      return {
-        ...state,
-        moviesShowed: getShowedMovieCount(state) + SHOW_MORE_COUNT
-      };
-    case ActionType.RESET_FILM_COUNT:
-      return {
-        ...state,
-        moviesShowed: SHOW_MORE_COUNT
-      };
-  }
-
-  return state;
-};
+const main = createReducer(initialState, (builder) => {
+  builder.addCase(changeGenre, (state, action) => {
+    state.genre = action.payload;
+    state.moviesShowed = SHOW_MORE_COUNT;
+  });
+  builder.addCase(resetFilmCount, (state) => {
+    state.moviesShowed = SHOW_MORE_COUNT;
+  });
+  builder.addCase(showMoreClicked, (state) => {
+    state.moviesShowed = getShowedMovieCount(state) + SHOW_MORE_COUNT;
+  });
+});
 
 export {main};

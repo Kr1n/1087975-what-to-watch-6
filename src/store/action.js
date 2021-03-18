@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   CHANGE_GENRE: `main/changeGenre`,
   SHOW_MORE_CLICKED: `main/showMoreClicked`,
@@ -14,54 +16,43 @@ export const ActionType = {
 };
 
 
-export const changeGenre = (genre) => ({
-  type: ActionType.CHANGE_GENRE,
+export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => ({
   payload: genre
-});
-export const loadMovies = (movies) => ({
-  type: ActionType.LOAD_MOVIES,
+}));
+
+export const loadMovies = createAction(ActionType.LOAD_MOVIES, (movies) => ({
   payload: movies
-});
-export const loadPromo = (promo) => ({
-  type: ActionType.LOAD_PROMO,
+}));
+
+export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
   payload: promo
-});
+}));
 
-export const loadFilm = (movie) => ({
-  type: ActionType.LOAD_MOVIE,
+export const loadMovie = createAction(ActionType.LOAD_MOVIE, (movie) => ({
   payload: movie
-});
+}));
 
-export const loadFavorite = (movies) => ({
-  type: ActionType.LOAD_FAVORITE,
+export const loadFavorite = createAction(ActionType.LOAD_FAVORITE, (movies) => ({
   payload: movies
-});
-export const loadReviews = (reviews) => ({
-  type: ActionType.LOAD_REVIEWS,
+}));
+export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
   payload: reviews
-});
-export const requireAuthorization = (status) => ({
-  type: ActionType.REQUIRED_AUTHORIZATION,
+}));
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
-});
-export const redirectToRoute = (url) => ({
-  type: ActionType.REDIRECT_TO_ROUTE,
+}));
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
-});
-export const showMoreClicked = () => ({
-  type: ActionType.SHOW_MORE_CLICKED,
-});
-export const resetFilmCount = () => ({
-  type: ActionType.RESET_FILM_COUNT,
-});
+}));
 
-export const toogleFavorite = (movie) => ({
-  type: ActionType.ADD_TO_FAVORITE,
+export const showMoreClicked = createAction(ActionType.SHOW_MORE_CLICKED);
+export const resetFilmCount = createAction(ActionType.RESET_FILM_COUNT);
+
+export const addToFavorite = createAction(ActionType.ADD_TO_FAVORITE, (movie) => ({
   payload: movie
-});
+}));
 
-export const addReview = ({id, reviews}) => ({
-  type: ActionType.ADD_REVIEW,
+export const addReview = createAction(ActionType.ADD_REVIEW, ({id, reviews}) => ({
   payload: {id, reviews}
-});
+}));
 
