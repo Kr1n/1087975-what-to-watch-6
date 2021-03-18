@@ -24,7 +24,7 @@ const SmallMovieCard = (props) => {
   );
 };
 
-export default SmallMovieCard;
+export default React.memo(SmallMovieCard);
 
 SmallMovieCard.propTypes = {
   movie: movieType.isRequired,

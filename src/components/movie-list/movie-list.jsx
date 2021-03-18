@@ -16,16 +16,16 @@ const MovieList = (props) => {
     return () => clearTimeout(timerID);
   });
 
-  const onHover = (id) => {
+  const onHover = React.useCallback((id) => {
     timerID = setTimeout(() => setActiveFilm(id), VIDEO_LOAD_TIMEOUT);
-  };
+  }, [activeFilm]);
 
-  const onCursorLeave = () => {
+  const onCursorLeave = React.useCallback(() => {
     clearTimeout(timerID);
     if (activeFilm !== -1) {
       setActiveFilm(-1);
     }
-  };
+  }, [activeFilm]);
 
   const moviesList = movies.slice().map((movie) =>
     <SmallMovieCard
