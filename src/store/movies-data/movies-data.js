@@ -51,7 +51,7 @@ const moviesData = createReducer(initialState, (builder) => {
     state.loadedFilmId = action.payload.id;
   });
   builder.addCase(loadReviews, (state, action) => {
-    state.mreviewsList = action.payload.reviews;
+    state.reviewList = action.payload.reviews;
     state.loadedCommentsFilmId = action.payload.filmId;
   });
   builder.addCase(loadPromo, (state, action) => {
