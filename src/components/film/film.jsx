@@ -10,7 +10,7 @@ import Tabs from "../tabs/tabs";
 import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {connect} from "react-redux";
 import Loading from "../loading/loading";
-import {ActionCreator} from "../../store/action";
+import {redirectToRoute} from "../../store/action";
 import {fetchMovie, toggleFavorite} from "../../store/api-actions";
 
 
@@ -140,7 +140,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   redirectToLogin() {
-    dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
+    dispatch(redirectToRoute(AppRoute.LOGIN));
   },
   onFavoriteClick(id, isFavorite) {
     dispatch(toggleFavorite(id, isFavorite));

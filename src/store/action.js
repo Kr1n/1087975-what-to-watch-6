@@ -13,51 +13,55 @@ export const ActionType = {
   LOAD_REVIEWS: `data/loadReviews`,
 };
 
-export const ActionCreator = {
-  changeGenre: (genre) => ({
-    type: ActionType.CHANGE_GENRE,
-    payload: genre
-  }),
-  loadMovies: (movies) => ({
-    type: ActionType.LOAD_MOVIES,
-    payload: movies
-  }),
-  loadPromo: (promo) => ({
-    type: ActionType.LOAD_PROMO,
-    payload: promo
-  }),
-  loadFilm: (movie) => ({
-    type: ActionType.LOAD_MOVIE,
-    payload: movie
-  }),
-  loadFavorite: (movies) => ({
-    type: ActionType.LOAD_FAVORITE,
-    payload: movies
-  }),
-  loadReviews: (reviews) => ({
-    type: ActionType.LOAD_REVIEWS,
-    payload: reviews
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-  showMoreClicked: () => ({
-    type: ActionType.SHOW_MORE_CLICKED,
-  }),
-  resetFilmCount: () => ({
-    type: ActionType.RESET_FILM_COUNT,
-  }),
-  toogleFavorite: (movie) => ({
-    type: ActionType.ADD_TO_FAVORITE,
-    payload: movie
-  }),
-  addReview: ({id, reviews}) => ({
-    type: ActionType.ADD_REVIEW,
-    payload: {id, reviews}
-  }),
-};
+
+export const changeGenre = (genre) => ({
+  type: ActionType.CHANGE_GENRE,
+  payload: genre
+});
+export const loadMovies = (movies) => ({
+  type: ActionType.LOAD_MOVIES,
+  payload: movies
+});
+export const loadPromo = (promo) => ({
+  type: ActionType.LOAD_PROMO,
+  payload: promo
+});
+
+export const loadFilm = (movie) => ({
+  type: ActionType.LOAD_MOVIE,
+  payload: movie
+});
+
+export const loadFavorite = (movies) => ({
+  type: ActionType.LOAD_FAVORITE,
+  payload: movies
+});
+export const loadReviews = (reviews) => ({
+  type: ActionType.LOAD_REVIEWS,
+  payload: reviews
+});
+export const requireAuthorization = (status) => ({
+  type: ActionType.REQUIRED_AUTHORIZATION,
+  payload: status,
+});
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url,
+});
+export const showMoreClicked = () => ({
+  type: ActionType.SHOW_MORE_CLICKED,
+});
+export const resetFilmCount = () => ({
+  type: ActionType.RESET_FILM_COUNT,
+});
+
+export const toogleFavorite = (movie) => ({
+  type: ActionType.ADD_TO_FAVORITE,
+  payload: movie
+});
+
+export const addReview = ({id, reviews}) => ({
+  type: ActionType.ADD_REVIEW,
+  payload: {id, reviews}
+});
+

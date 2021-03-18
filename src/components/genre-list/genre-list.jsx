@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action";
+import {changeGenre} from "../../store/action";
 
 const GenreList = (props) => {
 
@@ -31,7 +31,7 @@ GenreList.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onTabClick(genre) {
-    dispatch(ActionCreator.changeGenre(genre));
+    dispatch(changeGenre(genre));
   },
 });
 

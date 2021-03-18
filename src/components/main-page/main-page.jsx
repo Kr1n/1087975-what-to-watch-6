@@ -10,7 +10,7 @@ import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
 import Loading from "../loading/loading";
 import {ALL_GENRES, AppRoute, AuthorizationStatus} from "../../consts/common";
-import {ActionCreator} from "../../store/action";
+import {redirectToRoute, resetFilmCount} from "../../store/action";
 import {fetchPromo, toggleFavorite} from "../../store/api-actions";
 
 
@@ -116,7 +116,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   redirectToLogin() {
-    dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
+    dispatch(redirectToRoute(AppRoute.LOGIN));
   },
   onFavoriteClick(id, isFavorite) {
     dispatch(toggleFavorite(id, isFavorite));
@@ -125,7 +125,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchPromo());
   },
   onLeaveMainPage() {
-    dispatch(ActionCreator.resetFilmCount());
+    dispatch(resetFilmCount());
   }
 });
 
