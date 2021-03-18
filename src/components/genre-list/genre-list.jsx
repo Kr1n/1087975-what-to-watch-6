@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {changeGenre} from "../../store/action";
+import {getGenres, getMovieList} from "../../store/movies-data/selectors";
+import {getSelectedGenre} from "../../store/main/selectors";
 
 const GenreList = (props) => {
 
@@ -35,10 +37,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = ({MAIN, DATA}) => ({
-  genres: DATA.genres,
-  selectedGenre: MAIN.genre,
-  movieList: (MAIN.genre) ? DATA.movieList.filter((item) => item.genre === MAIN.genre) : DATA.movieList,
+const mapStateToProps = (state) => ({
+  genres: getGenres(state),
+  selectedGenre: getSelectedGenre(state),
+  movieList: (getSelectedGenre(state)) ? getMovieList(state).filter((item) => item.genre === getSelectedGenre(state)) : getMovieList(state),
 });
 
 export {GenreList};

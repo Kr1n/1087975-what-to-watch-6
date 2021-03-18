@@ -11,19 +11,26 @@ import {connect} from "react-redux";
 import Loading from "../loading/loading";
 import {ALL_GENRES, AppRoute, AuthorizationStatus} from "../../consts/common";
 import {redirectToRoute, resetFilmCount} from "../../store/action";
-import {fetchPromo, toggleFavorite} from "../../store/api-actions";
+import {fetchMovieList, fetchPromo, toggleFavorite} from "../../store/api-actions";
+import {getAuthorizationStatus} from "../../store/user/selectors";
+import {getSelectedGenre, getShowedMovieCount} from "../../store/main/selectors";
+import {getLoadedPromoStatus, getMovieList, getPromoMovie} from "../../store/movies-data/selectors";
 
 
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo, onLeaveMainPage} = props;
+  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo, onLeaveMainPage, loadMovies} = props;
 
   const onMylistClick = () => onFavoriteClick(promoMovie.id, !promoMovie.isFavorite);
   const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
 
   useEffect(() => {
     loadPromo();
+    loadMovies();
+  }, []);
+
+  useEffect(() => {
     return onLeaveMainPage;
-  }, [isPromoLoaded]);
+  }, []);
 
   return (
     <>
@@ -104,14 +111,15 @@ MainPage.propTypes = {
   redirectToLogin: PropTypes.func.isRequired,
   loadPromo: PropTypes.func.isRequired,
   onLeaveMainPage: PropTypes.func.isRequired,
+  loadMovies: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({MAIN, USER, DATA}) => ({
-  authorizationStatus: USER.authorizationStatus,
-  moviesShowed: MAIN.moviesShowed,
-  movies: ((MAIN.genre === ALL_GENRES) ? DATA.movieList : DATA.movieList.filter((item) => item.genre === MAIN.genre)),
-  promoMovie: DATA.promoMovie,
-  isPromoLoaded: DATA.isPromoLoaded,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  moviesShowed: getShowedMovieCount(state),
+  movies: ((getSelectedGenre(state) === ALL_GENRES) ? getMovieList(state) : getMovieList(state).filter((item) => item.genre === getSelectedGenre(state))),
+  promoMovie: getPromoMovie(state),
+  isPromoLoaded: getLoadedPromoStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -123,6 +131,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadPromo() {
     dispatch(fetchPromo());
+  },
+  loadMovies() {
+    dispatch(fetchMovieList());
   },
   onLeaveMainPage() {
     dispatch(resetFilmCount());

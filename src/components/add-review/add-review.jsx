@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {AppRoute} from "../../consts/common";
 import {postReview} from "../../store/api-actions";
 import PropTypes from "prop-types";
+import {getMovieList} from "../../store/movies-data/selectors";
 
 const AddReview = (props) => {
   const {movies, addReview} = props;
@@ -112,8 +113,8 @@ AddReview.propTypes = {
   addReview: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  movies: DATA.movieList,
+const mapStateToProps = (state) => ({
+  movies: getMovieList(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

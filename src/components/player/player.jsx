@@ -6,6 +6,7 @@ import {getDurationFromMinutes} from "../../utils/utils";
 import VideoPlayer from "../video-player/video-player";
 import {AppRoute} from "../../consts/common";
 import {connect} from "react-redux";
+import {getMovieList} from "../../store/movies-data/selectors";
 
 const Player = (props) => {
   const {movies} = props;
@@ -60,8 +61,8 @@ Player.propTypes = {
   movies: moviesType.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  movies: DATA.movieList,
+const mapStateToProps = (state) => ({
+  movies: getMovieList(state),
 });
 
 export {Player};

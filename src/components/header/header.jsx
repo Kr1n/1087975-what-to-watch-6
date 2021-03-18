@@ -5,6 +5,7 @@ import browserHistory from "../../browser-history";
 import {connect} from "react-redux";
 import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {logout} from "../../store/api-actions";
+import {getAuthorizationStatus} from "../../store/user/selectors";
 
 const Header = (props) => {
   const {title, link, authorizationStatus} = props;
@@ -63,8 +64,8 @@ Header.defaultProps = {
   link: null
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

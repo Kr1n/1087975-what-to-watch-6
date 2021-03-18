@@ -12,6 +12,8 @@ import {connect} from "react-redux";
 import Loading from "../loading/loading";
 import {redirectToRoute} from "../../store/action";
 import {fetchMovie, toggleFavorite} from "../../store/api-actions";
+import {getLoadedDataStatus, getLoadedFilmId, getMovie, getMovieList} from "../../store/movies-data/selectors";
+import {getAuthorizationStatus} from "../../store/user/selectors";
 
 
 const Film = (props) => {
@@ -130,12 +132,12 @@ Film.propTypes = {
   loadedFilmId: PropTypes.number.isRequired
 };
 
-const mapStateToProps = ({DATA, USER}) => ({
-  movies: DATA.movieList,
-  isDataLoaded: DATA.isDataLoaded,
-  authorizationStatus: USER.authorizationStatus,
-  loadedFilmId: DATA.loadedFilmId,
-  movie: DATA.movie,
+const mapStateToProps = (state) => ({
+  movies: getMovieList(state),
+  isDataLoaded: getLoadedDataStatus(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  loadedFilmId: getLoadedFilmId(state),
+  movie: getMovie(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
