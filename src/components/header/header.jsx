@@ -63,8 +63,8 @@ Header.defaultProps = {
   link: null
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus
+const mapStateToProps = ({USER}) => ({
+  authorizationStatus: USER.authorizationStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({

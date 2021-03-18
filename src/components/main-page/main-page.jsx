@@ -106,12 +106,12 @@ MainPage.propTypes = {
   onLeaveMainPage: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  moviesShowed: state.moviesShowed,
-  movies: ((state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre)),
-  promoMovie: state.promoMovie,
-  isPromoLoaded: state.isPromoLoaded,
+const mapStateToProps = ({MAIN, USER, DATA}) => ({
+  authorizationStatus: USER.authorizationStatus,
+  moviesShowed: MAIN.moviesShowed,
+  movies: ((MAIN.genre === ALL_GENRES) ? DATA.movieList : DATA.movieList.filter((item) => item.genre === MAIN.genre)),
+  promoMovie: DATA.promoMovie,
+  isPromoLoaded: DATA.isPromoLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({

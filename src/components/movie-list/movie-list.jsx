@@ -16,16 +16,16 @@ const MovieList = (props) => {
     return () => clearTimeout(timerID);
   });
 
-  const onHover = React.useCallback((id) => {
+  const onHover = (id) => {
     timerID = setTimeout(() => setActiveFilm(id), VIDEO_LOAD_TIMEOUT);
-  }, [activeFilm]);
+  };
 
-  const onCursorLeave = React.useCallback(() => {
+  const onCursorLeave = () => {
     clearTimeout(timerID);
     if (activeFilm !== -1) {
       setActiveFilm(-1);
     }
-  }, [activeFilm]);
+  };
 
   const moviesList = movies.slice().map((movie) =>
     <SmallMovieCard
@@ -55,8 +55,8 @@ MovieList.propTypes = {
 };
 
 
-const mapStateToProps = (state) => ({
-  isDataLoaded: state.isDataLoaded,
+const mapStateToProps = ({DATA}) => ({
+  isDataLoaded: DATA.isDataLoaded,
 });
 
 

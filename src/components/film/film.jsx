@@ -130,12 +130,12 @@ Film.propTypes = {
   loadedFilmId: PropTypes.number.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  movies: state.movieList,
-  isDataLoaded: state.isDataLoaded,
-  authorizationStatus: state.authorizationStatus,
-  loadedFilmId: state.loadedFilmId,
-  movie: state.movie,
+const mapStateToProps = ({DATA, USER}) => ({
+  movies: DATA.movieList,
+  isDataLoaded: DATA.isDataLoaded,
+  authorizationStatus: USER.authorizationStatus,
+  loadedFilmId: DATA.loadedFilmId,
+  movie: DATA.movie,
 });
 
 const mapDispatchToProps = (dispatch) => ({

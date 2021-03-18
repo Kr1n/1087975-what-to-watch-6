@@ -112,8 +112,8 @@ AddReview.propTypes = {
   addReview: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  movies: state.movieList,
+const mapStateToProps = ({DATA}) => ({
+  movies: DATA.movieList,
 });
 
 const mapDispatchToProps = (dispatch) => ({

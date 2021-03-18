@@ -167,9 +167,9 @@ Tabs.propTypes = {
   loadReviews: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  reviews: state.reviewsList,
-  loadedCommentsFilmId: state.loadedCommentsFilmId,
+const mapStateToProps = ({DATA}) => ({
+  reviews: DATA.reviewsList,
+  loadedCommentsFilmId: DATA.loadedCommentsFilmId,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -35,10 +35,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = (state) => ({
-  genres: state.genres,
-  selectedGenre: state.genre,
-  movieList: (state.genre) ? state.movieList.filter((item) => item.genre === state.genre) : state.movieList,
+const mapStateToProps = ({MAIN, DATA}) => ({
+  genres: DATA.genres,
+  selectedGenre: MAIN.genre,
+  movieList: (MAIN.genre) ? DATA.movieList.filter((item) => item.genre === MAIN.genre) : DATA.movieList,
 });
 
 export {GenreList};
