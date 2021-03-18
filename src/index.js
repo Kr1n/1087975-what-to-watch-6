@@ -1,11 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore, applyMiddleware} from "redux";
+import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
 import App from "./components/app/app";
 import rootReducer from "./store/root-reducer";
-import {composeWithDevTools} from "redux-devtools-extension";
-import thunk from "redux-thunk";
 import {createAPI} from "./services/api";
 import {AuthorizationStatus} from "./consts/common";
 import {requireAuthorization} from "./store/action";
@@ -16,16 +14,17 @@ const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 
-const store = createStore(
-    rootReducer,
-    composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api)),
-        applyMiddleware(redirect)
-    )
-);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api
+      },
+    }).concat(redirect)
+});
 
 store.dispatch(checkAuth());
-store.dispatch(fetchMovieList());
 
 const Setting = {
   RELATED_MOVIES_COUNT: 4
