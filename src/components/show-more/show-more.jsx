@@ -23,4 +23,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {ShowMore};
-export default connect(null, mapDispatchToProps)(ShowMore);
+export default connect(null, mapDispatchToProps)(React.memo(ShowMore));
