@@ -1,5 +1,6 @@
 import {ActionType} from '../action';
 import {ALL_GENRES, SHOW_MORE_COUNT} from "../../consts/common";
+import {getShowedMovieCount} from "./selectors";
 
 const initialState = {
   moviesShowed: SHOW_MORE_COUNT,
@@ -17,7 +18,7 @@ const main = (state = initialState, action) => {
     case ActionType.SHOW_MORE_CLICKED:
       return {
         ...state,
-        moviesShowed: state.moviesShowed + SHOW_MORE_COUNT
+        moviesShowed: getShowedMovieCount(state) + SHOW_MORE_COUNT
       };
     case ActionType.RESET_FILM_COUNT:
       return {
