@@ -25,3 +25,6 @@ export const APIRoute = {
   FAVORITE: `/favorite`,
   REVIEWS: `/comments`,
 };
+
+export const ALL_GENRES = `All genres`;
+export const GENRES_MAX_COUNT = 10;

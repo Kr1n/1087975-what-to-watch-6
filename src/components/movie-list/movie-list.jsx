@@ -5,6 +5,7 @@ import {VIDEO_LOAD_TIMEOUT} from "../../consts/common";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Loading from "../loading/loading";
+import {getLoadedDataStatus} from "../../store/movies-data/selectors";
 
 const MovieList = (props) => {
   const {movies, isDataLoaded} = props;
@@ -56,7 +57,7 @@ MovieList.propTypes = {
 
 
 const mapStateToProps = (state) => ({
-  isDataLoaded: state.isDataLoaded,
+  isDataLoaded: getLoadedDataStatus(state),
 });
 
 

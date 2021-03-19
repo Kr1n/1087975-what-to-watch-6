@@ -8,22 +8,29 @@ import Footer from "../footer/footer";
 import GenreList from "../genre-list/genre-list";
 import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
-import {ALL_GENRES} from "../../consts/genres";
 import Loading from "../loading/loading";
-import {AppRoute, AuthorizationStatus} from "../../consts/common";
-import {ActionCreator} from "../../store/action";
-import {fetchPromo, toggleFavorite} from "../../store/api-actions";
+import {ALL_GENRES, AppRoute, AuthorizationStatus} from "../../consts/common";
+import {redirectToRoute, resetFilmCount} from "../../store/action";
+import {fetchMovieList, fetchPromo, toggleFavorite} from "../../store/api-actions";
+import {getAuthorizationStatus} from "../../store/user/selectors";
+import {getSelectedGenre, getShowedMovieCount} from "../../store/main/selectors";
+import {getLoadedPromoStatus, getMovieList, getPromoMovie} from "../../store/movies-data/selectors";
 
 
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo} = props;
+  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo, onLeaveMainPage, loadMovies} = props;
 
   const onMylistClick = () => onFavoriteClick(promoMovie.id, !promoMovie.isFavorite);
   const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
 
   useEffect(() => {
     loadPromo();
-  }, [isPromoLoaded]);
+    loadMovies();
+  }, []);
+
+  useEffect(() => {
+    return onLeaveMainPage;
+  }, []);
 
   return (
     <>
@@ -103,25 +110,33 @@ MainPage.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   redirectToLogin: PropTypes.func.isRequired,
   loadPromo: PropTypes.func.isRequired,
+  onLeaveMainPage: PropTypes.func.isRequired,
+  loadMovies: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  moviesShowed: state.moviesShowed,
-  movies: ((state.genre === ALL_GENRES) ? state.movieList : state.movieList.filter((item) => item.genre === state.genre)),
-  promoMovie: state.promoMovie,
-  isPromoLoaded: state.isPromoLoaded,
+  authorizationStatus: getAuthorizationStatus(state),
+  moviesShowed: getShowedMovieCount(state),
+  movies: ((getSelectedGenre(state) === ALL_GENRES) ? getMovieList(state) : getMovieList(state).filter((item) => item.genre === getSelectedGenre(state))),
+  promoMovie: getPromoMovie(state),
+  isPromoLoaded: getLoadedPromoStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   redirectToLogin() {
-    dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
+    dispatch(redirectToRoute(AppRoute.LOGIN));
   },
   onFavoriteClick(id, isFavorite) {
     dispatch(toggleFavorite(id, isFavorite));
   },
   loadPromo() {
     dispatch(fetchPromo());
+  },
+  loadMovies() {
+    dispatch(fetchMovieList());
+  },
+  onLeaveMainPage() {
+    dispatch(resetFilmCount());
   }
 });
 

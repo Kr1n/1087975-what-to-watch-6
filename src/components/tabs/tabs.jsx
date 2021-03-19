@@ -7,6 +7,7 @@ import Review from "../review/review";
 import {fetchReviews} from "../../store/api-actions";
 import {connect} from "react-redux";
 import Loading from "../loading/loading";
+import {getLoadedCommentsFilmId, getReviewList} from "../../store/movies-data/selectors";
 
 export const TabStates = {
   OVERVIEW: `overview`,
@@ -168,8 +169,8 @@ Tabs.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  reviews: state.reviewsList,
-  loadedCommentsFilmId: state.loadedCommentsFilmId,
+  reviews: getReviewList(state),
+  loadedCommentsFilmId: getLoadedCommentsFilmId(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -8,6 +8,7 @@ import Header from "../header/header";
 import Svg from "../svg/svg";
 import {fetchFavoriteList} from "../../store/api-actions";
 import Loading from "../loading/loading";
+import {getFavoriteList, getLoadedFavoriteStatus} from "../../store/movies-data/selectors";
 
 const MyList = (props) => {
   const {movies, isFavoriteLoaded, loadFavoriteList} = props;
@@ -58,8 +59,8 @@ MyList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.favoriteList,
-  isFavoriteLoaded: state.isFavoriteLoaded
+  movies: getFavoriteList(state),
+  isFavoriteLoaded: getLoadedFavoriteStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
