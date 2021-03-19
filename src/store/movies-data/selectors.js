@@ -1,4 +1,6 @@
 import {NameSpace} from '../root-reducer';
+import {getSelectedGenre} from "../main/selectors";
+import {ALL_GENRES} from "../../consts/common";
 
 export const getGenres = (state) => state[NameSpace.DATA].genres;
 export const getMovieList = (state) => state[NameSpace.DATA].movieList;
@@ -15,3 +17,7 @@ export const getLoadedCommentStatus = (state) => state[NameSpace.DATA].isComment
 
 export const getLoadedFilmId = (state) => state[NameSpace.DATA].loadedFilmId;
 export const getLoadedCommentsFilmId = (state) => state[NameSpace.DATA].loadedCommentsFilmId;
+
+export const getMovieListByGenre = (state) => ((getSelectedGenre(state) === ALL_GENRES) ?
+  getMovieList(state) :
+  getMovieList(state).filter((item) => item.genre === getSelectedGenre(state)));

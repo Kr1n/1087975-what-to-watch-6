@@ -7,7 +7,7 @@ import rootReducer from "./store/root-reducer";
 import {createAPI} from "./services/api";
 import {AuthorizationStatus} from "./consts/common";
 import {requireAuthorization} from "./store/action";
-import {checkAuth, fetchMovieList} from "./store/api-actions";
+import {checkAuth} from "./store/api-actions";
 import {redirect} from "./store/middleware/redirect";
 
 const api = createAPI(

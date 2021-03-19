@@ -9,12 +9,12 @@ import GenreList from "../genre-list/genre-list";
 import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
 import Loading from "../loading/loading";
-import {ALL_GENRES, AppRoute, AuthorizationStatus} from "../../consts/common";
+import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {redirectToRoute, resetFilmCount} from "../../store/action";
 import {fetchMovieList, fetchPromo, toggleFavorite} from "../../store/api-actions";
 import {getAuthorizationStatus} from "../../store/user/selectors";
-import {getSelectedGenre, getShowedMovieCount} from "../../store/main/selectors";
-import {getLoadedPromoStatus, getMovieList, getPromoMovie} from "../../store/movies-data/selectors";
+import {getShowedMovieCount} from "../../store/main/selectors";
+import {getLoadedPromoStatus, getMovieListByGenre, getPromoMovie} from "../../store/movies-data/selectors";
 
 
 const MainPage = (props) => {
@@ -117,7 +117,7 @@ MainPage.propTypes = {
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   moviesShowed: getShowedMovieCount(state),
-  movies: ((getSelectedGenre(state) === ALL_GENRES) ? getMovieList(state) : getMovieList(state).filter((item) => item.genre === getSelectedGenre(state))),
+  movies: getMovieListByGenre(state),
   promoMovie: getPromoMovie(state),
   isPromoLoaded: getLoadedPromoStatus(state),
 });
