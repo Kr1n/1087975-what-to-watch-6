@@ -13,6 +13,7 @@ import browserHistory from "../../browser-history";
 import {AppRoute} from "../../consts/common";
 import {connect} from "react-redux";
 import Logout from "../logout/logout";
+import Error from "../error/error";
 
 const App = (props) => {
   const {relatedMoviesCount} = props;
@@ -44,7 +45,6 @@ const App = (props) => {
             <Film
               relatedMoviesCount={relatedMoviesCount}
               onPlayButtonClick={(id) => history.push(`${AppRoute.PLAYER}/${id}`)}
-              // onMyListButtonClick={() => history.push(AppRoute.MYLIST)}
             />
           }
         />
@@ -56,6 +56,9 @@ const App = (props) => {
         </Route>
         <Route path={AppRoute.NOT_FOUND}>
           <Page404 />
+        </Route>
+        <Route path={AppRoute.SERVER_ERROR}>
+          <Error />
         </Route>
         <Route>
           <Page404 />

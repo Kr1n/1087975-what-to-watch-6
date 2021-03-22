@@ -5,13 +5,14 @@ import {Provider} from 'react-redux';
 import App from "./components/app/app";
 import rootReducer from "./store/root-reducer";
 import {createAPI} from "./services/api";
-import {AuthorizationStatus} from "./consts/common";
-import {requireAuthorization} from "./store/action";
+import {AppRoute, AuthorizationStatus} from "./consts/common";
+import {redirectToRoute, requireAuthorization} from "./store/action";
 import {checkAuth} from "./store/api-actions";
 import {redirect} from "./store/middleware/redirect";
 
 const api = createAPI(
-    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
+    ()=> store.dispatch(redirectToRoute(AppRoute.SERVER_ERROR))
 );
 
 const store = configureStore({
