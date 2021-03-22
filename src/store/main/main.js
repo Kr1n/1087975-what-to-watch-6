@@ -1,7 +1,6 @@
 import {changeGenre, resetFilmCount, showMoreClicked} from '../action';
 import {createReducer} from '@reduxjs/toolkit';
 import {ALL_GENRES, SHOW_MORE_COUNT} from "../../consts/common";
-import {getShowedMovieCount} from "./selectors";
 
 const initialState = {
   moviesShowed: SHOW_MORE_COUNT,
@@ -17,7 +16,7 @@ const main = createReducer(initialState, (builder) => {
     state.moviesShowed = SHOW_MORE_COUNT;
   });
   builder.addCase(showMoreClicked, (state) => {
-    state.moviesShowed = getShowedMovieCount(state) + SHOW_MORE_COUNT;
+    state.moviesShowed = state.moviesShowed + SHOW_MORE_COUNT;
   });
 });
 
