@@ -72,6 +72,7 @@ const moviesData = createReducer(initialState, (builder) => {
       movie,
       movieList: updatedMovieList,
       isFavoriteLoaded: false,
+      isPromoLoaded: false,
     };
   });
 });

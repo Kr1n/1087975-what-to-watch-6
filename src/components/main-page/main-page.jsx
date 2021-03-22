@@ -24,7 +24,12 @@ const MainPage = (props) => {
   const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
 
   useEffect(() => {
-    loadPromo();
+    if (!isPromoLoaded) {
+      loadPromo();
+    }
+  }, [isPromoLoaded]);
+
+  useEffect(() => {
     loadMovies();
   }, []);
 
@@ -69,7 +74,11 @@ const MainPage = (props) => {
                   </button>
                   <button className="btn btn--list movie-card__button" type="button" onClick={mylistAction}>
                     <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
+                      {
+                        promoMovie.isFavorite ?
+                          <use xlinkHref="#in-list"></use> :
+                          <use xlinkHref="#add"></use>
+                      }
                     </svg>
                     <span>My list</span>
                   </button>
