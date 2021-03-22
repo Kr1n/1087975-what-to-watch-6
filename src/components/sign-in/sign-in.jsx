@@ -5,8 +5,17 @@ import Footer from "../footer/footer";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
+import {getAuthorizationStatus} from "../../store/user/selectors";
+import {redirectToRoute} from "../../store/action";
+import {AppRoute, AuthorizationStatus} from "../../consts/common";
 
-const SignIn = ({onSubmit}) => {
+const SignIn = (props) => {
+  const {onSubmit, authorizationStatus, redirect} = props;
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    redirect();
+  }
+
   const loginRef = useRef();
   const passwordRef = useRef();
 
@@ -77,13 +86,23 @@ const SignIn = ({onSubmit}) => {
 
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  redirect: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
+});
+
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
     dispatch(login(authData));
+  },
+  redirect() {
+    dispatch(redirectToRoute(AppRoute.ROOT));
   }
 });
 
 export {SignIn};
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
