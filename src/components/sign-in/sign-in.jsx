@@ -25,7 +25,7 @@ const SignIn = (props) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    if (!loginRef.current.value) {
+    if (!loginRef.current.value || !passwordRef.current.value) {
       setEmailValid(false);
       return;
     }
@@ -37,7 +37,7 @@ const SignIn = (props) => {
   };
 
   const errorMessage = <div className="sign-in__message">
-    <p>Please enter a valid email address</p>
+    <p>Please enter a valid email address and password</p>
   </div>;
 
   return (
