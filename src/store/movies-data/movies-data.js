@@ -4,10 +4,9 @@ import {
   loadMovie,
   loadMovies, loadPromo,
   loadReviews,
-  showMoreClicked,
 } from '../action';
 
-import {ALL_GENRES, GENRES_MAX_COUNT, SHOW_MORE_COUNT} from '../../consts/common';
+import {ALL_GENRES, GENRES_MAX_COUNT} from '../../consts/common';
 import {adaptMoviesToClient} from "../../utils/utils";
 import {createReducer} from "@reduxjs/toolkit";
 
@@ -42,9 +41,6 @@ const moviesData = createReducer(initialState, (builder) => {
     state.favoriteList = adaptMoviesToClient(action.payload);
     state.isFavoriteLoaded = true;
   });
-  builder.addCase(showMoreClicked, (state) => {
-    state.moviesShowed = state.moviesShowed + SHOW_MORE_COUNT;
-  });
   builder.addCase(loadMovie, (state, action) => {
     state.movie = adaptMoviesToClient([action.payload])[0];
     state.loadedFilmId = action.payload.id;
@@ -58,7 +54,7 @@ const moviesData = createReducer(initialState, (builder) => {
     state.isPromoLoaded = true;
   });
   builder.addCase(addReview, (state, action) => {
-    state.reviewsList = action.payload.reviews;
+    state.reviewList = action.payload.reviews;
     state.loadedCommentsFilmId = action.payload.id;
   });
   builder.addCase(addToFavorite, (state, action) => {
@@ -66,7 +62,6 @@ const moviesData = createReducer(initialState, (builder) => {
     const movieIndex = state.movieList.findIndex((item) => item.id === movie.id);
     const updatedMovieList = state.movieList.slice();
     updatedMovieList.splice(movieIndex, 1, movie);
-
     return {
       ...state,
       movie,
