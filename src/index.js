@@ -9,6 +9,8 @@ import {AppRoute, AuthorizationStatus} from "./consts/common";
 import {redirectToRoute, requireAuthorization} from "./store/action";
 import {checkAuth} from "./store/api-actions";
 import {redirect} from "./store/middleware/redirect";
+import browserHistory from "./browser-history";
+import {Router as BrowserRouter} from "react-router";
 
 const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
@@ -33,9 +35,11 @@ const Setting = {
 
 ReactDOM.render(
     <Provider store={store}>
-      <App
-        relatedMoviesCount={Setting.RELATED_MOVIES_COUNT}
-      />
+      <BrowserRouter history={browserHistory}>
+        <App
+          relatedMoviesCount={Setting.RELATED_MOVIES_COUNT}
+        />
+      </BrowserRouter>
     </Provider>,
     document.querySelector(`#root`)
 );
