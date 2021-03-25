@@ -63,12 +63,12 @@ const SignIn = (props) => {
             <div className="sign-in__fields">
               <div className={`sign-in__field ${isEmailValid ? `` : `sign-in__field--error`}`}>
                 <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email"
-                  id="user-email"/>
+                  id="user-email" data-testid="login"/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
               <div className="sign-in__field">
                 <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password"
-                  id="user-password"/>
+                  id="user-password" data-testid="password"/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
             </div>
