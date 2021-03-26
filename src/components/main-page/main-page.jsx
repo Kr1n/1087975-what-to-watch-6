@@ -15,10 +15,14 @@ import {fetchMovieList, fetchPromo, toggleFavorite} from "../../store/api-action
 import {getAuthorizationStatus} from "../../store/user/selectors";
 import {getShowedMovieCount} from "../../store/main/selectors";
 import {getLoadedPromoStatus, getMovieListByGenre, getPromoMovie} from "../../store/movies-data/selectors";
+import {useHistory} from "react-router-dom";
 
 
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movies, onPlayButtonClick, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo, onLeaveMainPage, loadMovies} = props;
+  const {promoMovie, moviesShowed, movies, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo, onLeaveMainPage, loadMovies} = props;
+
+  const history = useHistory();
+  const onPlayButtonClick = (id) => history.push(`${AppRoute.PLAYER}/${id}`);
 
   const onMylistClick = () => onFavoriteClick(promoMovie.id, !promoMovie.isFavorite);
   const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
@@ -113,7 +117,6 @@ MainPage.propTypes = {
   promoMovie: movieType,
   movies: moviesType.isRequired,
   moviesShowed: PropTypes.number.isRequired,
-  onPlayButtonClick: PropTypes.func.isRequired,
   onFavoriteClick: PropTypes.func.isRequired,
   isPromoLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,

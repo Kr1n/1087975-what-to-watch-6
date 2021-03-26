@@ -7,7 +7,6 @@ const withActivePlayer = (WrappedComponent) => {
     const [isPlaying, isPlayingChange] = useState(true);
     const [currentPlayedTime, currentPlayedTimeChange] = useState(0);
     const [progressBarValue, progressBarValueChange] = useState(0);
-    // const [isFullScreen, isFullScreenChange] = useState(false);
 
     const onPlayButtonClick = () => {
       if (isPlaying) {
@@ -18,9 +17,44 @@ const withActivePlayer = (WrappedComponent) => {
       isPlayingChange((prevState) => !prevState);
     };
 
+    function enter() {
+      if (refVideo.current.requestFullscreen) {
+        refVideo.current.requestFullscreen();
+      } else if (refVideo.current.webkitRequestFullScreen) {
+        refVideo.current.webkitRequestFullscreen();
+      } else if (refVideo.current.mozRequestFullScreen) {
+        refVideo.current.mozRequestFullScreen();
+      } else if (refVideo.current.msRequestFullscreen) {
+        refVideo.current.msRequestFullscreen();
+      }
+    }
+
+    function exit() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+
+    function checkFullscreen() {
+      return document.fullscreenElement ||
+        document.mozFullScreenElement ||
+        document.webkitFullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement;
+    }
+
     const onFullsScreenClick = () => {
-      refVideo.current.requestFullscreen();
-      // isFullScreenChange((prevState) => !prevState);
+      if (checkFullscreen()) {
+        exit();
+      } else {
+        enter();
+      }
     };
 
     const onVideoLoaded = () => {

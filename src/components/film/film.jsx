@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {moviesType, movieType} from "../../utils/prop-types";
 import MovieList from "../movie-list/movie-list";
@@ -7,18 +7,26 @@ import Header from "../header/header";
 import Svg from "../svg/svg";
 import Footer from "../footer/footer";
 import Tabs from "../tabs/tabs";
-import {AppRoute, AuthorizationStatus} from "../../consts/common";
+import {AppRoute, AuthorizationStatus, RELATED_MOVIES_COUNT} from "../../consts/common";
 import {connect} from "react-redux";
 import Loading from "../loading/loading";
 import {redirectToRoute} from "../../store/action";
 import {fetchMovie, fetchMovieList, toggleFavorite} from "../../store/api-actions";
-import {getLoadedDataStatus, getLoadedFilmId, getMovie, getMovieList} from "../../store/movies-data/selectors";
+import {
+  getLoadedDataStatus,
+  getLoadedFilmId,
+  getMovie,
+  getRelatedMovies,
+} from "../../store/movies-data/selectors";
 import {getAuthorizationStatus} from "../../store/user/selectors";
 
 
 const Film = (props) => {
-  const {relatedMoviesCount, movies, movie, onPlayButtonClick, onFavoriteClick, redirectToLogin, authorizationStatus, loadFilm, loadedFilmId, loadFilms, isDataLoaded} = props;
+  const {movie, onFavoriteClick, redirectToLogin, authorizationStatus, loadFilm, loadedFilmId, loadFilms, isDataLoaded, relatedMovies} = props;
   const {id} = useParams();
+
+  const history = useHistory();
+  const onPlayButtonClick = (filmId) => history.push(`${AppRoute.PLAYER}/${filmId}`);
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -38,7 +46,6 @@ const Film = (props) => {
 
   if (loadedFilmId === Number(id)) {
     const {backgroundImage, backgroundColor, posterImage, name, genre, released} = movie;
-    const relatedMovies = movies.filter((item) => item.genre === genre);
     const genreTitle = genre;
 
     const onMylistClick = () => onFavoriteClick(id, !movie.isFavorite);
@@ -104,7 +111,7 @@ const Film = (props) => {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__movies-list">
-            <MovieList movies={relatedMovies.slice(0, relatedMoviesCount)} />
+            <MovieList movies={relatedMovies.slice(0, RELATED_MOVIES_COUNT)} />
           </div>
         </section>
 
@@ -127,10 +134,8 @@ const Film = (props) => {
 };
 
 Film.propTypes = {
-  relatedMoviesCount: PropTypes.number.isRequired,
   movie: movieType,
-  movies: moviesType.isRequired,
-  onPlayButtonClick: PropTypes.func.isRequired,
+  relatedMovies: moviesType,
   onFavoriteClick: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
@@ -141,11 +146,11 @@ Film.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  movies: getMovieList(state),
   isDataLoaded: getLoadedDataStatus(state),
   authorizationStatus: getAuthorizationStatus(state),
   loadedFilmId: getLoadedFilmId(state),
   movie: getMovie(state),
+  relatedMovies: getRelatedMovies(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

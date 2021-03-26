@@ -21,3 +21,6 @@ export const getLoadedCommentsFilmId = (state) => state[NameSpace.DATA].loadedCo
 export const getMovieListByGenre = (state) => ((getSelectedGenre(state) === ALL_GENRES) ?
   getMovieList(state) :
   getMovieList(state).filter((item) => item.genre === getSelectedGenre(state)));
+
+export const getRelatedMovies = (state) => getMovieListByGenre(state);
+

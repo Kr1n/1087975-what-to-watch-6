@@ -1,5 +1,7 @@
 export const VIDEO_LOAD_TIMEOUT = 1000;
 export const SHOW_MORE_COUNT = 8;
+export const STAR_COUNT = 10;
+export const RELATED_MOVIES_COUNT = 4;
 
 export const AuthorizationStatus = {
   AUTH: `AUTH`,

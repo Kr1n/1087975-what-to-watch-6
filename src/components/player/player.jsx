@@ -86,18 +86,27 @@ const Player = (props) => {
   );
 };
 
+Player.defaultProps = {
+  refVideo: ()=>{},
+};
+
 Player.propTypes = {
   movies: moviesType.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onFullScreenClick: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
-  refVideo: PropTypes.ref,
   loadFilms: PropTypes.func.isRequired,
   onVideoLoaded: PropTypes.func.isRequired,
   currentPlayedTime: PropTypes.number.isRequired,
   progressBarValue: PropTypes.number.isRequired,
   onComponentUnmount: PropTypes.func.isRequired,
+  refVideo: PropTypes.oneOfType([
+    // Either a function
+    PropTypes.func,
+    // Or the instance of a DOM native element (see the note about SSR)
+    PropTypes.shape({current: PropTypes.instanceOf(Player)})
+  ])
 };
 
 const mapStateToProps = (state) => ({
