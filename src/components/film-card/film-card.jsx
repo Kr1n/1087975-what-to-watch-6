@@ -90,4 +90,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {FilmCard};
-export default connect(mapStateToProps, mapDispatchToProps)(FilmCard);
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(FilmCard));

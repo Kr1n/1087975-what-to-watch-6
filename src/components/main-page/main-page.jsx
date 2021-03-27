@@ -13,6 +13,7 @@ import {fetchMovieList, fetchPromo, toggleFavorite} from "../../store/api-action
 import {getAuthorizationStatus} from "../../store/user/selectors";
 import {getShowedMovieCount} from "../../store/main/selectors";
 import {
+  getLoadedDataStatus,
   getLoadedPromoStatus,
   getMoviesToShow,
   getPromoMovie,
@@ -21,17 +22,17 @@ import FilmCard from "../film-card/film-card";
 import Loading from "../loading/loading";
 
 const MainPage = (props) => {
-  const {promoMovie, movies, isPromoLoaded, loadPromo, onLeaveMainPage, loadMovies} = props;
+  const {promoMovie, movies, isPromoLoaded, loadPromo, onLeaveMainPage, loadMovies, isDataLoaded} = props;
 
   useEffect(() => {
     if (!isPromoLoaded) {
       loadPromo();
     }
-  }, [isPromoLoaded]);
+  });
 
   useEffect(() => {
     loadMovies();
-  }, []);
+  }, [isDataLoaded]);
 
   useEffect(() => {
     return onLeaveMainPage;
@@ -41,7 +42,7 @@ const MainPage = (props) => {
     <>
       <Svg/>
       {
-        (isPromoLoaded) ?
+        (promoMovie) ?
           <FilmCard movie={promoMovie} /> :
           <Loading/>
       }
@@ -68,6 +69,7 @@ MainPage.propTypes = {
   movies: moviesType.isRequired,
   onFavoriteClick: PropTypes.func.isRequired,
   isPromoLoaded: PropTypes.bool.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   redirectToLogin: PropTypes.func.isRequired,
   loadPromo: PropTypes.func.isRequired,
@@ -80,6 +82,7 @@ const mapStateToProps = (state) => ({
   moviesShowed: getShowedMovieCount(state),
   movies: getMoviesToShow(state),
   promoMovie: getPromoMovie(state),
+  isDataLoaded: getLoadedDataStatus(state),
   isPromoLoaded: getLoadedPromoStatus(state),
 });
 
