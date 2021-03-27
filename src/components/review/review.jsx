@@ -21,9 +21,10 @@ const Review = (props) => {
   );
 };
 
-
-export default Review;
-
 Review.propTypes = {
   review: reviewType.isRequired
 };
+
+export default Review;
+
+

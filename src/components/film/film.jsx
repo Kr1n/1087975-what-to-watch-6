@@ -106,6 +106,7 @@ const Film = (props) => {
           </div>
         </div>
       </section>
+
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>

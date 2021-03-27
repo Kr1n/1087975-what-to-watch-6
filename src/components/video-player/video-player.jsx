@@ -24,9 +24,7 @@ VideoPlayer.propTypes = {
   autoPlay: PropTypes.bool.isRequired,
   muted: PropTypes.bool.isRequired,
   refVideo: PropTypes.oneOfType([
-    // Either a function
     PropTypes.func,
-    // Or the instance of a DOM native element (see the note about SSR)
     PropTypes.shape({current: PropTypes.instanceOf(VideoPlayer)})
   ])
 };

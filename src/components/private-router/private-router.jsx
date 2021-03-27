@@ -5,7 +5,6 @@ import {connect} from "react-redux";
 import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {getAuthorizationStatus} from "../../store/user/selectors";
 
-
 const PrivateRoute = ({render, path, exact, authorizationStatus}) => {
   return (
     <Route

@@ -1,4 +1,4 @@
-import {NameSpace} from '../root-reducer';
+import {NameSpace} from "../root-reducer";
 import {getSelectedGenre} from "../main/selectors";
 import {ALL_GENRES} from "../../consts/common";
 
@@ -24,3 +24,7 @@ export const getMovieListByGenre = (state) => ((getSelectedGenre(state) === ALL_
 
 export const getRelatedMovies = (state) => getMovieListByGenre(state);
 
+export const getMoviesToShow = (state) =>{
+  const relatedMovies = getMovieListByGenre(state);
+  return relatedMovies.slice(0, state[NameSpace.MAIN].moviesShowed);
+};

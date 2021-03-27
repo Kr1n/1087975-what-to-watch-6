@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState} from "react";
 
 const withActivePlayer = (WrappedComponent) => {
 
@@ -58,16 +58,12 @@ const withActivePlayer = (WrappedComponent) => {
     };
 
     const onVideoLoaded = () => {
-      refVideo.current.ontimeupdate = () => {
-        currentPlayedTimeChange(() => refVideo.current.currentTime);
-        progressBarValueChange(() => refVideo.current.currentTime * 100 / refVideo.current.duration);
-      };
+      refVideo.current.addEventListener(`timeupdate`, () => {
+        currentPlayedTimeChange(refVideo.current.duration - refVideo.current.currentTime);
+        progressBarValueChange(refVideo.current.currentTime * 100 / refVideo.current.duration);
+      });
     };
 
-    const onComponentUnmount = () => {
-      refVideo.current.pause();
-      refVideo.current.ontimeupdate = null;
-    };
     return (
       <WrappedComponent
         {...props}
@@ -78,7 +74,6 @@ const withActivePlayer = (WrappedComponent) => {
         onVideoLoaded={onVideoLoaded}
         currentPlayedTime={currentPlayedTime}
         progressBarValue={progressBarValue}
-        onComponentUnmount={onComponentUnmount}
       />);
   };
 

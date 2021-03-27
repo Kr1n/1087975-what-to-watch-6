@@ -4,9 +4,9 @@ import {
   loadMovie,
   loadMovies, loadPromo,
   loadReviews,
-} from '../action';
+} from "../action";
 
-import {ALL_GENRES, GENRES_MAX_COUNT} from '../../consts/common';
+import {ALL_GENRES, GENRES_MAX_COUNT} from "../../consts/common";
 import {adaptMoviesToClient} from "../../utils/utils";
 import {createReducer} from "@reduxjs/toolkit";
 

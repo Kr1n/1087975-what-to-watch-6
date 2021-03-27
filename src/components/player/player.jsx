@@ -13,7 +13,7 @@ import {fetchMovieList} from "../../store/api-actions";
 import Loading from "../loading/loading";
 
 const Player = (props) => {
-  const {movies, refVideo, onPlayButtonClick, isPlaying, onFullScreenClick, isDataLoaded, loadFilms, onVideoLoaded, currentPlayedTime, progressBarValue, onComponentUnmount} = props;
+  const {movies, refVideo, onPlayButtonClick, isPlaying, onFullScreenClick, isDataLoaded, loadFilms, onVideoLoaded, currentPlayedTime, progressBarValue} = props;
   const {id} = useParams();
   const history = useHistory();
 
@@ -24,7 +24,6 @@ const Player = (props) => {
     } else {
       loadFilms();
     }
-    return onComponentUnmount;
   }, [isDataLoaded]);
 
   let palyerComponent;
@@ -100,11 +99,8 @@ Player.propTypes = {
   onVideoLoaded: PropTypes.func.isRequired,
   currentPlayedTime: PropTypes.number.isRequired,
   progressBarValue: PropTypes.number.isRequired,
-  onComponentUnmount: PropTypes.func.isRequired,
   refVideo: PropTypes.oneOfType([
-    // Either a function
     PropTypes.func,
-    // Or the instance of a DOM native element (see the note about SSR)
     PropTypes.shape({current: PropTypes.instanceOf(Player)})
   ])
 };

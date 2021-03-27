@@ -1,5 +1,5 @@
-import {changeGenre, resetFilmCount, showMoreClicked} from '../action';
-import {createReducer} from '@reduxjs/toolkit';
+import {changeGenre, resetFilmCount, showMoreClicked} from "../action";
+import {createReducer} from "@reduxjs/toolkit";
 import {ALL_GENRES, SHOW_MORE_COUNT} from "../../consts/common";
 
 const initialState = {

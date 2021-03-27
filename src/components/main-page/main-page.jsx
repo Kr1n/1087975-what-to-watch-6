@@ -3,29 +3,25 @@ import PropTypes from "prop-types";
 import {moviesType, movieType} from "../../utils/prop-types";
 import MovieList from "../movie-list/movie-list";
 import Svg from "../svg/svg";
-import Header from "../header/header";
 import Footer from "../footer/footer";
 import GenreList from "../genre-list/genre-list";
 import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
-import Loading from "../loading/loading";
-import {AppRoute, AuthorizationStatus} from "../../consts/common";
+import {AppRoute} from "../../consts/common";
 import {redirectToRoute, resetFilmCount} from "../../store/action";
 import {fetchMovieList, fetchPromo, toggleFavorite} from "../../store/api-actions";
 import {getAuthorizationStatus} from "../../store/user/selectors";
 import {getShowedMovieCount} from "../../store/main/selectors";
-import {getLoadedPromoStatus, getMovieListByGenre, getPromoMovie} from "../../store/movies-data/selectors";
-import {useHistory} from "react-router-dom";
-
+import {
+  getLoadedPromoStatus,
+  getMoviesToShow,
+  getPromoMovie,
+} from "../../store/movies-data/selectors";
+import FilmCard from "../film-card/film-card";
+import Loading from "../loading/loading";
 
 const MainPage = (props) => {
-  const {promoMovie, moviesShowed, movies, onFavoriteClick, isPromoLoaded, authorizationStatus, redirectToLogin, loadPromo, onLeaveMainPage, loadMovies} = props;
-
-  const history = useHistory();
-  const onPlayButtonClick = (id) => history.push(`${AppRoute.PLAYER}/${id}`);
-
-  const onMylistClick = () => onFavoriteClick(promoMovie.id, !promoMovie.isFavorite);
-  const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
+  const {promoMovie, movies, isPromoLoaded, loadPromo, onLeaveMainPage, loadMovies} = props;
 
   useEffect(() => {
     if (!isPromoLoaded) {
@@ -44,56 +40,11 @@ const MainPage = (props) => {
   return (
     <>
       <Svg/>
-
-      <section className="movie-card">
-        <div className="movie-card__bg">
-          {isPromoLoaded ? <img src={promoMovie.backgroundImage} alt={promoMovie.name}/> : ``}
-        </div>
-
-        <h1 className="visually-hidden">WTW</h1>
-
-        <Header/>
-
-        {isPromoLoaded ?
-          <div className="movie-card__wrap">
-            <div className="movie-card__info">
-              <div className="movie-card__poster">
-                <img src={promoMovie.posterImage} alt={`${promoMovie.name} poster`} width="218"
-                  height="327"/>
-              </div>
-
-              <div className="movie-card__desc">
-                <h2 className="movie-card__title">{promoMovie.name}</h2>
-                <p className="movie-card__meta">
-                  <span className="movie-card__genre">{promoMovie.genre}</span>
-                  <span className="movie-card__year">{promoMovie.released}</span>
-                </p>
-
-                <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button" onClick={()=>onPlayButtonClick(promoMovie.id)}>
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s"></use>
-                    </svg>
-                    <span>Play</span>
-                  </button>
-                  <button className="btn btn--list movie-card__button" type="button" onClick={mylistAction}>
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      {
-                        promoMovie.isFavorite ?
-                          <use xlinkHref="#in-list"></use> :
-                          <use xlinkHref="#add"></use>
-                      }
-                    </svg>
-                    <span>My list</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div> :
+      {
+        (isPromoLoaded) ?
+          <FilmCard movie={promoMovie} /> :
           <Loading/>
-        }
-      </section>
-
+      }
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
@@ -101,10 +52,9 @@ const MainPage = (props) => {
           <GenreList />
 
           <div className="catalog__movies-list">
-            <MovieList movies={movies.slice(0, moviesShowed)}/>
+            <MovieList movies={movies}/>
           </div>
-
-          {(movies.length > moviesShowed) ? <ShowMore/> : ``}
+          <ShowMore/>
         </section>
 
         <Footer/>
@@ -116,7 +66,6 @@ const MainPage = (props) => {
 MainPage.propTypes = {
   promoMovie: movieType,
   movies: moviesType.isRequired,
-  moviesShowed: PropTypes.number.isRequired,
   onFavoriteClick: PropTypes.func.isRequired,
   isPromoLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
@@ -129,7 +78,7 @@ MainPage.propTypes = {
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   moviesShowed: getShowedMovieCount(state),
-  movies: getMovieListByGenre(state),
+  movies: getMoviesToShow(state),
   promoMovie: getPromoMovie(state),
   isPromoLoaded: getLoadedPromoStatus(state),
 });

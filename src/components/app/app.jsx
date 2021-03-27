@@ -1,5 +1,5 @@
 import React from "react";
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route} from "react-router-dom";
 import MainPage from "../main-page/main-page";
 import Page404 from "../page-404/page-404";
 import SignIn from "../sign-in/sign-in";
@@ -19,9 +19,9 @@ const App = () => {
         render={() => <MainPage />}
       >
       </Route>
-      <Route exact path={AppRoute.LOGIN}>
-        <SignIn />
-      </Route>
+      <Route exact path={AppRoute.LOGIN}
+        render={()=>(<SignIn />)}
+      />
       <PrivateRoute exact path={AppRoute.MYLIST}
         render={()=>(<MyList/>)}
       >
