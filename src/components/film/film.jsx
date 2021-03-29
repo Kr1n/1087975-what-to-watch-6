@@ -48,8 +48,8 @@ const Film = (props) => {
     const {backgroundImage, backgroundColor, posterImage, name, genre, released} = movie;
     const genreTitle = genre;
 
-    const onMylistClick = () => onFavoriteClick(id, !movie.isFavorite);
-    const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
+    const onMyListClick = () => onFavoriteClick(id, !movie.isFavorite);
+    const myListAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMyListClick : redirectToLogin;
 
     const fullDescription = <>
       <section className="movie-card movie-card--full" style={{backgroundColor}}>
@@ -77,7 +77,7 @@ const Film = (props) => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={mylistAction}>
+                <button className="btn btn--list movie-card__button" type="button" onClick={myListAction}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     {
                       movie.isFavorite ?
