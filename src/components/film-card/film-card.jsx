@@ -11,13 +11,13 @@ import {toggleFavorite} from "../../store/api-actions";
 import {movieType} from "../../utils/prop-types";
 
 const FilmCard = (props) => {
-  const {movie, authorizationStatus, redirectToLogin, onFavoriteClick} = props;
+  const {movie, authorizationStatus, redirectToLogin, onFavoriteClick, isMainPage} = props;
 
   const history = useHistory();
   const onPlayButtonClick = (id) => history.push(`${AppRoute.PLAYER}/${id}`);
 
-  const onMylistClick = () => onFavoriteClick(movie.id, !movie.isFavorite);
-  const mylistAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMylistClick : redirectToLogin;
+  const onMyListClick = () => onFavoriteClick(movie.id, !movie.isFavorite);
+  const myListAction = (authorizationStatus === AuthorizationStatus.AUTH) ? onMyListClick : redirectToLogin;
 
   return (
     <section className="movie-card">
@@ -50,7 +50,7 @@ const FilmCard = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button" onClick={mylistAction}>
+              <button className="btn btn--list movie-card__button" type="button" onClick={myListAction}>
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   {
                     movie.isFavorite ?
@@ -69,6 +69,7 @@ const FilmCard = (props) => {
 };
 
 FilmCard.propTypes = {
+  isMainPage: PropTypes.bool.isRequired,
   movie: movieType,
   onFavoriteClick: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
