@@ -26,7 +26,7 @@ const Player = (props) => {
     }
   }, [isDataLoaded]);
 
-  let palyerComponent;
+  let playerComponent;
 
   if (isDataLoaded) {
 
@@ -34,7 +34,7 @@ const Player = (props) => {
     const {videoLink, backgroundImage} = movie;
     const duration = getDurationFromSeconds(currentPlayedTime);
 
-    palyerComponent = <>
+    playerComponent = <>
       <Svg/>
 
       <div className="player">
@@ -76,11 +76,11 @@ const Player = (props) => {
       </div>
     </>;
   } else {
-    palyerComponent = <Loading/>;
+    playerComponent = <Loading/>;
   }
 
   return (<>
-    {palyerComponent}
+    {playerComponent}
   </>
   );
 };
