@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import Svg from "../svg/svg";
 import {useParams} from "react-router-dom";
 import {moviesType} from "../../utils/prop-types";
@@ -14,8 +14,12 @@ const AddReview = (props) => {
   const {id} = useParams();
   const movie = movies.find((item) => item.id === Number(id));
 
+  const [rating, ratingChange] = useState(undefined);
+  const [reviewLenght, reviewLenghtChange] = useState(0);
+  const [isReviewSended, isReviewSendedChange] = useState(false);
   const refReview = useRef();
   const refForm = useRef();
+
 
   const {backgroundImage, backgroundColor, posterImage, name} = movie;
 
@@ -26,16 +30,27 @@ const AddReview = (props) => {
       refReview.current.placeholder = `Please enter your text.`;
       return;
     }
+    isReviewSendedChange(true);
     addReview(movie.id, {rating: commentRating, comment});
+  };
+
+  const onRatingChange = (e) => {
+    ratingChange(e.currentTarget.value);
+  };
+
+  const onReviewChange = (e) => {
+    reviewLenghtChange(e.currentTarget.value.length);
   };
 
   const starList = [...Array(STAR_COUNT)].map((item, index) =>
     <>
-      <input key={`input${index}`} className="rating__input" id={`star-${index}`} type="radio" name="rating" value={index}/>
-      <label key={`label${index}`} className="rating__label" htmlFor={`star-${index}`}>Rating {index}</label>
+      <input key={`input${index + 1}`} className="rating__input" id={`star-${index + 1}`} type="radio" name="rating" value={index + 1} checked={Number(rating) === index + 1} onChange={onRatingChange}/>
+      <label key={`label${index + 1}`} className="rating__label" htmlFor={`star-${index + 1}`}>Rating {index + 1}</label>
     </>
   );
 
+  const isDisabled = (rating && reviewLenght > 50 && rating < 400 && !isReviewSended) ? false : true;
+  console.log(rating, reviewLenght);
   return (
     <>
       <Svg/>
@@ -72,9 +87,9 @@ const AddReview = (props) => {
 
             <div className="add-review__text">
               <textarea ref={refReview} className="add-review__textarea" name="review-text" id="review-text"
-                placeholder="Review text"></textarea>
+                placeholder="Review text" onChange={onReviewChange}></textarea>
               <div className="add-review__submit">
-                <button className="add-review__btn" type="submit">Post</button>
+                <button className="add-review__btn" type="submit" disabled={isDisabled}>Post</button>
               </div>
 
             </div>
