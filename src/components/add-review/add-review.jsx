@@ -15,11 +15,10 @@ const AddReview = (props) => {
   const movie = movies.find((item) => item.id === Number(id));
 
   const [rating, ratingChange] = useState(undefined);
-  const [reviewLenght, reviewLenghtChange] = useState(0);
+  const [reviewLength, reviewLengthChange] = useState(0);
   const [isReviewSended, isReviewSendedChange] = useState(false);
   const refReview = useRef();
   const refForm = useRef();
-
 
   const {backgroundImage, backgroundColor, posterImage, name} = movie;
 
@@ -39,7 +38,7 @@ const AddReview = (props) => {
   };
 
   const onReviewChange = (e) => {
-    reviewLenghtChange(e.currentTarget.value.length);
+    reviewLengthChange(e.currentTarget.value.length);
   };
 
   const starList = [...Array(STAR_COUNT)].map((item, index) =>
@@ -49,8 +48,8 @@ const AddReview = (props) => {
     </>
   );
 
-  const isDisabled = (rating && reviewLenght > 50 && rating < 400 && !isReviewSended) ? false : true;
-  console.log(rating, reviewLenght);
+  const isDisabled = (rating && reviewLength > 50 && !isReviewSended) ? false : true;
+
   return (
     <>
       <Svg/>
@@ -87,7 +86,7 @@ const AddReview = (props) => {
 
             <div className="add-review__text">
               <textarea ref={refReview} className="add-review__textarea" name="review-text" id="review-text"
-                placeholder="Review text" onChange={onReviewChange}></textarea>
+                placeholder="Review text" onChange={onReviewChange} maxLength="400"></textarea>
               <div className="add-review__submit">
                 <button className="add-review__btn" type="submit" disabled={isDisabled}>Post</button>
               </div>
