@@ -1,9 +1,11 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import SmallMoviesCard from './small-movie-card';
 import {adaptMoviesToClient} from "../../utils/utils";
 import {Router} from "react-router-dom";
 import {createMemoryHistory} from "history";
+import {user} from "../../store/user/user";
+import userEvent from "@testing-library/user-event";
 
 const movie = adaptMoviesToClient([{
   "id": 1,
@@ -25,21 +27,41 @@ const movie = adaptMoviesToClient([{
   "is_favorite": false
 }])[0];
 
+jest.mock(`./../video-player/video-player`, () =>{
+  const videoPlayer = () => <>This is mock VideoPlayer</>;
+  videoPlayer.displayName = `VideoPlayer`;
+  return {
+    __esModule: true,
+    default: () => {
+      return videoPlayer();
+    }
+  };
+});
+
 it(`SmallMoviesCard should render correctly`, () => {
   const history = createMemoryHistory();
-  const {getByText} = render(
+
+  const onHover = jest.fn();
+
+  render(
       <Router history={history}>
         <SmallMoviesCard
           movie={movie}
-          onHover={()=>(1)}
-          onCursorLeave={()=>(1)}
+          onHover={onHover}
+          onCursorLeave={()=>{}}
           isActive={false}
         />
       </Router>
   );
-  const movieNameElement = getByText(movie.name);
 
-  expect(movieNameElement).toBeInTheDocument();
+  const smallCardElement = screen.getByTestId(`smallCard`);
+
+  expect(smallCardElement).toBeInTheDocument();
+  expect(screen.getByText(movie.name)).toBeInTheDocument();
+  expect(screen.getByText(/VideoPlayer/)).toBeInTheDocument();
+
+  userEvent.hover(smallCardElement);
+  expect(onHover).toBeCalled();
 });
 
 
