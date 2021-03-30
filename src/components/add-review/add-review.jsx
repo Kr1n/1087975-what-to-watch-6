@@ -43,7 +43,7 @@ const AddReview = (props) => {
 
   const starList = [...Array(STAR_COUNT)].map((item, index) =>
     <>
-      <input key={`input${index + 1}`} className="rating__input" id={`star-${index + 1}`} type="radio" name="rating" value={index + 1} checked={Number(rating) === index + 1} onChange={onRatingChange}/>
+      <input key={`input${index + 1}`} className="rating__input" id={`star-${index + 1}`} data-testid={`star-${index + 1}`} type="radio" name="rating" value={index + 1} checked={Number(rating) === index + 1} onChange={onRatingChange}/>
       <label key={`label${index + 1}`} className="rating__label" htmlFor={`star-${index + 1}`}>Rating {index + 1}</label>
     </>
   );
@@ -85,10 +85,10 @@ const AddReview = (props) => {
             </div>
 
             <div className="add-review__text">
-              <textarea ref={refReview} className="add-review__textarea" name="review-text" id="review-text"
+              <textarea ref={refReview} className="add-review__textarea" name="review-text" id="review-text" data-testid="review-text"
                 placeholder="Review text" onChange={onReviewChange} maxLength="400"></textarea>
               <div className="add-review__submit">
-                <button className="add-review__btn" type="submit" disabled={isDisabled}>Post</button>
+                <button className="add-review__btn" type="submit" disabled={isDisabled} data-testid="button-submit">Post</button>
               </div>
 
             </div>
