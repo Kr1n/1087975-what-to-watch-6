@@ -1,5 +1,5 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {AuthorizationStatus} from "../../consts/common";
@@ -9,34 +9,62 @@ import {Header} from "./header";
 
 const mockStore = configureStore({});
 
-it(`Header page should render correctly`, () => {
-  const history = createMemoryHistory();
-  const store = mockStore({
-    USER: {authorizationStatus: AuthorizationStatus.NO_AUTH}
+describe(`GenreList should render correctly`, () => {
+
+  it(`Header page should render correctly with AUTH`, () => {
+    const history = createMemoryHistory();
+    const store = mockStore({
+      USER: {authorizationStatus: AuthorizationStatus.AUTH},
+    });
+
+    const title = `Header title`;
+    const link = {
+      href: `/`,
+      name: `main`
+    };
+
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <Header
+              title={title}
+              link={link}
+            />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByText(link.name)).toBeInTheDocument();
+    expect(screen.getByText(`Sign in`)).toBeNull();
+
   });
 
-  const title = `Header title`;
-  const link = {
-    href: `/`,
-    name: `main`
-  };
+  it(`Header page should render correctly with NO_AUTH`, () => {
+    const history = createMemoryHistory();
+    const store = mockStore({
+      USER: {authorizationStatus: AuthorizationStatus.NO_AUTH}
+    });
 
+    const title = `Header title`;
+    const link = {
+      href: `/`,
+      name: `main`
+    };
 
-  const {getByText} = render(
-      <redux.Provider store={store}>
-        <Router history={history}>
-          <Header
-            title={title}
-            link={link}
-            authorizationStatus={AuthorizationStatus.AUTH}
-          />
-        </Router>
-      </redux.Provider>
-  );
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <Header
+              title={title}
+              link={link}
+            />
+          </Router>
+        </redux.Provider>
+    );
 
-  const titleElement = getByText(title);
-  const linkElement = getByText(link.name);
-
-  expect(titleElement).toBeInTheDocument();
-  expect(linkElement).toBeInTheDocument();
+    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByText(link.name)).toBeInTheDocument();
+    expect(screen.getByText(`Sign in`)).toBeInTheDocument();
+  });
 });
