@@ -56,7 +56,6 @@ Header.propTypes = {
     name: PropTypes.string,
   }),
   authorizationStatus: PropTypes.string.isRequired,
-  onLogout: PropTypes.func.isRequired
 };
 
 Header.defaultProps = {
