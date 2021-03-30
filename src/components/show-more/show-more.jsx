@@ -10,7 +10,7 @@ const ShowMore = ({onShowMoreClick, movies, moviesShowed}) => {
 
   const showMoreElement =
     <div className="catalog__more">
-      <button onClick={onShowMoreClick} className="catalog__button" type="button">Show more</button>
+      <button onClick={onShowMoreClick} className="catalog__button" type="button" data-testid="show-more">Show more</button>
     </div>;
 
   return (
