@@ -5,13 +5,12 @@ import {AppRoute, AuthorizationStatus} from "../../consts/common";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {getAuthorizationStatus} from "../../store/user/selectors";
-import {getMovieList} from "../../store/movies-data/selectors";
 import {redirectToRoute} from "../../store/action";
 import {toggleFavorite} from "../../store/api-actions";
 import {movieType} from "../../utils/prop-types";
 
 const FilmCard = (props) => {
-  const {movie, authorizationStatus, redirectToLogin, onFavoriteClick, isMainPage} = props;
+  const {movie, authorizationStatus, redirectToLogin, onFavoriteClick} = props;
 
   const history = useHistory();
   const onPlayButtonClick = (id) => history.push(`${AppRoute.PLAYER}/${id}`);
@@ -50,7 +49,7 @@ const FilmCard = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button" onClick={myListAction}>
+              <button className="btn btn--list movie-card__button" type="button" onClick={myListAction} data-testid="button-in-mylist">
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   {
                     movie.isFavorite ?
@@ -69,7 +68,6 @@ const FilmCard = (props) => {
 };
 
 FilmCard.propTypes = {
-  isMainPage: PropTypes.bool.isRequired,
   movie: movieType,
   onFavoriteClick: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
@@ -78,7 +76,6 @@ FilmCard.propTypes = {
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
-  movies: getMovieList(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
