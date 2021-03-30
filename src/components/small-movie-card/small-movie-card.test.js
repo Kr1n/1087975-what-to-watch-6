@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import SmallMoviesCard from './small-movies-card';
+import SmallMoviesCard from './small-movie-card';
 import {adaptMoviesToClient} from "../../utils/utils";
 import {Router} from "react-router-dom";
 import {createMemoryHistory} from "history";

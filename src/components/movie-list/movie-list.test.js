@@ -31,7 +31,7 @@ const mockMovie = adaptMoviesToClient([{
 const mockMovies = new Array(5).fill((mockMovie))
   .map((item, index) => ({...item, id: index, genre: `genre${index}`}));
 
-jest.mock(`./../small-movie-card/small-movies-card`, () =>{
+jest.mock(`./../small-movie-card/small-movie-card`, () =>{
   const smallMoviesCard = () => <div>This is mock SmallMoviesCard</div>;
   smallMoviesCard.displayName = `SmallMoviesCard`;
   return {

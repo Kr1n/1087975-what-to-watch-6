@@ -1,5 +1,5 @@
 import React from "react";
-import SmallMovieCard from "../small-movie-card/small-movies-card";
+import SmallMovieCard from "../small-movie-card/small-movie-card";
 import {moviesType} from "../../utils/prop-types";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
