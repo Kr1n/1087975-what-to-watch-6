@@ -44,7 +44,7 @@ const Tabs = (props) => {
 
   const overviewTab =
     <>
-      <div className="movie-rating">
+      <div className="movie-rating" data-testid="overview-rating">
         <div className="movie-rating__score">{rating}</div>
         <p className="movie-rating__meta">
           <span className="movie-rating__level">{getRatingDescription(rating)}</span>
