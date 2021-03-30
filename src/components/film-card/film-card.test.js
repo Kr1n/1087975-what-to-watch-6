@@ -43,7 +43,7 @@ jest.mock(`./../header/header`, () =>{
   };
 });
 
-describe(`Reducers in DATA domain work correctly`, () => {
+describe(`FilmCard should render correctly`, () => {
 
   it(`Render 'FilmCard' with NOT_AUTH`, () => {
     const history = createMemoryHistory();
