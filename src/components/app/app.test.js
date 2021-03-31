@@ -6,7 +6,7 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import App from './app';
 import {adaptMoviesToClient} from "../../utils/utils";
-import {ALL_GENRES, SHOW_MORE_COUNT, AuthorizationStatus, AppRoute} from "../../consts/common";
+import {ALL_GENRES, SHOW_MORE_COUNT, AuthorizationStatus} from "../../consts/common";
 
 const mockStore = configureStore({});
 
@@ -33,26 +33,68 @@ const mockMovie = adaptMoviesToClient([{
 const mockMovies = new Array(5).fill((mockMovie))
   .map((item, index) => ({...item, id: index, genre: `genre${index}`}));
 
-const mockReview = {
-  "id": 1,
-  "user": {
-    "id": 4,
-    "name": `Kate Muir`
-  },
-  "rating": 8.9,
-  "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-  "date": `2019-05-08T14:13:56.569Z`
-};
+jest.mock(`../movie-list/movie-list`, () =>{
+  const movieList = () => <>This is mock MovieList</>;
+  movieList.displayName = `MovieList`;
+  return {
+    __esModule: true,
+    default: () => {
+      return movieList();
+    }
+  };
+});
 
-const mockReviews = new Array(5).fill((mockReview))
-  .map((item, index) => ({...item, id: index, user: `username${index}`}));
+jest.mock(`../my-list/my-list`, () =>{
+  const myList = () => <>This is mock MyList</>;
+  myList.displayName = `MyList`;
+  return {
+    __esModule: true,
+    default: () => {
+      return myList();
+    }
+  };
+});
+
+jest.mock(`../main-page/main-page`, () =>{
+  const mainPage = () => <>This is mock MainPage</>;
+  mainPage.displayName = `MainPage`;
+  return {
+    __esModule: true,
+    default: () => {
+      return mainPage();
+    }
+  };
+});
+
+jest.mock(`../film/film`, () =>{
+  const film = () => <>This is mock Film</>;
+  film.displayName = `Film`;
+  return {
+    __esModule: true,
+    default: () => {
+      return film();
+    }
+  };
+});
+
+jest.mock(`../player/player`, () =>{
+  const player = () => <>This is mock Player</>;
+  player.displayName = `Player`;
+  return {
+    __esModule: true,
+    default: () => {
+      return player();
+    }
+  };
+});
 
 
 describe(`Test routing`, () => {
   jest.spyOn(redux, `useSelector`);
   jest.spyOn(redux, `useDispatch`);
 
-  it(`Render 'WelcomeScreen' when user navigate to '/' url`, () => {
+
+  it(`Render 'MainPage' when user navigate to '/' url`, () => {
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH},
@@ -65,10 +107,10 @@ describe(`Test routing`, () => {
         isFavoriteLoaded: false,
         isDataLoaded: true,
         isPromoLoaded: true,
-        isFilmLoaded: false,
-        isCommentLoaded: false,
-        loadedFilmId: -1,
-        loadedCommentsFilmId: -1,
+        isFilmLoaded: true,
+        isCommentLoaded: true,
+        loadedFilmId: 1,
+        loadedCommentsFilmId: 1,
         promoMovie: mockMovie,
       },
       MAIN: {
@@ -86,8 +128,230 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
-    expect(screen.getByText(mockMovie.name)).toBeInTheDocument();
-    console.log(screen.getAllByTestId(`smallCard`));
-    expect(screen.getAllByTestId(`smallCard`)).toBeInTheDocument();
+    expect(screen.getByText(/This is mock MainPage/)).toBeInTheDocument();
+  });
+
+  it(`Render 'SignIn' when user navigate to '/login' url`, () => {
+    const store = mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.NO_AUTH},
+      DATA: {
+        genres: [ALL_GENRES, `genre1`, `genre2`, `genre3`],
+        movieList: mockMovies,
+        favoriteList: [],
+        reviewList: [],
+        movie: null,
+        isFavoriteLoaded: false,
+        isDataLoaded: true,
+        isPromoLoaded: true,
+        isFilmLoaded: true,
+        isCommentLoaded: true,
+        loadedFilmId: 1,
+        loadedCommentsFilmId: 1,
+        promoMovie: mockMovie,
+      },
+      MAIN: {
+        moviesShowed: SHOW_MORE_COUNT,
+        genre: ALL_GENRES,
+      }
+    });
+
+    const history = createMemoryHistory();
+    history.push(`/login`);
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByTestId(`login`)).toBeInTheDocument();
+    expect(screen.getByTestId(`password`)).toBeInTheDocument();
+  });
+
+  it(`Render 'MyList' when user navigate to '/mylist' url`, () => {
+    const store = mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH},
+      DATA: {
+        genres: [ALL_GENRES, `genre1`, `genre2`, `genre3`],
+        movieList: mockMovies,
+        favoriteList: [],
+        reviewList: [],
+        movie: null,
+        isFavoriteLoaded: false,
+        isDataLoaded: true,
+        isPromoLoaded: true,
+        isFilmLoaded: true,
+        isCommentLoaded: true,
+        loadedFilmId: 1,
+        loadedCommentsFilmId: 1,
+        promoMovie: mockMovie,
+      },
+      MAIN: {
+        moviesShowed: SHOW_MORE_COUNT,
+        genre: ALL_GENRES,
+      }
+    });
+
+    const history = createMemoryHistory();
+    history.push(`/mylist`);
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(/This is mock MyList/)).toBeInTheDocument();
+  });
+
+  it(`Render 'Film' when user navigate to '/film/1' url`, () => {
+    const store = mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH},
+      DATA: {
+        genres: [ALL_GENRES, `genre1`, `genre2`, `genre3`],
+        movieList: mockMovies,
+        favoriteList: [],
+        reviewList: [],
+        movie: null,
+        isFavoriteLoaded: false,
+        isDataLoaded: true,
+        isPromoLoaded: true,
+        isFilmLoaded: true,
+        isCommentLoaded: true,
+        loadedFilmId: 1,
+        loadedCommentsFilmId: 1,
+        promoMovie: mockMovie,
+      },
+      MAIN: {
+        moviesShowed: SHOW_MORE_COUNT,
+        genre: ALL_GENRES,
+      }
+    });
+
+    const history = createMemoryHistory();
+    history.push(`/film/1`);
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(/This is mock Film/)).toBeInTheDocument();
+  });
+
+  it(`Render 'AddReview' when user navigate to '/film/1/review' url`, () => {
+    const store = mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH},
+      DATA: {
+        genres: [ALL_GENRES, `genre1`, `genre2`, `genre3`],
+        movieList: mockMovies,
+        favoriteList: [],
+        reviewList: [],
+        movie: null,
+        isFavoriteLoaded: false,
+        isDataLoaded: true,
+        isPromoLoaded: true,
+        isFilmLoaded: true,
+        isCommentLoaded: true,
+        loadedFilmId: 1,
+        loadedCommentsFilmId: 1,
+        promoMovie: mockMovie,
+      },
+      MAIN: {
+        moviesShowed: SHOW_MORE_COUNT,
+        genre: ALL_GENRES,
+      }
+    });
+
+    const history = createMemoryHistory();
+    history.push(`/film/1/review`);
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByTestId(`review-text`)).toBeInTheDocument();
+    expect(screen.getByTestId(`button-submit`)).toBeInTheDocument();
+  });
+
+  it(`Render '404 page'`, () => {
+    const store = mockStore({});
+
+    const history = createMemoryHistory();
+    history.push(`/some-wrong-url`);
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(/404 Page not found/)).toBeInTheDocument();
+  });
+
+  it(`Render 'Server error' when was bad response`, () => {
+    const store = mockStore({});
+
+    const history = createMemoryHistory();
+    history.push(`/error`);
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(/Server error/)).toBeInTheDocument();
+  });
+
+  it(`Render 'Player' when user navigate to '/player/1 url`, () => {
+    const store = mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH},
+      DATA: {
+        genres: [ALL_GENRES, `genre1`, `genre2`, `genre3`],
+        movieList: mockMovies,
+        favoriteList: [],
+        reviewList: [],
+        movie: null,
+        isFavoriteLoaded: false,
+        isDataLoaded: true,
+        isPromoLoaded: true,
+        isFilmLoaded: true,
+        isCommentLoaded: true,
+        loadedFilmId: 1,
+        loadedCommentsFilmId: 1,
+        promoMovie: mockMovie,
+      },
+      MAIN: {
+        moviesShowed: SHOW_MORE_COUNT,
+        genre: ALL_GENRES,
+      }
+    });
+
+    const history = createMemoryHistory();
+    history.push(`/player/1`);
+    render(
+        <redux.Provider store={store}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(/This is mock Player/)).toBeInTheDocument();
   });
 });
