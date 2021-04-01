@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import withVideoPlayer from './with-video-player';
+import withMovieList from './with-movie-list';
 
 jest.mock(`../components/player/player`, () => {
   const mockVideoPlayer = () => <>This is mock VideoPlayer</>;
@@ -13,11 +13,11 @@ jest.mock(`../components/player/player`, () => {
   };
 });
 
-describe(`Test HOC 'withVideoPlayer`, () => {
+describe(`Test HOC 'withMovieList`, () => {
   it(`Base component should be correct rendering when use with HOC`, () => {
-    const BaseComponent = () => <h1>withVideoPlayer</h1>;
-    const BaseComponentWrapped = withVideoPlayer(BaseComponent);
+    const BaseComponent = () => <h1>withMovieList</h1>;
+    const BaseComponentWrapped = withMovieList(BaseComponent);
     render(<BaseComponentWrapped />);
-    expect(screen.getByText(/withVideoPlayer/i)).toBeInTheDocument();
+    expect(screen.getByText(/withMovieList/i)).toBeInTheDocument();
   });
 });

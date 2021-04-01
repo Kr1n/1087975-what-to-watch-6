@@ -2,12 +2,10 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import configureStore from 'redux-mock-store';
-import * as redux from 'react-redux';
-import Tabs from './tabs';
+import {Tabs} from './tabs';
 import {adaptMoviesToClient} from "../../utils/utils";
+import userEvent from "@testing-library/user-event";
 
-const mockStore = configureStore({});
 const mockMovie = adaptMoviesToClient([{
   "id": 1,
   "name": `The Grand Budapest Hotel`,
@@ -53,35 +51,24 @@ jest.mock(`./../review/review`, () =>{
   };
 });
 
-
 describe(`Tabs should render correctly`, () => {
 
   it(`Render overview Tab`, () => {
     const history = createMemoryHistory();
-    const store = mockStore({
-      DATA: {
-        reviewList: mockReviews,
-        loadedCommentsFilmId: mockMovie.id
-      }
-    });
-
-    const loadReviews = jest.fn();
 
     render(
-        <redux.Provider store={store}>
-          <Router history={history}>
-            <Tabs
-              movie={mockMovie}
-              loadReviews={loadReviews}
-            />
-          </Router>
-        </redux.Provider>
+        <Router history={history}>
+          <Tabs
+            movie={mockMovie}
+            reviews={mockReviews}
+            loadedCommentsFilmId={mockMovie.id}
+            loadReviews={() => {}}
+          />
+        </Router>
     );
-
-    expect(loadReviews).toBeCalled();
     expect(screen.getByText(mockMovie.description)).toBeInTheDocument();
     expect(screen.getByTestId(`overview-rating`)).toBeInTheDocument();
+    userEvent.click(screen.getByText(`Reviews`));
     expect(screen.getAllByText(/This is mock Review/i)).toHaveLength(mockReviews.length);
   });
-
 });

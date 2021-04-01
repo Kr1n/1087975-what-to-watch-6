@@ -4,7 +4,6 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
-import userEvent from '@testing-library/user-event';
 import MovieList from './movie-list';
 import {adaptMoviesToClient} from "../../utils/utils";
 
@@ -94,14 +93,10 @@ describe(`MovieList should render correctly`, () => {
       DATA: {isDataLoaded: true}
     });
 
-    const onHover = jest.fn();
-
     render(
         <redux.Provider store={store}>
           <Router history={history}>
             <MovieList
-              onHover={onHover}
-              onCursorLeave={()=>{}}
               activeFilm={-1}
               movies={mockMovies}
             />
@@ -110,10 +105,6 @@ describe(`MovieList should render correctly`, () => {
     );
 
     expect(screen.getAllByText(/This is mock SmallMoviesCard/i)).toHaveLength(mockMovies.length);
-
-    userEvent.hover(screen.getAllByText(/This is mock SmallMoviesCard/i)[0]);
-    expect(onHover).toBeCalled();
-    // expect(onTabClick).toBe(mockMovies[3].genre);
   });
 
 });

@@ -4,7 +4,6 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
-import userEvent from '@testing-library/user-event';
 import ShowMore from './show-more';
 import {adaptMoviesToClient} from "../../utils/utils";
 import {ALL_GENRES} from "../../consts/common";
@@ -41,22 +40,15 @@ describe(`ShowMore should render correctly`, () => {
       DATA: {movieList: mockMovies}
     });
 
-    const onShowMoreClick = jest.fn();
-
     render(
         <redux.Provider store={store}>
           <Router history={history}>
-            <ShowMore
-              onShowMoreClick={onShowMoreClick}
-            />
+            <ShowMore/>
           </Router>
         </redux.Provider>
     );
 
     expect(screen.getByTestId(`show-more`)).toBeInTheDocument();
-
-    userEvent.click(screen.getByText(/Show more/i));
-    expect(onShowMoreClick).toBeCalled();
   });
 
   it(`Render 'ShowMore' when movies.lenght <= moviesShowed`, () => {
@@ -66,14 +58,10 @@ describe(`ShowMore should render correctly`, () => {
       DATA: {movieList: mockMovies}
     });
 
-    const onShowMoreClick = jest.fn();
-
     render(
         <redux.Provider store={store}>
           <Router history={history}>
-            <ShowMore
-              onShowMoreClick={onShowMoreClick}
-            />
+            <ShowMore/>
           </Router>
         </redux.Provider>
     );

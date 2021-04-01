@@ -5,7 +5,7 @@ import {createMemoryHistory} from 'history';
 import {AuthorizationStatus} from "../../consts/common";
 import * as redux from "react-redux";
 import configureStore from "redux-mock-store";
-import {Header} from "./header";
+import Header from "./header";
 
 const mockStore = configureStore({});
 
@@ -36,8 +36,6 @@ describe(`GenreList should render correctly`, () => {
 
     expect(screen.getByText(title)).toBeInTheDocument();
     expect(screen.getByText(link.name)).toBeInTheDocument();
-    expect(screen.getByText(`Sign in`)).toBeNull();
-
   });
 
   it(`Header page should render correctly with NO_AUTH`, () => {

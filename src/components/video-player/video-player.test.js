@@ -24,10 +24,17 @@ const mockMovie = adaptMoviesToClient([{
 }])[0];
 
 describe(`Test VideoPlayer`, () => {
+  let mutedMock;
+
   beforeAll(() => {
+    mutedMock = jest.fn();
     window.HTMLMediaElement.prototype.play = () => {};
     window.HTMLMediaElement.prototype.pause = () => {};
+    Object.defineProperty(window.HTMLMediaElement.prototype, `muted`, {
+      set: mutedMock,
+    });
   });
+
 
   it(`VideoPlayer should be render correctly`, () => {
     const mockPath = `mock-path`;
@@ -42,6 +49,6 @@ describe(`Test VideoPlayer`, () => {
     );
 
     expect(container.querySelector(`video`)).toBeInTheDocument();
-    expect(container.querySelector(`video`)).toHaveAttribute(`muted`);
+    expect(mutedMock).toBeCalled();
   });
 });

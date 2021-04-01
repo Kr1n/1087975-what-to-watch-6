@@ -4,7 +4,6 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
-import userEvent from '@testing-library/user-event';
 import GenreList from './genre-list';
 import {ALL_GENRES} from "../../consts/common";
 import {adaptMoviesToClient} from "../../utils/utils";
@@ -41,24 +40,14 @@ describe(`GenreList should render correctly`, () => {
       DATA: {genres: Array.from(new Set([ALL_GENRES, ...mockMovies.map((item) => item.genre)]))}
     });
 
-    const onTabClick = jest.fn((newGenre) => newGenre);
-
     render(
         <redux.Provider store={store}>
           <Router history={history}>
-            <GenreList
-              onTabClick={onTabClick}
-            />
+            <GenreList />
           </Router>
         </redux.Provider>
     );
-
     expect(screen.getByText(ALL_GENRES)).toBeInTheDocument();
     expect(screen.getByText(mockMovies[3].genre)).toBeInTheDocument();
-
-    userEvent.click(screen.getByText(mockMovies[3].genre));
-    expect(onTabClick).toBeCalled();
-    // expect(onTabClick).toBe(mockMovies[3].genre);
   });
-
 });
