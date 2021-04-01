@@ -1,11 +1,4 @@
 film - нет
-film-card - jest.fn()
-genre-list - jest.fn()
-header - .toBeNull(); (state - authorizationStatus ?)
 main-page - нет
-movie-list - jest.fn()
 player - нет
-show-more - jest.fn()
-tabs - dispatch, useEffect ?
-video-player - unstable_flushDiscreteUpdates (toHaveAttribute ? )
-HOCs
+api-actions
