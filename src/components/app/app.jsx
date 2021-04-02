@@ -9,7 +9,6 @@ import Player from "../player/player";
 import AddReview from "../add-review/add-review";
 import PrivateRoute from "../private-router/private-router";
 import {AppRoute} from "../../consts/common";
-import Logout from "../logout/logout";
 import Error from "../error/error";
 
 const App = () => {
@@ -35,9 +34,6 @@ const App = () => {
       />
       <Route exact path={`${AppRoute.PLAYER}/:id`}>
         <Player/>
-      </Route>
-      <Route exact path={AppRoute.LOGOUT}>
-        <Logout/>
       </Route>
       <Route path={AppRoute.SERVER_ERROR}>
         <Error />

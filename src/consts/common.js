@@ -10,7 +10,6 @@ export const AuthorizationStatus = {
 
 export const AppRoute = {
   LOGIN: `/login`,
-  LOGOUT: `/logout`,
   PLAYER: `/player`,
   MYLIST: `/mylist`,
   FILM: `/film`,
@@ -23,7 +22,6 @@ export const AppRoute = {
 export const APIRoute = {
   FILMS: `/films`,
   LOGIN: `/login`,
-  LOGOUT: `/logout`,
   PROMO: `/films/promo`,
   FAVORITE: `/favorite`,
   REVIEWS: `/comments`,
