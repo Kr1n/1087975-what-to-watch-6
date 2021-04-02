@@ -42,10 +42,10 @@ const AddReview = (props) => {
   };
 
   const starList = [...Array(STAR_COUNT)].map((item, index) =>
-    <>
-      <input key={`input${index + 1}`} className="rating__input" id={`star-${index + 1}`} data-testid={`star-${index + 1}`} type="radio" name="rating" value={index + 1} checked={Number(rating) === index + 1} onChange={onRatingChange}/>
-      <label key={`label${index + 1}`} className="rating__label" htmlFor={`star-${index + 1}`}>Rating {index + 1}</label>
-    </>
+    <React.Fragment key={index}>
+      <input className="rating__input" id={`star-${index + 1}`} data-testid={`star-${index + 1}`} type="radio" name="rating" value={index + 1} checked={Number(rating) === index + 1} onChange={onRatingChange}/>
+      <label className="rating__label" htmlFor={`star-${index + 1}`}>Rating {index + 1}</label>
+    </React.Fragment>
   );
 
   const isDisabled = (rating && reviewLength > 50 && !isReviewSended) ? false : true;
