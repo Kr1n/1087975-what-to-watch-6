@@ -57,11 +57,17 @@ const withActivePlayer = (WrappedComponent) => {
       }
     };
 
+    const onTimeUpdate = () => {
+      currentPlayedTimeChange(refVideo.current.duration - refVideo.current.currentTime);
+      progressBarValueChange(refVideo.current.currentTime * 100 / refVideo.current.duration);
+    };
+
     const onVideoLoaded = () => {
-      refVideo.current.addEventListener(`timeupdate`, () => {
-        currentPlayedTimeChange(refVideo.current.duration - refVideo.current.currentTime);
-        progressBarValueChange(refVideo.current.currentTime * 100 / refVideo.current.duration);
-      });
+      refVideo.current.addEventListener(`timeupdate`, onTimeUpdate);
+    };
+
+    const onComponentUnmount = () => {
+      refVideo.current.removeEventListener(`timeupdate`, onTimeUpdate);
     };
 
     return (
@@ -72,6 +78,7 @@ const withActivePlayer = (WrappedComponent) => {
         onPlayButtonClick={onPlayButtonClick}
         onFullScreenClick={onFullsScreenClick}
         onVideoLoaded={onVideoLoaded}
+        onComponentUnmount={onComponentUnmount}
         currentPlayedTime={currentPlayedTime}
         progressBarValue={progressBarValue}
       />);

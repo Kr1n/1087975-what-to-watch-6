@@ -13,7 +13,7 @@ import {fetchMovieList} from "../../store/api-actions";
 import Loading from "../loading/loading";
 
 const Player = (props) => {
-  const {movies, refVideo, onPlayButtonClick, isPlaying, onFullScreenClick, isDataLoaded, loadFilms, onVideoLoaded, currentPlayedTime, progressBarValue} = props;
+  const {movies, refVideo, onPlayButtonClick, isPlaying, onFullScreenClick, isDataLoaded, loadFilms, onVideoLoaded, currentPlayedTime, progressBarValue, onComponentUnmount} = props;
   const {id} = useParams();
   const history = useHistory();
 
@@ -24,6 +24,7 @@ const Player = (props) => {
     } else {
       loadFilms();
     }
+    return onComponentUnmount;
   }, [isDataLoaded]);
 
   let playerComponent;
@@ -38,7 +39,7 @@ const Player = (props) => {
       <Svg/>
 
       <div className="player">
-        <VideoPlayer videoLink={videoLink} backgroundImage={backgroundImage} autoPlay muted={false}
+        <VideoPlayer videoLink={videoLink} backgroundImage={backgroundImage} autoPlay={true} muted={false}
           refVideo={refVideo}/>
 
         <button type="button" className="player__exit" onClick={() => history.push(`${AppRoute.FILM}/${id}`)}>Exit
@@ -97,6 +98,7 @@ Player.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
   loadFilms: PropTypes.func.isRequired,
   onVideoLoaded: PropTypes.func.isRequired,
+  onComponentUnmount: PropTypes.func.isRequired,
   currentPlayedTime: PropTypes.number.isRequired,
   progressBarValue: PropTypes.number.isRequired,
   refVideo: PropTypes.oneOfType([
