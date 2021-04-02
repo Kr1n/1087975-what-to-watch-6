@@ -77,7 +77,7 @@ const Film = (props) => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={myListAction}>
+                <button className="btn btn--list movie-card__button" type="button" onClick={myListAction} data-testid="button-favorite">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     {
                       movie.isFavorite ?

@@ -7,9 +7,8 @@ import Footer from "../footer/footer";
 import GenreList from "../genre-list/genre-list";
 import ShowMore from "../show-more/show-more";
 import {connect} from "react-redux";
-import {AppRoute} from "../../consts/common";
-import {redirectToRoute, resetFilmCount} from "../../store/action";
-import {fetchMovieList, fetchPromo, toggleFavorite} from "../../store/api-actions";
+import {resetFilmCount} from "../../store/action";
+import {fetchMovieList, fetchPromo} from "../../store/api-actions";
 import {getAuthorizationStatus} from "../../store/user/selectors";
 import {getShowedMovieCount} from "../../store/main/selectors";
 import {
@@ -67,11 +66,9 @@ const MainPage = (props) => {
 MainPage.propTypes = {
   promoMovie: movieType,
   movies: moviesType.isRequired,
-  onFavoriteClick: PropTypes.func.isRequired,
   isPromoLoaded: PropTypes.bool.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  redirectToLogin: PropTypes.func.isRequired,
   loadPromo: PropTypes.func.isRequired,
   onLeaveMainPage: PropTypes.func.isRequired,
   loadMovies: PropTypes.func.isRequired,
@@ -87,12 +84,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  redirectToLogin() {
-    dispatch(redirectToRoute(AppRoute.LOGIN));
-  },
-  onFavoriteClick(id, isFavorite) {
-    dispatch(toggleFavorite(id, isFavorite));
-  },
   loadPromo() {
     dispatch(fetchPromo());
   },

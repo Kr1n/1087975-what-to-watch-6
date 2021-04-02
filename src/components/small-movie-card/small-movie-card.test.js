@@ -4,7 +4,6 @@ import SmallMoviesCard from './small-movie-card';
 import {adaptMoviesToClient} from "../../utils/utils";
 import {Router} from "react-router-dom";
 import {createMemoryHistory} from "history";
-import {user} from "../../store/user/user";
 import userEvent from "@testing-library/user-event";
 
 const movie = adaptMoviesToClient([{

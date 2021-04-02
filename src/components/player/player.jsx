@@ -8,7 +8,7 @@ import {AppRoute} from "../../consts/common";
 import {connect} from "react-redux";
 import {getLoadedDataStatus, getMovieList} from "../../store/movies-data/selectors";
 import PropTypes from "prop-types";
-import withActivePlayer from "../../hocs/with-video-player";
+import withActivePlayer from "../../hocs/with-player";
 import {fetchMovieList} from "../../store/api-actions";
 import Loading from "../loading/loading";
 
@@ -54,7 +54,7 @@ const Player = (props) => {
           </div>
 
           <div className="player__controls-row">
-            <button type="button" className="player__play" onClick={onPlayButtonClick}>
+            <button type="button" className="player__play" onClick={onPlayButtonClick} data-testid="button-play">
               <svg viewBox="0 0 19 19" width="19" height="19">
                 {isPlaying ?
                   <use xlinkHref="#pause"></use> :
@@ -65,7 +65,7 @@ const Player = (props) => {
             </button>
             <div className="player__name">Transpotting</div>
 
-            <button type="button" className="player__full-screen" onClick={onFullScreenClick}>
+            <button type="button" className="player__full-screen" onClick={onFullScreenClick} data-testid="button-fullscreen">
               <svg viewBox="0 0 27 27" width="27" height="27">
                 <use xlinkHref="#full-screen"></use>
               </svg>

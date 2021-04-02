@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import withVideoPlayer from './with-video-player';
+import withVideoPlayer from './with-player';
 
 jest.mock(`../components/player/player`, () => {
   const mockVideoPlayer = () => <>This is mock VideoPlayer</>;
