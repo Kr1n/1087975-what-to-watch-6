@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import browserHistory from "../../browser-history";
 import {connect} from "react-redux";
 import {AppRoute, AuthorizationStatus} from "../../consts/common";
-import {logout} from "../../store/api-actions";
 import {getAuthorizationStatus} from "../../store/user/selectors";
 
 const Header = (props) => {
@@ -49,6 +48,11 @@ const Header = (props) => {
     </>);
 };
 
+Header.defaultProps = {
+  title: ``,
+  link: null
+};
+
 Header.propTypes = {
   title: PropTypes.string,
   link: PropTypes.shape({
@@ -56,23 +60,12 @@ Header.propTypes = {
     name: PropTypes.string,
   }),
   authorizationStatus: PropTypes.string.isRequired,
-  onLogout: PropTypes.func.isRequired
-};
-
-Header.defaultProps = {
-  title: ``,
-  link: null
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatus(state)
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onLogout() {
-    dispatch(logout());
-  }
-});
 
 export {Header};
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Header));
+export default connect(mapStateToProps)(React.memo(Header));

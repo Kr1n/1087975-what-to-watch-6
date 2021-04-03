@@ -1,32 +1,14 @@
-import React, {useState, useEffect} from "react";
-import SmallMovieCard from "../small-movie-card/small-movies-card";
+import React from "react";
+import SmallMovieCard from "../small-movie-card/small-movie-card";
 import {moviesType} from "../../utils/prop-types";
-import {VIDEO_LOAD_TIMEOUT} from "../../consts/common";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Loading from "../loading/loading";
 import {getLoadedDataStatus} from "../../store/movies-data/selectors";
+import withMovieList from "../../hocs/with-movie-list";
 
 const MovieList = (props) => {
-  const {movies, isDataLoaded} = props;
-  const [activeFilm, setActiveFilm] = useState(-1);
-  let timerID;
-
-
-  useEffect(() => {
-    return () => clearTimeout(timerID);
-  });
-
-  const onHover = (id) => {
-    timerID = setTimeout(() => setActiveFilm(id), VIDEO_LOAD_TIMEOUT);
-  };
-
-  const onCursorLeave = () => {
-    clearTimeout(timerID);
-    if (activeFilm !== -1) {
-      setActiveFilm(-1);
-    }
-  };
+  const {movies, isDataLoaded, onHover, onCursorLeave, activeFilm} = props;
 
   const moviesList = movies.slice().map((movie) =>
     <SmallMovieCard
@@ -53,6 +35,9 @@ const MovieList = (props) => {
 MovieList.propTypes = {
   movies: moviesType.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
+  onHover: PropTypes.func.isRequired,
+  onCursorLeave: PropTypes.func.isRequired,
+  activeFilm: PropTypes.number.isRequired
 };
 
 
@@ -62,4 +47,4 @@ const mapStateToProps = (state) => ({
 
 
 export {MovieList};
-export default connect(mapStateToProps)(MovieList);
+export default connect(mapStateToProps)(withMovieList(MovieList));

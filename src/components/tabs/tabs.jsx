@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useState} from "react";
 import PropTypes from "prop-types";
-import {getDurationFromMinutes, getRatingDescription} from "../../utils/utils";
+import {getDurationFromSeconds, getRatingDescription} from "../../utils/utils";
 import {movieType, reviewsType} from "../../utils/prop-types";
 import Review from "../review/review";
 import {fetchReviews} from "../../store/api-actions";
@@ -22,7 +22,7 @@ const Tabs = (props) => {
   const [activeTab, setActiveTab] = useState(TabStates.OVERVIEW);
 
   const {runTime, scoresCount, genre, released, rating, director, description, starring} = movie;
-  const {hours, minutes} = getDurationFromMinutes(runTime);
+  const {hours, minutes} = getDurationFromSeconds(runTime);
 
   useEffect(() => {
     loadReviews(movie.id);
@@ -44,7 +44,7 @@ const Tabs = (props) => {
 
   const overviewTab =
     <>
-      <div className="movie-rating">
+      <div className="movie-rating" data-testid="overview-rating">
         <div className="movie-rating__score">{rating}</div>
         <p className="movie-rating__meta">
           <span className="movie-rating__level">{getRatingDescription(rating)}</span>
@@ -179,4 +179,5 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
+export {Tabs};
 export default connect(mapStateToProps, mapDispatchToProps)(Tabs);

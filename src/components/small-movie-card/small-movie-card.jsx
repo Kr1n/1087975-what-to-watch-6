@@ -13,6 +13,7 @@ const SmallMovieCard = (props) => {
     <article className="small-movie-card catalog__movies-card"
       onMouseEnter={() => onHover(movie.id)}
       onMouseLeave={() => onCursorLeave(movie.id)}
+      data-testid = "smallCard"
     >
       <div className="small-movie-card__image" onClick={() => browserHistory.push(`${AppRoute.FILM}/${movie.id}`)}>
         <VideoPlayer videoLink={isActive ? movie.previewVideoLink : ``} backgroundImage={movie.backgroundImage} autoPlay={true} muted={true}/>

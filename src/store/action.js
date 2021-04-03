@@ -1,4 +1,4 @@
-import {createAction} from '@reduxjs/toolkit';
+import {createAction} from "@reduxjs/toolkit";
 
 export const ActionType = {
   CHANGE_GENRE: `main/changeGenre`,
@@ -16,43 +16,23 @@ export const ActionType = {
 };
 
 
-export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => ({
-  payload: genre
-}));
+export const changeGenre = createAction(ActionType.CHANGE_GENRE);
 
-export const loadMovies = createAction(ActionType.LOAD_MOVIES, (movies) => ({
-  payload: movies
-}));
+export const loadMovies = createAction(ActionType.LOAD_MOVIES);
 
-export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
-  payload: promo
-}));
+export const loadPromo = createAction(ActionType.LOAD_PROMO);
 
-export const loadMovie = createAction(ActionType.LOAD_MOVIE, (movie) => ({
-  payload: movie
-}));
+export const loadMovie = createAction(ActionType.LOAD_MOVIE);
 
-export const loadFavorite = createAction(ActionType.LOAD_FAVORITE, (movies) => ({
-  payload: movies
-}));
-export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
-  payload: reviews
-}));
-export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
-  payload: status,
-}));
-export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
-  payload: url,
-}));
+export const loadFavorite = createAction(ActionType.LOAD_FAVORITE);
+export const loadReviews = createAction(ActionType.LOAD_REVIEWS);
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION);
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE);
 
 export const showMoreClicked = createAction(ActionType.SHOW_MORE_CLICKED);
 export const resetFilmCount = createAction(ActionType.RESET_FILM_COUNT);
 
-export const addToFavorite = createAction(ActionType.ADD_TO_FAVORITE, (movie) => ({
-  payload: movie
-}));
+export const addToFavorite = createAction(ActionType.ADD_TO_FAVORITE);
 
-export const addReview = createAction(ActionType.ADD_REVIEW, ({id, reviews}) => ({
-  payload: {id, reviews}
-}));
+export const addReview = createAction(ActionType.ADD_REVIEW);
 

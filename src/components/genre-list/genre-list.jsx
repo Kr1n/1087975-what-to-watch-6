@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {changeGenre} from "../../store/action";
-import {getGenres, getMovieList} from "../../store/movies-data/selectors";
+import {getGenres} from "../../store/movies-data/selectors";
 import {getSelectedGenre} from "../../store/main/selectors";
 
 const GenreList = (props) => {
 
   const {selectedGenre, onTabClick, genres} = props;
 
-  const genreItems = genres.slice().map((genre) =>
+  const genreItems = genres.map((genre) =>
     <li key={genre} className={`catalog__genres-item ${(selectedGenre === genre) ? `catalog__genres-item--active` : ``}`}>
       {
         (selectedGenre === genre)
@@ -40,7 +40,6 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   genres: getGenres(state),
   selectedGenre: getSelectedGenre(state),
-  movieList: (getSelectedGenre(state)) ? getMovieList(state).filter((item) => item.genre === getSelectedGenre(state)) : getMovieList(state),
 });
 
 export {GenreList};

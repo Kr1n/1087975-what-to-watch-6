@@ -5,8 +5,17 @@ import Footer from "../footer/footer";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
+import {getAuthorizationStatus} from "../../store/user/selectors";
+import {redirectToRoute} from "../../store/action";
+import {AppRoute, AuthorizationStatus} from "../../consts/common";
 
-const SignIn = ({onSubmit}) => {
+const SignIn = (props) => {
+  const {onSubmit, authorizationStatus, redirect} = props;
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    redirect();
+  }
+
   const loginRef = useRef();
   const passwordRef = useRef();
 
@@ -16,7 +25,7 @@ const SignIn = ({onSubmit}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    if (!loginRef.current.value) {
+    if (!loginRef.current.value || !passwordRef.current.value) {
       setEmailValid(false);
       return;
     }
@@ -28,7 +37,7 @@ const SignIn = ({onSubmit}) => {
   };
 
   const errorMessage = <div className="sign-in__message">
-    <p>Please enter a valid email address</p>
+    <p>Please enter a valid email address and password</p>
   </div>;
 
   return (
@@ -54,12 +63,12 @@ const SignIn = ({onSubmit}) => {
             <div className="sign-in__fields">
               <div className={`sign-in__field ${isEmailValid ? `` : `sign-in__field--error`}`}>
                 <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email"
-                  id="user-email"/>
+                  id="user-email" data-testid="login"/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
               <div className="sign-in__field">
                 <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password"
-                  id="user-password"/>
+                  id="user-password" data-testid="password"/>
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
             </div>
@@ -77,13 +86,23 @@ const SignIn = ({onSubmit}) => {
 
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  redirect: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state)
+});
+
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(authData) {
     dispatch(login(authData));
+  },
+  redirect() {
+    dispatch(redirectToRoute(AppRoute.ROOT));
   }
 });
 
 export {SignIn};
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

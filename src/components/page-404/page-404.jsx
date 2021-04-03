@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import Svg from "../svg/svg";
+import Footer from "../footer/footer";
 
 const Page404 = () => (
   <>
@@ -25,19 +26,7 @@ const Page404 = () => (
         </div>
       </div>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <Link to="/" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </Link>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   </>
 );
