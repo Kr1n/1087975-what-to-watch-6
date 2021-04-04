@@ -1,10 +1,18 @@
 export const getDurationFromSeconds = (seconds) => {
   const minutes = (seconds - seconds % 60) / 60;
   const hours = (minutes - minutes % 60) / 60;
+
   return {
     hours,
     minutes,
-    seconds: Math.floor(seconds - (seconds - seconds % 60))
+    seconds: Math.floor(seconds % 60)
+  };
+};
+
+export const getDurationFromMinutes = (minutes) => {
+  return {
+    hours: (minutes - minutes % 60) / 60,
+    minutes: minutes % 60,
   };
 };
 
