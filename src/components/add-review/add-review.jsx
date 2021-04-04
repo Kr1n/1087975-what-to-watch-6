@@ -30,7 +30,7 @@ const AddReview = (props) => {
       return;
     }
     isReviewSendedChange(true);
-    addReview(movie.id, {rating: commentRating, comment});
+    addReview(movie.id, {rating: commentRating, comment}, () => isReviewSendedChange(false));
   };
 
   const onRatingChange = (e) => {
@@ -47,8 +47,7 @@ const AddReview = (props) => {
       <label className="rating__label" htmlFor={`star-${index + 1}`}>Rating {index + 1}</label>
     </React.Fragment>
   );
-
-  const isDisabled = (rating && reviewLength > 50 && !isReviewSended);
+  const isDisabled = (reviewLength < 50 || !rating || isReviewSended);
 
   return (
     <>
@@ -86,7 +85,7 @@ const AddReview = (props) => {
 
             <div className="add-review__text">
               <textarea ref={refReview} className="add-review__textarea" name="review-text" id="review-text" data-testid="review-text"
-                placeholder="Review text" onChange={onReviewChange} maxLength="400"/>
+                placeholder="Review text" onChange={onReviewChange} maxLength="400"></textarea>
               <div className="add-review__submit">
                 <button className="add-review__btn" type="submit" disabled={isDisabled} data-testid="button-submit">Post</button>
               </div>
@@ -111,8 +110,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addReview(id, review) {
-    dispatch(postReview(id, review));
+  addReview(id, review, callback) {
+    dispatch(postReview(id, review, callback));
   },
 });
 

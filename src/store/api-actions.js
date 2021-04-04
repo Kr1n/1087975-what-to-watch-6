@@ -54,9 +54,10 @@ export const toggleFavorite = (id, isFavorite) => (dispatch, _getState, api) => 
     .then(({data}) => dispatch(addToFavorite(data)))
 );
 
-export const postReview = (id, review) => (dispatch, _getState, api) => (
+export const postReview = (id, review, callback) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.REVIEWS}/${id}`, review)
     .then(({data}) => dispatch(addReview({id, reviews: data})))
     .then(() => dispatch(redirectToRoute(`${AppRoute.FILM}/${id}`)))
+    .catch(callback)
 );
 
