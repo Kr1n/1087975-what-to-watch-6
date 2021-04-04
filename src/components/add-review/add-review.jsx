@@ -48,7 +48,7 @@ const AddReview = (props) => {
     </React.Fragment>
   );
 
-  const isDisabled = (rating && reviewLength > 50 && !isReviewSended) ? false : true;
+  const isDisabled = (rating && reviewLength > 50 && !isReviewSended);
 
   return (
     <>
