@@ -86,7 +86,7 @@ const AddReview = (props) => {
 
             <div className="add-review__text">
               <textarea ref={refReview} className="add-review__textarea" name="review-text" id="review-text" data-testid="review-text"
-                placeholder="Review text" onChange={onReviewChange} maxLength="400"></textarea>
+                placeholder="Review text" onChange={onReviewChange} maxLength="400"/>
               <div className="add-review__submit">
                 <button className="add-review__btn" type="submit" disabled={isDisabled} data-testid="button-submit">Post</button>
               </div>
